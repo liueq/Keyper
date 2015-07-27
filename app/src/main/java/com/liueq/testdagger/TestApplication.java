@@ -18,7 +18,7 @@ public class TestApplication extends Application{
     public void onCreate() {
         super.onCreate();
 
-        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this, new ArrayList<Account>())).build();
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this, new ArrayList<Account>())).build();//注意这里的list，之后在listPresenter和detailPresenter中都注入了此对象，必须保持同步
     }
 
     public static TestApplication get(Context context){

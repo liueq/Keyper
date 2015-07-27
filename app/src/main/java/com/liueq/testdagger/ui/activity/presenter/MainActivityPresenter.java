@@ -47,7 +47,9 @@ public class MainActivityPresenter {
 
 
     public void loadData(){
-        mainActivity.updateUI((List<Account>) getAccountListUseCase.execute());
+        mAccountList.clear();
+        mAccountList.addAll((List<Account>) getAccountListUseCase.execute());
+        mainActivity.updateUI(mAccountList);
     }
 
     public void search(String searchKey){
