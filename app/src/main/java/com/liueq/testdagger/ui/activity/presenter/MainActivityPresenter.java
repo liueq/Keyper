@@ -10,6 +10,9 @@ import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.activity.MainActivity;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
+import com.liueq.testdagger.domain.interactor.GetAccountDetailUseCase;
+import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
+import com.liueq.testdagger.domain.interactor.SearchAccountUseCase;
 import com.liueq.testdagger.utils.Encrypter;
 import com.liueq.testdagger.utils.FileReader;
 import com.liueq.testdagger.utils.JsonParser;
@@ -32,22 +35,23 @@ public class MainActivityPresenter {
 
     private MainActivity mainActivity;
     List<Account> mAccountList;
-    List<Account> mFilteredList;
-    AccountRepositoryImpl mARI;
+    GetAccountListUseCase getAccountListUseCase;
+    SearchAccountUseCase searchAccountUseCase;
 
-    public MainActivityPresenter(MainActivity mainActivity, List<Account> list, AccountRepositoryImpl accountRepositoryImpl) {
+    public MainActivityPresenter(MainActivity mainActivity, List<Account> list, GetAccountListUseCase getAccountListUseCase, SearchAccountUseCase searchAccountUseCase) {
         this.mainActivity = mainActivity;
         this.mAccountList = list;
-        this.mARI = accountRepositoryImpl;
+        this.getAccountListUseCase = getAccountListUseCase;
+        this.searchAccountUseCase = searchAccountUseCase;
     }
 
 
     public void loadData(){
-        mainActivity.updateUI(mARI.getAccountList());
+        mainActivity.updateUI((List<Account>) getAccountListUseCase.execute());
     }
 
     public void search(String searchKey){
-        mainActivity.updateUI(mARI.searchAccount(searchKey));
+        mainActivity.updateUI(searchAccountUseCase.execute(searchKey) );
     }
 
 }
