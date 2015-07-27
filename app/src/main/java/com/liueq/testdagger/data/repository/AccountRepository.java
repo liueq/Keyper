@@ -14,4 +14,6 @@ public interface AccountRepository {
     Account getAccountDetail(final String accountId);
 
     List<Account> searchAccount(final String key);
+
+    void saveAccountList(List<Account> list);
 }

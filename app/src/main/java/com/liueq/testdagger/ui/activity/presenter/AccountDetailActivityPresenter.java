@@ -12,6 +12,10 @@ import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.activity.AccountDetailActivity;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.domain.interactor.DeleteAccountUseCase;
+import com.liueq.testdagger.domain.interactor.GetAccountDetailUseCase;
+import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
+import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
 import com.liueq.testdagger.utils.Encrypter;
 import com.liueq.testdagger.utils.FileReader;
 import com.liueq.testdagger.utils.JsonParser;
@@ -27,14 +31,23 @@ public class AccountDetailActivityPresenter {
     public final static String TAG = "AccountDAPresenter";
 
     private AccountDetailActivity activity;
-    FileReader mFileReader;
     List<Account> mAccountList;
     private Account mCurrentAccount;
+    SaveAccountListUseCase saveAccountListUseCase;
+    GetAccountListUseCase getAccountListUseCase;
+    DeleteAccountUseCase deleteAccountUseCase;
 
-    public AccountDetailActivityPresenter(AccountDetailActivity activity, FileReader fileReader, List<Account> accountList){
+    public AccountDetailActivityPresenter(AccountDetailActivity activity,
+                                          List<Account> accountList,
+                                          SaveAccountListUseCase saveAccountListUseCase,
+                                          GetAccountListUseCase getAccountListUseCase,
+                                          DeleteAccountUseCase deleteAccountUseCase){
         this.activity = activity;
-        this.mFileReader = fileReader;
         this.mAccountList = accountList;
+
+        this.saveAccountListUseCase = saveAccountListUseCase;
+        this.getAccountListUseCase = getAccountListUseCase;
+        this.deleteAccountUseCase = deleteAccountUseCase;
     }
 
     public void loadData(Bundle bundle){
@@ -49,36 +62,11 @@ public class AccountDetailActivityPresenter {
      * @return
      */
     public boolean saveData(Account account){
-        boolean insert_flag = true;
-        for(int i = 0; i < mAccountList.size(); i++){
-            if(mAccountList.get(i).id.equals(account.id)){
-                mAccountList.set(i, account);
-                insert_flag = false;
-            }
-        }
 
-        if(insert_flag){
-            mAccountList.add(account);
-            mCurrentAccount = account;
-        }
+        mCurrentAccount = (Account) saveAccountListUseCase.execute(mAccountList, account);
+        mAccountList.clear();
+        mAccountList.addAll(getAccountListUseCase.execute());
 
-//        SaveDataTask task = new SaveDataTask(activity);
-//        task.execute(mAccountList, mFileReader);
-
-        //加密
-        for(Account a : mAccountList){
-            String password_plaint = a.password;;
-            String password_encrypt = Encrypter.encryptByAes(Constants.AES_KEY, password_plaint);
-            a.password = password_encrypt;
-
-            if(BuildConfig.DEBUG){
-                Log.d(TAG, "saveData after encrypt " + a.password);
-            }
-        }
-
-        mFileReader.presistData(JsonParser.objToJson(mAccountList));
-
-        loadData();
         return true;
     }
 
@@ -87,54 +75,14 @@ public class AccountDetailActivityPresenter {
     }
 
     public void deleteAccount(){
-        if(mCurrentAccount != null){
-            for(int i = 0; i < mAccountList.size(); i++){
-                if(mAccountList.get(i).id.equals(mCurrentAccount.id)){
-                    mAccountList.remove(i);
-                }
-            }
 
-            if(BuildConfig.DEBUG){
-                Log.d(TAG, "deleteAccount mCurrentAccount is " + mCurrentAccount);
-                Log.d(TAG, "deleteAccount mAccountList is " + mAccountList);
-            }
-
-            //加密
-            for(Account a : mAccountList){
-                String password_plaint = a.password;;
-                String password_encrypt = Encrypter.encryptByAes(Constants.AES_KEY, password_plaint);
-                a.password = password_encrypt;
-            }
-
-            mFileReader.presistData(JsonParser.objToJson(mAccountList));
-
-            loadData();
+        List<Account> deleteResult = deleteAccountUseCase.execute(mAccountList, mCurrentAccount);
+        if(deleteResult != null){
+            saveAccountListUseCase.execute(deleteResult, null);
+            mAccountList.clear();
+            mAccountList.addAll(getAccountListUseCase.execute());
         }
     }
 
 
-    public void loadData(){
-        JsonReader json = mFileReader.retrieveData();
-        mAccountList.clear();
-        mAccountList.addAll(JsonParser.jsonToObj(json));    //由于TypeToken的原因，无法使用泛型
-
-        if(BuildConfig.DEBUG){
-            for(Account i : mAccountList){
-                Log.i(TAG, "loadData id " + i.id);
-                Log.i(TAG, "loadData site" + i.site);
-                Log.i(TAG, "loadData userName" + i.userName);
-                Log.i(TAG, "loadData password" + i.password);
-                Log.i(TAG, "loadData mail" + i.mail);
-                Log.i(TAG, "loadData description" + i.description);
-
-            }
-        }
-
-        //解密
-        for(Account a : mAccountList){
-            String password_encrypt = a.password;
-            String password_plaint = Encrypter.decryptByAes(Constants.AES_KEY, password_encrypt);
-            a.password = password_plaint;
-        }
-    }
 }

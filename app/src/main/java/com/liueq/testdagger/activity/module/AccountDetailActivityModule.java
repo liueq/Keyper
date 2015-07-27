@@ -3,6 +3,11 @@ package com.liueq.testdagger.activity.module;
 import com.liueq.testdagger.activity.AccountDetailActivity;
 import com.liueq.testdagger.activity.ActivityScope;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.data.repository.AccountRepository;
+import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
+import com.liueq.testdagger.domain.interactor.DeleteAccountUseCase;
+import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
+import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
 import com.liueq.testdagger.ui.activity.presenter.AccountDetailActivityPresenter;
 import com.liueq.testdagger.utils.FileReader;
 
@@ -32,6 +37,12 @@ public class AccountDetailActivityModule {
     @Provides
     @ActivityScope
     AccountDetailActivityPresenter provideAccountDetailActivityPresenter(FileReader fileReader, List<Account> accountList){
-        return new AccountDetailActivityPresenter(accountDetailActivity, fileReader, accountList);
+        AccountRepository ar = new AccountRepositoryImpl(fileReader);
+
+        SaveAccountListUseCase saveAccountListUseCase = new SaveAccountListUseCase((AccountRepositoryImpl) ar);
+        GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase((AccountRepositoryImpl) ar);
+        DeleteAccountUseCase deleteAccountUseCase = new DeleteAccountUseCase();
+
+        return new AccountDetailActivityPresenter(accountDetailActivity, accountList, saveAccountListUseCase, getAccountListUseCase, deleteAccountUseCase);
     }
 }

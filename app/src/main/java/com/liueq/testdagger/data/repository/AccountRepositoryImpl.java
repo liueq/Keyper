@@ -85,4 +85,21 @@ public class AccountRepositoryImpl implements AccountRepository{
         }
         return mFilteredList;
     }
+
+    @Override
+    public void saveAccountList(List<Account> accountList) {
+
+        //加密
+        for(Account a : accountList){
+            String password_plaint = a.password;;
+            String password_encrypt = Encrypter.encryptByAes(Constants.AES_KEY, password_plaint);
+            a.password = password_encrypt;
+
+            if(BuildConfig.DEBUG){
+                Log.d(TAG, "saveData after encrypt " + a.password);
+            }
+        }
+
+        mFileReader.presistData(JsonParser.objToJson(accountList));
+    }
 }
