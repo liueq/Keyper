@@ -9,6 +9,7 @@ import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.activity.MainActivity;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
 import com.liueq.testdagger.utils.Encrypter;
 import com.liueq.testdagger.utils.FileReader;
 import com.liueq.testdagger.utils.JsonParser;
@@ -29,59 +30,24 @@ public class MainActivityPresenter {
 
     public final static String TAG = "MainActivityPresenter";
 
-    FileReader mFileReader;
     private MainActivity mainActivity;
     List<Account> mAccountList;
     List<Account> mFilteredList;
+    AccountRepositoryImpl mARI;
 
-    public MainActivityPresenter(MainActivity mainActivity, FileReader fileReader, List<Account> list) {
+    public MainActivityPresenter(MainActivity mainActivity, List<Account> list, AccountRepositoryImpl accountRepositoryImpl) {
         this.mainActivity = mainActivity;
-        this.mFileReader = fileReader;
         this.mAccountList = list;
+        this.mARI = accountRepositoryImpl;
     }
 
 
     public void loadData(){
-        JsonReader json = mFileReader.retrieveData();
-        mAccountList.clear();
-        mAccountList.addAll(JsonParser.jsonToObj(json));    //由于TypeToken的原因，无法使用泛型
-
-        if(BuildConfig.DEBUG){
-            for(Account i : mAccountList){
-                Log.i(TAG, "loadData id " + i.id);
-                Log.i(TAG, "loadData site" + i.site);
-                Log.i(TAG, "loadData userName" + i.userName);
-                Log.i(TAG, "loadData password" + i.password);
-                Log.i(TAG, "loadData mail" + i.mail);
-                Log.i(TAG, "loadData description" + i.description);
-
-            }
-        }
-
-        //解密
-        for(Account a : mAccountList){
-            String password_encrypt = a.password;
-            String password_plaint = Encrypter.decryptByAes(Constants.AES_KEY, password_encrypt);
-            a.password = password_plaint;
-        }
-
-        mainActivity.updateUI(mAccountList);
+        mainActivity.updateUI(mARI.getAccountList());
     }
 
     public void search(String searchKey){
-        if(mFilteredList == null){
-            mFilteredList = new ArrayList<Account>();
-        }else{
-            mFilteredList.clear();
-        }
-        for(Account a : mAccountList){
-            String site_lower = a.site.toLowerCase();       //无视大小写
-            if(site_lower.contains(searchKey.toLowerCase())){
-                mFilteredList.add(a);
-            }
-        }
-
-        mainActivity.updateUI(mFilteredList);
+        mainActivity.updateUI(mARI.searchAccount(searchKey));
     }
 
 }

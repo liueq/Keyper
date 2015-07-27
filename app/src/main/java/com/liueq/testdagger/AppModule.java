@@ -3,6 +3,8 @@ package com.liueq.testdagger;
 import android.app.Application;
 
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.data.repository.AccountRepository;
+import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
 import com.liueq.testdagger.utils.FileReader;
 
 import java.util.List;
@@ -43,6 +45,5 @@ public class AppModule {
     public List<Account> provideAccountList(){
         return accountList;
     }
-
 
 }
