@@ -23,7 +23,12 @@ public class FileReader {
 
     private static FileReader instance = new FileReader();
 
+    private String mFilePath;
+    private String mFileName;
+
     private FileReader() {
+        mFilePath = Environment.getExternalStorageDirectory().getPath();
+        mFileName = Constants.STORAGE_FILE;
     }
 
     public static FileReader getInstance(){
@@ -36,7 +41,7 @@ public class FileReader {
         java.io.FileReader fileReader = null;
 
         if(Environment.isExternalStorageRemovable() == false){
-            file = new File(Environment.getExternalStorageDirectory() + Constants.STORAGE_FILE);
+            file = new File(mFilePath, mFileName);
             if(!file.exists()){
                 if(BuildConfig.DEBUG){
                     Log.d(TAG, "retrieveData File do not exist.");
@@ -68,7 +73,7 @@ public class FileReader {
     }
 
     public boolean presistData(String data){
-        File file = new File(Environment.getExternalStorageDirectory(), "password.json");
+        File file = new File(mFilePath, mFileName);
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(file);
@@ -89,4 +94,19 @@ public class FileReader {
     }
 
 
+    public String getmFilePath() {
+        return mFilePath;
+    }
+
+    public void setmFilePath(String mFilePath) {
+        this.mFilePath = mFilePath;
+    }
+
+    public String getmFilName() {
+        return mFileName;
+    }
+
+    public void setmFilName(String mFilName) {
+        this.mFileName = mFilName;
+    }
 }
