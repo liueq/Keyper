@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.CharBuffer;
@@ -25,11 +26,20 @@ public class FileReaderTest extends AndroidTestCase {
 
     FileReader fileReader;
     String data = "[{\"name\" : \"liueq\", \"age\" : \"23\", \"ok\" : \"yes\"},{\"name\" : \"liueq2\", \"age\" : \"232\", \"ok\" : \"yes2\"}]";
+    String mTestPath = Environment.getExternalStorageDirectory().getPath() + "/Test";
+    String mTestFile = "password_test.json";
 
     @Before
     public void setUp() throws IOException {
         fileReader = FileReader.getInstance();
-        File testfile = new File(Environment.getExternalStorageDirectory(), "password.json");
+        fileReader.setmFilePath(mTestPath);
+        fileReader.setmFilName(mTestFile);
+
+        File f = new File(mTestPath);
+        if(!f.exists()){
+            f.mkdir();
+        }
+        File testfile = new File(mTestPath, mTestFile);
         FileWriter fileWriter = new FileWriter(testfile);
         fileWriter.write(data);
         fileWriter.flush();
@@ -73,8 +83,17 @@ public class FileReaderTest extends AndroidTestCase {
         assertEquals("liueq2", value);
     }
 
-//    @Test
-//    public void testPersistData(){
-//        fileReader.presistData(data);
-//    }
+    @Test
+    public void testPersistData() throws FileNotFoundException {
+        fileReader.setmFilName("password_test_persisit.txt");
+        String save_data = "Hello world";
+        fileReader.presistData(save_data);
+
+        java.io.FileReader fr = new java.io.FileReader(new File(mTestPath, "password_test_persisit.txt"));
+        Scanner scanner = new Scanner(fr);
+
+        String result = scanner.nextLine();
+
+        assertEquals(save_data, result);
+    }
 }
