@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 /**
  * Created by liueq on 27/7/15.
+ * 实际没有使用
  */
 public class GetAccountDetailUseCase extends UseCase {
 

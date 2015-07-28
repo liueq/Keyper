@@ -51,12 +51,6 @@ public class AccountRepositoryImpl implements AccountRepository{
             }
         }
 
-        //解密
-        for(Account a : mAccountList){
-            String password_encrypt = a.password;
-            String password_plaint = Encrypter.decryptByAes(Constants.AES_KEY, password_encrypt);
-            a.password = password_plaint;
-        }
         return mAccountList;
     }
 
@@ -88,18 +82,6 @@ public class AccountRepositoryImpl implements AccountRepository{
 
     @Override
     public void saveAccountList(List<Account> accountList) {
-
-        //加密
-        for(Account a : accountList){
-            String password_plaint = a.password;;
-            String password_encrypt = Encrypter.encryptByAes(Constants.AES_KEY, password_plaint);
-            a.password = password_encrypt;
-
-            if(BuildConfig.DEBUG){
-                Log.d(TAG, "saveData after encrypt " + a.password);
-            }
-        }
-
         mFileReader.presistData(JsonParser.objToJson(accountList));
     }
 }

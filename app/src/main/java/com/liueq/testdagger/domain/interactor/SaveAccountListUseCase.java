@@ -1,7 +1,11 @@
 package com.liueq.testdagger.domain.interactor;
 
+import android.util.Log;
+
+import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
+import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.List;
 
@@ -33,6 +37,13 @@ public class SaveAccountListUseCase {
                 list.add(account);
             }
 
+        }
+
+        //加密
+        for(Account a : list){
+            String password_plaint = a.password;;
+            String password_encrypt = Encrypter.encryptByAes(Constants.AES_KEY, password_plaint);
+            a.password = password_encrypt;
         }
 
         mARI.saveAccountList(list);
