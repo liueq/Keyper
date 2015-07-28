@@ -12,11 +12,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.MainActivityModule;
@@ -34,7 +39,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity{
+import static android.support.v7.widget.RecyclerView.*;
+
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.appbar)
     AppBarLayout appBarLayout;
@@ -80,6 +87,67 @@ public class MainActivity extends BaseActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerListAdapter = new RecyclerListAdapter(this, new ArrayList<Account>());
         recyclerView.setAdapter(recyclerListAdapter);
+
+        recyclerView.addOnScrollListener(new OnScrollListener() {
+
+            private boolean scrollUp = true;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(BuildConfig.DEBUG)
+                    Log.i("liueq", "onScrolled dy = " + dy);
+
+                if(dy > 0 && scrollUp){
+                    Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_appear);
+                    anim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            fab.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    fab.startAnimation(anim);
+
+                    scrollUp = false;
+                }else if(dy < 0 && !scrollUp){
+                    Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_disappear);
+                    anim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            fab.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    fab.startAnimation(anim);
+
+                    scrollUp = true;
+                }
+            }
+        });
     }
 
     private void initDate(){

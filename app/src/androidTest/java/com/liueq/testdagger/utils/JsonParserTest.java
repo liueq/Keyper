@@ -3,10 +3,12 @@ package com.liueq.testdagger.utils;
 import android.test.AndroidTestCase;
 import android.util.JsonReader;
 import android.util.Log;
+import static org.junit.Assert.assertThat;
 
 import com.liueq.testdagger.data.model.Account;
 
 import junit.framework.TestResult;
+import static org.hamcrest.CoreMatchers.is;
 
 import org.junit.After;
 import org.junit.Before;
@@ -116,7 +118,9 @@ public class JsonParserTest extends AndroidTestCase{
         assertEquals("Description", list.get(0).description);
         assertEquals("123@email.com", list.get(0).mail);
         assertEquals("www.baidu.com", list.get(0).site);
-        assertEquals("liuerqiang", list.get(0).userName);
+//        assertEquals("liuerqiang", list.get(0).userName);
+
+        assertThat(list.get(0).userName, is("liuerqiang"));
     }
 
 
