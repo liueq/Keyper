@@ -149,6 +149,9 @@ public class AccountDetailActivity extends BaseActivity {
         if(presenter.saveData(account)){
             Snackbar snackbar = Snackbar.make(mLinearLayout, "SAVED", Snackbar.LENGTH_SHORT);
             snackbar.show();
+        }else{
+            Snackbar snackbar = Snackbar.make(mLinearLayout, "Site can't be NULL", Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
     }
 }

@@ -16,17 +16,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.MainActivityModule;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.model.Settings;
 import com.liueq.testdagger.ui.activity.presenter.MainActivityPresenter;
 import com.liueq.testdagger.ui.adapter.RecyclerListAdapter;
 

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -63,11 +64,14 @@ public class AccountDetailActivityPresenter {
      */
     public boolean saveData(Account account){
 
-        mCurrentAccount = (Account) saveAccountListUseCase.execute(mAccountList, account);
-        mAccountList.clear();
-        mAccountList.addAll(getAccountListUseCase.execute());
-
-        return true;
+        if(!TextUtils.isEmpty(account.site)){
+            mCurrentAccount = (Account) saveAccountListUseCase.execute(mAccountList, account);
+            mAccountList.clear();
+            mAccountList.addAll(getAccountListUseCase.execute());
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public Account getCurrentAccount(){
