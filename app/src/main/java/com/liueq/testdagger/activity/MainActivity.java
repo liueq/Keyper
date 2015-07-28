@@ -12,12 +12,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ActionMenuView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.R;
@@ -79,6 +83,9 @@ public class MainActivity extends BaseActivity {
     private void initView(){
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.main_activity_title);
+//        getSupportActionBar().setHomeAsUpIndicator(null);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -195,7 +202,6 @@ public class MainActivity extends BaseActivity {
                     return false;
                 }
             });
-
 
             searchView.setOnCloseListener(new SearchView.OnCloseListener() {
                 @Override

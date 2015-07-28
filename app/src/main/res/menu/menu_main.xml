@@ -4,10 +4,10 @@
       tools:context="com.liueq.testdagger.activity.MainActivity">
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@mipmap/ic_search_white_24dp"
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always"/>
+        app:showAsAction="always|collapseActionView"/>
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
