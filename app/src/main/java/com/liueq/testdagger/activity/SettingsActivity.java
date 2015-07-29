@@ -18,6 +18,11 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
@@ -30,11 +35,26 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SettingsActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.rl_change_pwd)
+    RelativeLayout mRelativePwd;
+    @Bind(R.id.rl_change_aes)
+    RelativeLayout mRelativeAES;
+    @Bind(R.id.rl_change_path)
+    RelativeLayout mRelativePath;
+    @Bind(R.id.rl_encrypt_pwd)
+    RelativeLayout mRelativeEncPwd;
+    @Bind(R.id.rl_encrypt_desc)
+    RelativeLayout mRelativeEncDesc;
+    @Bind(R.id.switch_pwd)
+    Switch mSwitchPwd;
+    @Bind(R.id.switch_desc)
+    Switch mSwitchDesc;
 
     @Inject
     SettingsActivityPresenter presenter;
@@ -46,6 +66,7 @@ public class SettingsActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initView();
+        initData();
 
     }
 
@@ -57,6 +78,24 @@ public class SettingsActivity extends BaseActivity {
         if(Build.VERSION.SDK_INT > 21){
             mToolbar.setElevation(8);
         }
+
+        mSwitchPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                presenter.encryptPwd(isChecked);
+            }
+        });
+
+        mSwitchDesc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                presenter.encryptDesc(isChecked);
+            }
+        });
+    }
+
+    private void initData(){
+        presenter.initialSwitch();
     }
 
     @Override
@@ -65,4 +104,36 @@ public class SettingsActivity extends BaseActivity {
                 .plus(new SettingsActivityModule(this))
                 .inject(this);
     }
+
+    public void checkSwitchPwd(boolean check){
+        mSwitchPwd.setChecked(check);
+    }
+
+    public void checkSwitchDesc(boolean check){
+        mSwitchDesc.setChecked(check);
+    }
+
+    @OnClick({R.id.rl_change_pwd, R.id.rl_change_aes, R.id.rl_change_path, R.id.rl_encrypt_pwd, R.id.rl_encrypt_desc})
+    public void click(View v){
+        int id = v.getId();
+        switch (id){
+            case R.id.rl_change_pwd:
+                Toast.makeText(SettingsActivity.this, "Change password", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rl_change_aes:
+                Toast.makeText(SettingsActivity.this, "Change AES", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rl_change_path:
+                Toast.makeText(SettingsActivity.this, "Change Path", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rl_encrypt_pwd:
+                mSwitchPwd.setChecked(!mSwitchPwd.isChecked());
+                break;
+            case R.id.rl_encrypt_desc:
+                mSwitchDesc.setChecked(!mSwitchDesc.isChecked());
+                break;
+        }
+    }
+
+
 }

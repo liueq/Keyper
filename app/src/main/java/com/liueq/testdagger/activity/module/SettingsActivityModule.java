@@ -2,6 +2,10 @@ package com.liueq.testdagger.activity.module;
 
 import com.liueq.testdagger.activity.ActivityScope;
 import com.liueq.testdagger.activity.SettingsActivity;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
+import com.liueq.testdagger.domain.interactor.GetSpUseCase;
+import com.liueq.testdagger.domain.interactor.SetSpUseCase;
 import com.liueq.testdagger.ui.activity.presenter.SettingsActivityPresenter;
 
 import dagger.Module;
@@ -28,6 +32,10 @@ public class SettingsActivityModule {
     @Provides
     @ActivityScope
     SettingsActivityPresenter provideSettingsActivityPresenter(){
-        return new SettingsActivityPresenter(settingsActivity);
+        SharedPreferenceRepositoryImpl impl = new SharedPreferenceRepositoryImpl(settingsActivity);
+        GetSpUseCase getSpUseCase = new GetSpUseCase(impl);
+        SetSpUseCase setSpUseCase = new SetSpUseCase(impl);
+
+        return new SettingsActivityPresenter(settingsActivity, setSpUseCase, getSpUseCase);
     }
 }

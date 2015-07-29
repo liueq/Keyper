@@ -13,11 +13,14 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <RelativeLayout
+        android:id="@+id/rl_change_pwd"
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:padding="15dp"
+        android:background="@drawable/setting_item_bg"
+        android:clickable="true"
         >
 
         <TextView
@@ -37,11 +40,14 @@
         android:background="@android:color/darker_gray"/>
 
     <RelativeLayout
+        android:id="@+id/rl_change_aes"
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:padding="15dp"
+        android:background="@drawable/setting_item_bg"
+        android:clickable="true"
         >
 
         <TextView
@@ -61,11 +67,14 @@
         android:background="@android:color/darker_gray"/>
 
     <RelativeLayout
+        android:id="@+id/rl_change_path"
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:padding="15dp"
+        android:background="@drawable/setting_item_bg"
+        android:clickable="true"
         >
 
         <TextView
@@ -85,11 +94,14 @@
         android:background="@android:color/darker_gray"/>
 
     <RelativeLayout
+        android:id="@+id/rl_encrypt_pwd"
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:padding="15dp"
+        android:background="@drawable/setting_item_bg"
+        android:clickable="true"
         >
 
         <TextView
@@ -101,6 +113,7 @@
             android:textColor="@color/black"/>
 
         <Switch
+            android:id="@+id/switch_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -115,11 +128,14 @@
         android:background="@android:color/darker_gray"/>
 
     <RelativeLayout
+        android:id="@+id/rl_encrypt_desc"
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:padding="15dp"
+        android:background="@drawable/setting_item_bg"
+        android:clickable="true"
         >
 
         <TextView
@@ -131,6 +147,7 @@
             android:textColor="@color/black"/>
 
         <Switch
+            android:id="@+id/switch_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
