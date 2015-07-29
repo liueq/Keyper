@@ -83,9 +83,6 @@ public class MainActivity extends BaseActivity {
     private void initView(){
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.main_activity_title);
-//        getSupportActionBar().setHomeAsUpIndicator(null);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

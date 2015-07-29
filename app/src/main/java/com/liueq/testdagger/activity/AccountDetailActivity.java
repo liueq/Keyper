@@ -1,5 +1,6 @@
 package com.liueq.testdagger.activity;
 
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,6 +74,10 @@ public class AccountDetailActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(mEditTextSite.getText().toString());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if(Build.VERSION.SDK_INT > 21){
+            toolbar.setElevation(8);
+        }
 
         mTextViewSite.requestFocus();
     }

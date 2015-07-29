@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/first_pwd"
                 android:focusableInTouchMode="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:text="sakamoto"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
