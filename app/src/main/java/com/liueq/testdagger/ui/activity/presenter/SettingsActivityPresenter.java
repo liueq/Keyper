@@ -2,6 +2,7 @@ package com.liueq.testdagger.ui.activity.presenter;
 
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.activity.SettingsActivity;
+import com.liueq.testdagger.domain.interactor.CheckPasswordUseCase;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
 import com.liueq.testdagger.domain.interactor.SetSpUseCase;
 
@@ -17,11 +18,13 @@ public class SettingsActivityPresenter {
     private SettingsActivity mSettingsActivity;
     private SetSpUseCase mSetSpUseCase;
     private GetSpUseCase mGetSpUseCase;
+    private CheckPasswordUseCase checkPasswordUseCase;
 
-    public SettingsActivityPresenter(SettingsActivity settingsActivity, SetSpUseCase setSpUseCase, GetSpUseCase getSpUseCase){
+    public SettingsActivityPresenter(SettingsActivity settingsActivity, SetSpUseCase setSpUseCase, GetSpUseCase getSpUseCase, CheckPasswordUseCase checkPasswordUseCase){
         this.mSettingsActivity = settingsActivity;
         this.mSetSpUseCase = setSpUseCase;
         this.mGetSpUseCase = getSpUseCase;
+        this.checkPasswordUseCase = checkPasswordUseCase;
     }
 
     public void initialSwitch(){
@@ -56,5 +59,13 @@ public class SettingsActivityPresenter {
 
     public void encryptDesc(boolean encrypt){
         mSetSpUseCase.saveDescEncStatus(encrypt);
+    }
+
+    public boolean checkPassword(String password){
+        return checkPasswordUseCase.execute(password);
+    }
+
+    public boolean savePassword(String password){
+        return mSetSpUseCase.savePassword(password);
     }
 }

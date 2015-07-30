@@ -2,6 +2,7 @@ package com.liueq.testdagger.activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -16,10 +17,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -118,7 +122,7 @@ public class SettingsActivity extends BaseActivity {
         int id = v.getId();
         switch (id){
             case R.id.rl_change_pwd:
-                Toast.makeText(SettingsActivity.this, "Change password", Toast.LENGTH_SHORT).show();
+                createChangePasswordDialog();
                 break;
             case R.id.rl_change_aes:
                 Toast.makeText(SettingsActivity.this, "Change AES", Toast.LENGTH_SHORT).show();
@@ -135,5 +139,36 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    private void createChangePasswordDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.change_pwd);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_change_pwd, null);
+        final EditText old_pwd = (EditText) view.findViewById(R.id.et_old_pwd);
+        final EditText new_pwd = (EditText) view.findViewById(R.id.et_new_pwd);
+
+        builder.setView(view);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String old_pwd_str = old_pwd.getText().toString();
+                String new_pwd_str = new_pwd.getText().toString();
+                //Check old 是否和SP中相同
+                if(presenter.checkPassword(old_pwd_str)){
+                    //将新密码保存到SP
+                    if(presenter.savePassword(new_pwd_str)) {
+                        Toast.makeText(SettingsActivity.this, "Password saved", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(SettingsActivity.this, "Password can not null", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(SettingsActivity.this, "Old password wrong", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        builder.setNegativeButton("CANCEL", null);
+        builder.create().show();
+    }
 
 }

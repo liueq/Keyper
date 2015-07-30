@@ -4,6 +4,7 @@ import com.liueq.testdagger.activity.ActivityScope;
 import com.liueq.testdagger.activity.SettingsActivity;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
+import com.liueq.testdagger.domain.interactor.CheckPasswordUseCase;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
 import com.liueq.testdagger.domain.interactor.SetSpUseCase;
 import com.liueq.testdagger.ui.activity.presenter.SettingsActivityPresenter;
@@ -35,7 +36,8 @@ public class SettingsActivityModule {
         SharedPreferenceRepositoryImpl impl = new SharedPreferenceRepositoryImpl(settingsActivity);
         GetSpUseCase getSpUseCase = new GetSpUseCase(impl);
         SetSpUseCase setSpUseCase = new SetSpUseCase(impl);
+        CheckPasswordUseCase checkPasswordUseCase = new CheckPasswordUseCase(impl);
 
-        return new SettingsActivityPresenter(settingsActivity, setSpUseCase, getSpUseCase);
+        return new SettingsActivityPresenter(settingsActivity, setSpUseCase, getSpUseCase, checkPasswordUseCase);
     }
 }

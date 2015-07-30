@@ -37,7 +37,7 @@
         android:layout_height="0.5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/divider"/>
 
     <RelativeLayout
         android:id="@+id/rl_change_aes"
@@ -64,7 +64,7 @@
         android:layout_height="0.5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/divider"/>
 
     <RelativeLayout
         android:id="@+id/rl_change_path"
@@ -91,7 +91,7 @@
         android:layout_height="0.5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/divider"/>
 
     <RelativeLayout
         android:id="@+id/rl_encrypt_pwd"
@@ -125,7 +125,7 @@
         android:layout_height="0.5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/divider"/>
 
     <RelativeLayout
         android:id="@+id/rl_encrypt_desc"
@@ -159,7 +159,7 @@
         android:layout_height="0.5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/divider"/>
 
 
 </LinearLayout>
