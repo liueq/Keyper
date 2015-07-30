@@ -29,11 +29,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.SettingsActivityModule;
 import com.liueq.testdagger.ui.activity.presenter.SettingsActivityPresenter;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -131,30 +133,10 @@ public class SettingsActivity extends BaseActivity {
                 createChangePasswordDialog();
                 break;
             case R.id.rl_change_aes:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.change_aes);
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.dialog_change_aes, null);
-                final EditText new_aes = (EditText) view.findViewById(R.id.et_new_aes);
-
-                builder.setView(view);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String new_aes_str = new_aes.getText().toString();
-                        if(presenter.saveAes(new_aes_str)) {
-                            Toast.makeText(SettingsActivity.this, "AES password saved", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(SettingsActivity.this, "AES password can not null", Toast.LENGTH_SHORT).show();
-                        }
-                        presenter.retrieveUIData();
-                    }
-                });
-                builder.setNegativeButton("CANCEL", null);
-                builder.create().show();
+                createChangeAESDialog();
                 break;
             case R.id.rl_change_path:
-                Toast.makeText(SettingsActivity.this, "Change Path", Toast.LENGTH_SHORT).show();
+                createChooseSavePathDialog();
                 break;
             case R.id.rl_encrypt_pwd:
                 mSwitchPwd.setChecked(!mSwitchPwd.isChecked());
@@ -197,11 +179,94 @@ public class SettingsActivity extends BaseActivity {
         builder.create().show();
     }
 
+    private void createChangeAESDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.change_aes);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_change_aes, null);
+        final EditText new_aes = (EditText) view.findViewById(R.id.et_new_aes);
+
+        builder.setView(view);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String new_aes_str = new_aes.getText().toString();
+                if(presenter.saveAes(new_aes_str)) {
+                    Toast.makeText(SettingsActivity.this, "AES password saved", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(SettingsActivity.this, "AES password can not null", Toast.LENGTH_SHORT).show();
+                }
+                presenter.retrieveUIData();
+            }
+        });
+        builder.setNegativeButton("CANCEL", null);
+        builder.create().show();
+    }
+
+    private void createChooseSavePathDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.change_path);
+        String [] paths = {"External Storage", "Internal Storage"};
+
+        boolean [] paths_state = new boolean[2];
+        if(presenter.mFilePathState != null){
+            if(presenter.mFilePathState.get(Constants.SP_IS_SAVE_EXTERNAL)){
+                paths_state[0] = true;
+            }else{
+                paths_state[0] = false;
+            }
+
+            if(presenter.mFilePathState.get(Constants.SP_IS_SAVE_INTERNAL)){
+                paths_state[1] = true;
+            }else{
+                paths_state[1] = false;
+            }
+        }else{
+            paths_state[0] = true;
+            paths_state[1] = false;
+        }
+
+        builder.setMultiChoiceItems(paths, paths_state, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                switch (which){
+                    case 0:
+                        if(isChecked)
+                            presenter.mFilePathState.put(Constants.SP_IS_SAVE_EXTERNAL, true);
+                        else
+                            presenter.mFilePathState.put(Constants.SP_IS_SAVE_EXTERNAL, false);
+                        break;
+                    case 1:
+                        if(isChecked)
+                            presenter.mFilePathState.put(Constants.SP_IS_SAVE_INTERNAL, true);
+                        else
+                            presenter.mFilePathState.put(Constants.SP_IS_SAVE_INTERNAL, false);
+                        break;
+                }
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //将状态保存到SP
+                if(presenter.savePath(presenter.mFilePathState)){
+                    Toast.makeText(SettingsActivity.this, "Save path changed", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(SettingsActivity.this, "Must choose one path", Toast.LENGTH_SHORT).show();
+                }
+                presenter.retrieveUIData();
+            }
+        });
+        builder.setNegativeButton("CANCEL", null);
+        builder.create().show();
+    }
+
     public void setShowAES(String aes_pwd){
         mTextViewAES.setText(aes_pwd);
     }
 
-    public void setShowPath(String path){
-        mTextViewPath.setText(path);
+    public void setShowPath(String file_path){
+        mTextViewPath.setText(file_path);
     }
 }

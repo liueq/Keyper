@@ -1,6 +1,7 @@
 package com.liueq.testdagger.ui.activity.presenter;
 
 import com.liueq.testdagger.Constants;
+import com.liueq.testdagger.R;
 import com.liueq.testdagger.activity.SettingsActivity;
 import com.liueq.testdagger.domain.interactor.CheckPasswordUseCase;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
@@ -19,6 +20,8 @@ public class SettingsActivityPresenter {
     private SetSpUseCase mSetSpUseCase;
     private GetSpUseCase mGetSpUseCase;
     private CheckPasswordUseCase checkPasswordUseCase;
+
+    public HashMap<String, Boolean> mFilePathState;
 
     public SettingsActivityPresenter(SettingsActivity settingsActivity, SetSpUseCase setSpUseCase, GetSpUseCase getSpUseCase, CheckPasswordUseCase checkPasswordUseCase){
         this.mSettingsActivity = settingsActivity;
@@ -56,13 +59,24 @@ public class SettingsActivityPresenter {
     public void retrieveUIData() {
         //从SP获取AES密码和文件的保存路径
         HashMap<String, String> aes_pwd_map = mGetSpUseCase.getAESPassword();
-        HashMap<String, String> file_path_map = mGetSpUseCase.getFileSavePath();
+        mFilePathState = mGetSpUseCase.getFileSavePath();
         String aes = aes_pwd_map.get(Constants.SP_AES);
-        String path = file_path_map.get(Constants.STORAGE_PATH);
 
         //设定到activity
         mSettingsActivity.setShowAES(aes);
-        mSettingsActivity.setShowPath(path);
+
+        StringBuffer sb = new StringBuffer();
+        if (mFilePathState.get(Constants.SP_IS_SAVE_EXTERNAL)) {
+            sb.append(mSettingsActivity.getString(R.string.external_path));
+            if (mFilePathState.get(Constants.SP_IS_SAVE_INTERNAL)) {
+                sb.append(", ");
+                sb.append(mSettingsActivity.getString(R.string.internal_path));
+            }
+        }else if (mFilePathState.get(Constants.SP_IS_SAVE_INTERNAL)){
+            sb.append(mSettingsActivity.getString(R.string.internal_path));
+        }
+
+        mSettingsActivity.setShowPath(sb.toString());
     }
     public void encryptPwd(boolean encrypt){
         mSetSpUseCase.savePwdEncStatus(encrypt);
@@ -82,5 +96,9 @@ public class SettingsActivityPresenter {
 
     public boolean saveAes(String aes_pwd){
         return mSetSpUseCase.saveAES(aes_pwd);
+    }
+
+    public boolean savePath(HashMap<String, Boolean> state){
+        return mSetSpUseCase.saveFilePathState(state);
     }
 }

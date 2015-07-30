@@ -75,4 +75,29 @@ public class SetSpUseCase {
         impl.saveProperties(map);
         return true;
     }
+
+    public boolean saveFilePathState(HashMap<String, Boolean> state){
+        int both_uncheck_flag = 0;
+        HashMap<String, String> map = new HashMap<>();
+        if(state.get(Constants.SP_IS_SAVE_EXTERNAL)){
+            map.put(Constants.SP_IS_SAVE_EXTERNAL, Constants.YES);
+        }else{
+            map.put(Constants.SP_IS_SAVE_EXTERNAL, Constants.NO);
+            both_uncheck_flag++;
+        }
+
+        if(state.get(Constants.SP_IS_SAVE_INTERNAL)){
+            map.put(Constants.SP_IS_SAVE_INTERNAL, Constants.YES);
+        }else{
+            map.put(Constants.SP_IS_SAVE_INTERNAL, Constants.NO);
+            both_uncheck_flag++;
+        }
+
+        if(both_uncheck_flag == 2){
+            return false;
+        }
+
+        impl.saveProperties(map);
+        return true;
+    }
 }

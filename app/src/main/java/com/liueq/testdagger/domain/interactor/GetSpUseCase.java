@@ -40,11 +40,20 @@ public class GetSpUseCase extends UseCase {
         return map;
     }
 
-    public HashMap<String, String> getFileSavePath(){
-        HashMap<String, String> map = new HashMap<>();
-        String file_path = impl.getProterties(Constants.STORAGE_PATH);
+    public HashMap<String, Boolean> getFileSavePath(){
+        HashMap<String, Boolean> map = new HashMap<>();
+        if(impl.getProterties(Constants.SP_IS_SAVE_EXTERNAL) != null && impl.getProterties(Constants.SP_IS_SAVE_EXTERNAL).equals(Constants.NO)){
+            map.put(Constants.SP_IS_SAVE_EXTERNAL, false);
+        }else{
+            map.put(Constants.SP_IS_SAVE_EXTERNAL, true);
+        }
 
-        map.put(Constants.STORAGE_PATH, file_path);
+        if(impl.getProterties(Constants.SP_IS_SAVE_INTERNAL) != null && impl.getProterties(Constants.SP_IS_SAVE_INTERNAL).equals(Constants.NO)){
+            map.put(Constants.SP_IS_SAVE_INTERNAL, false);
+        }else{
+            map.put(Constants.SP_IS_SAVE_INTERNAL, true);
+        }
+
         return map;
     }
 

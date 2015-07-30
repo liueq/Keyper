@@ -24,4 +24,7 @@
     <string name="change_path">Choose file save path</string>
     <string name="encrypt_password">Encrypt password</string>
     <string name="encrypt_description">Encrypt description</string>
+
+    <string name="external_path">External Storage</string>
+    <string name="internal_path">Internal Storage</string>
 </resources>
