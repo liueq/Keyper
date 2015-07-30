@@ -26,6 +26,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liueq.testdagger.R;
@@ -59,6 +60,10 @@ public class SettingsActivity extends BaseActivity {
     Switch mSwitchPwd;
     @Bind(R.id.switch_desc)
     Switch mSwitchDesc;
+    @Bind(R.id.tv_show_aes)
+    TextView mTextViewAES;
+    @Bind(R.id.tv_show_path)
+    TextView mTextViewPath;
 
     @Inject
     SettingsActivityPresenter presenter;
@@ -100,6 +105,7 @@ public class SettingsActivity extends BaseActivity {
 
     private void initData(){
         presenter.initialSwitch();
+        presenter.retrieveUIData();
     }
 
     @Override
@@ -125,7 +131,27 @@ public class SettingsActivity extends BaseActivity {
                 createChangePasswordDialog();
                 break;
             case R.id.rl_change_aes:
-                Toast.makeText(SettingsActivity.this, "Change AES", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.change_aes);
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View view = inflater.inflate(R.layout.dialog_change_aes, null);
+                final EditText new_aes = (EditText) view.findViewById(R.id.et_new_aes);
+
+                builder.setView(view);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String new_aes_str = new_aes.getText().toString();
+                        if(presenter.saveAes(new_aes_str)) {
+                            Toast.makeText(SettingsActivity.this, "AES password saved", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(SettingsActivity.this, "AES password can not null", Toast.LENGTH_SHORT).show();
+                        }
+                        presenter.retrieveUIData();
+                    }
+                });
+                builder.setNegativeButton("CANCEL", null);
+                builder.create().show();
                 break;
             case R.id.rl_change_path:
                 Toast.makeText(SettingsActivity.this, "Change Path", Toast.LENGTH_SHORT).show();
@@ -171,4 +197,11 @@ public class SettingsActivity extends BaseActivity {
         builder.create().show();
     }
 
+    public void setShowAES(String aes_pwd){
+        mTextViewAES.setText(aes_pwd);
+    }
+
+    public void setShowPath(String path){
+        mTextViewPath.setText(path);
+    }
 }

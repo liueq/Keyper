@@ -53,6 +53,17 @@ public class SettingsActivityPresenter {
         }
     }
 
+    public void retrieveUIData() {
+        //从SP获取AES密码和文件的保存路径
+        HashMap<String, String> aes_pwd_map = mGetSpUseCase.getAESPassword();
+        HashMap<String, String> file_path_map = mGetSpUseCase.getFileSavePath();
+        String aes = aes_pwd_map.get(Constants.SP_AES);
+        String path = file_path_map.get(Constants.STORAGE_PATH);
+
+        //设定到activity
+        mSettingsActivity.setShowAES(aes);
+        mSettingsActivity.setShowPath(path);
+    }
     public void encryptPwd(boolean encrypt){
         mSetSpUseCase.savePwdEncStatus(encrypt);
     }
@@ -67,5 +78,9 @@ public class SettingsActivityPresenter {
 
     public boolean savePassword(String password){
         return mSetSpUseCase.savePassword(password);
+    }
+
+    public boolean saveAes(String aes_pwd){
+        return mSetSpUseCase.saveAES(aes_pwd);
     }
 }

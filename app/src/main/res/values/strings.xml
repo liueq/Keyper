@@ -21,7 +21,7 @@
 
     <string name="change_pwd">Change password</string>
     <string name="change_aes">Change AES password</string>
-    <string name="change_path">Change file save path</string>
+    <string name="change_path">Choose file save path</string>
     <string name="encrypt_password">Encrypt password</string>
     <string name="encrypt_description">Encrypt description</string>
 </resources>

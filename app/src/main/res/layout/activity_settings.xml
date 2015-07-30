@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -45,18 +46,33 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:padding="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
         >
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_aes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/change_aes"
             android:textSize="16sp"
             android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_show_aes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            tools:hint="1234567890123456"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <TextView
@@ -72,18 +88,33 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:padding="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
         >
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+        <TextView
+            android:id="@+id/tv_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/change_path"
             android:textSize="16sp"
             android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_show_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            tools:hint="External, Inner"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <TextView

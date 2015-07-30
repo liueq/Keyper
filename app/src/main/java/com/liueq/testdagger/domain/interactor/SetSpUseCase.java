@@ -52,4 +52,27 @@ public class SetSpUseCase {
         impl.saveProperties(map);
         return true;
     }
+
+    public boolean saveAES(String aes_input){
+        HashMap<String, String> map = new HashMap<>();
+        if(TextUtils.isEmpty(aes_input)){
+            return false;
+        }
+
+        //补齐16位
+        if(aes_input.length() != 16){
+            int length = aes_input.length();
+            int diff = 16 - length;
+            StringBuffer sb = new StringBuffer();
+            sb.append(aes_input);
+            for(int i = 0; i < diff; i++){
+                sb.append("*");
+            }
+            aes_input = sb.toString();
+        }
+
+        map.put(Constants.SP_AES, aes_input);
+        impl.saveProperties(map);
+        return true;
+    }
 }

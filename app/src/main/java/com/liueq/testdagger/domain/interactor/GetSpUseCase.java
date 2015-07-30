@@ -32,4 +32,20 @@ public class GetSpUseCase extends UseCase {
         return map;
     }
 
+    public HashMap<String, String> getAESPassword(){
+        HashMap<String, String> map = new HashMap<>();
+        String aes_pwd = impl.getProterties(Constants.SP_AES);
+
+        map.put(Constants.SP_AES, aes_pwd);
+        return map;
+    }
+
+    public HashMap<String, String> getFileSavePath(){
+        HashMap<String, String> map = new HashMap<>();
+        String file_path = impl.getProterties(Constants.STORAGE_PATH);
+
+        map.put(Constants.STORAGE_PATH, file_path);
+        return map;
+    }
+
 }
