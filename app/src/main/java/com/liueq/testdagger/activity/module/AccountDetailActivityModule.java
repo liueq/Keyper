@@ -41,10 +41,11 @@ public class AccountDetailActivityModule {
     @Provides
     @ActivityScope
     AccountDetailActivityPresenter provideAccountDetailActivityPresenter(FileReader fileReader, List<Account> accountList){
-        AccountRepository ar = new AccountRepositoryImpl(fileReader);
-        SharedPreferenceRepository spr = new SharedPreferenceRepositoryImpl(accountDetailActivity);
 
+        SharedPreferenceRepository spr = new SharedPreferenceRepositoryImpl(accountDetailActivity);
         GetSpUseCase getSpUseCase = new GetSpUseCase((SharedPreferenceRepositoryImpl) spr);
+
+        AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUseCase);
 
         SaveAccountListUseCase saveAccountListUseCase = new SaveAccountListUseCase((AccountRepositoryImpl) ar, getSpUseCase);
         GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase((AccountRepositoryImpl) ar, getSpUseCase);

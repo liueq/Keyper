@@ -43,10 +43,12 @@ public class MainActivityModule {
         //这里的FileReader是由AppModule中提供，不需要显示注入
         //然后从这里向Presenter中提供的时候，需要使用构造方法传入，不能在Presenter中直接@Inject注入
 
-        AccountRepository ar = new AccountRepositoryImpl(fileReader);
-        SharedPreferenceRepository spr = new SharedPreferenceRepositoryImpl(mainActivity);
 
+        SharedPreferenceRepository spr = new SharedPreferenceRepositoryImpl(mainActivity);
         GetSpUseCase getSpUseCase = new GetSpUseCase((SharedPreferenceRepositoryImpl) spr);
+
+        AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUseCase);
+
         GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase((AccountRepositoryImpl) ar, getSpUseCase);
         SearchAccountUseCase searchAccountUseCase = new SearchAccountUseCase((AccountRepositoryImpl) ar);
 

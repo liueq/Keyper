@@ -257,6 +257,7 @@ public class SettingsActivity extends BaseActivity {
                     Toast.makeText(SettingsActivity.this, "Must choose one path", Toast.LENGTH_SHORT).show();
                 }
                 presenter.retrieveUIData();
+                presenter.saveData();
             }
         });
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
