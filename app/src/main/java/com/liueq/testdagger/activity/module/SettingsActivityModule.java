@@ -2,12 +2,18 @@ package com.liueq.testdagger.activity.module;
 
 import com.liueq.testdagger.activity.ActivityScope;
 import com.liueq.testdagger.activity.SettingsActivity;
+import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
 import com.liueq.testdagger.domain.interactor.CheckPasswordUseCase;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
+import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
 import com.liueq.testdagger.domain.interactor.SetSpUseCase;
 import com.liueq.testdagger.ui.activity.presenter.SettingsActivityPresenter;
+import com.liueq.testdagger.utils.FileReader;
+
+import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
@@ -32,12 +38,16 @@ public class SettingsActivityModule {
 
     @Provides
     @ActivityScope
-    SettingsActivityPresenter provideSettingsActivityPresenter(){
+    SettingsActivityPresenter provideSettingsActivityPresenter(List<Account> accountList, FileReader fileReader){
+
+        AccountRepositoryImpl ari = new AccountRepositoryImpl(fileReader);
         SharedPreferenceRepositoryImpl impl = new SharedPreferenceRepositoryImpl(settingsActivity);
+
         GetSpUseCase getSpUseCase = new GetSpUseCase(impl);
         SetSpUseCase setSpUseCase = new SetSpUseCase(impl);
+        SaveAccountListUseCase saveAccountListUseCase = new SaveAccountListUseCase(ari, getSpUseCase);
         CheckPasswordUseCase checkPasswordUseCase = new CheckPasswordUseCase(impl);
 
-        return new SettingsActivityPresenter(settingsActivity, setSpUseCase, getSpUseCase, checkPasswordUseCase);
+        return new SettingsActivityPresenter(settingsActivity, accountList, setSpUseCase, getSpUseCase, checkPasswordUseCase, saveAccountListUseCase);
     }
 }

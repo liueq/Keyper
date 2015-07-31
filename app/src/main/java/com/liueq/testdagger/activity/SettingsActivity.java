@@ -196,6 +196,7 @@ public class SettingsActivity extends BaseActivity {
                 }else{
                     Toast.makeText(SettingsActivity.this, "AES password can not null", Toast.LENGTH_SHORT).show();
                 }
+                presenter.saveData();
                 presenter.retrieveUIData();
             }
         });

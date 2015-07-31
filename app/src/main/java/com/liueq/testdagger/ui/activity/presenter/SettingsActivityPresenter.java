@@ -3,11 +3,14 @@ package com.liueq.testdagger.ui.activity.presenter;
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.activity.SettingsActivity;
+import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.domain.interactor.CheckPasswordUseCase;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
+import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
 import com.liueq.testdagger.domain.interactor.SetSpUseCase;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -17,17 +20,21 @@ import javax.inject.Inject;
 public class SettingsActivityPresenter {
 
     private SettingsActivity mSettingsActivity;
+    private List<Account> mList;
     private SetSpUseCase mSetSpUseCase;
     private GetSpUseCase mGetSpUseCase;
     private CheckPasswordUseCase checkPasswordUseCase;
+    private SaveAccountListUseCase mSaveAccountListUseCase;
 
     public HashMap<String, Boolean> mFilePathState;
 
-    public SettingsActivityPresenter(SettingsActivity settingsActivity, SetSpUseCase setSpUseCase, GetSpUseCase getSpUseCase, CheckPasswordUseCase checkPasswordUseCase){
+    public SettingsActivityPresenter(SettingsActivity settingsActivity, List<Account> list, SetSpUseCase setSpUseCase, GetSpUseCase getSpUseCase, CheckPasswordUseCase checkPasswordUseCase, SaveAccountListUseCase saveAccountListUseCase){
         this.mSettingsActivity = settingsActivity;
+        this.mList = list;
         this.mSetSpUseCase = setSpUseCase;
         this.mGetSpUseCase = getSpUseCase;
         this.checkPasswordUseCase = checkPasswordUseCase;
+        this.mSaveAccountListUseCase = saveAccountListUseCase;
     }
 
     public void initialSwitch(){
@@ -100,5 +107,9 @@ public class SettingsActivityPresenter {
 
     public boolean savePath(HashMap<String, Boolean> state){
         return mSetSpUseCase.saveFilePathState(state);
+    }
+
+    public void saveData(){
+        mSaveAccountListUseCase.execute(mList, null);
     }
 }
