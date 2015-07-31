@@ -5,6 +5,7 @@ import com.liueq.testdagger.R;
 import com.liueq.testdagger.activity.SettingsActivity;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.domain.interactor.CheckPasswordUseCase;
+import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
 import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
 import com.liueq.testdagger.domain.interactor.SetSpUseCase;
@@ -25,16 +26,18 @@ public class SettingsActivityPresenter {
     private GetSpUseCase mGetSpUseCase;
     private CheckPasswordUseCase checkPasswordUseCase;
     private SaveAccountListUseCase mSaveAccountListUseCase;
+    private GetAccountListUseCase mGetAccountListUseCase;
 
     public HashMap<String, Boolean> mFilePathState;
 
-    public SettingsActivityPresenter(SettingsActivity settingsActivity, List<Account> list, SetSpUseCase setSpUseCase, GetSpUseCase getSpUseCase, CheckPasswordUseCase checkPasswordUseCase, SaveAccountListUseCase saveAccountListUseCase){
+    public SettingsActivityPresenter(SettingsActivity settingsActivity, List<Account> list, SetSpUseCase setSpUseCase, GetSpUseCase getSpUseCase, CheckPasswordUseCase checkPasswordUseCase, SaveAccountListUseCase saveAccountListUseCase, GetAccountListUseCase getAccountListUseCase){
         this.mSettingsActivity = settingsActivity;
         this.mList = list;
         this.mSetSpUseCase = setSpUseCase;
         this.mGetSpUseCase = getSpUseCase;
         this.checkPasswordUseCase = checkPasswordUseCase;
         this.mSaveAccountListUseCase = saveAccountListUseCase;
+        this.mGetAccountListUseCase = getAccountListUseCase;
     }
 
     public void initialSwitch(){
@@ -111,5 +114,10 @@ public class SettingsActivityPresenter {
 
     public void saveData(){
         mSaveAccountListUseCase.execute(mList, null);
+    }
+
+    public void loadData(){
+        mList.clear();
+        mList.addAll(mGetAccountListUseCase.execute());
     }
 }

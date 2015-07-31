@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by liueq on 13/7/15.
  */
-public class Account implements Serializable {
+public class Account implements Serializable, Comparable<Account> {
 
     public String id;
     public String site;
@@ -30,5 +30,15 @@ public class Account implements Serializable {
                 ", mail='" + mail + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public int compareTo(Account another) {
+        if(this.site.equals(another.site) || this.id.equals(another.id)){
+            return 0;
+        }
+
+        return -1;
     }
 }

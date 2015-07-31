@@ -36,12 +36,20 @@ public class FileReader {
     }
 
     public JsonReader retrieveData() {
+
         File file = null;
+        File dir = null;
         StringBuffer sb = new StringBuffer();
         java.io.FileReader fileReader = null;
 
         if(Environment.isExternalStorageRemovable() == false){
             file = new File(mFilePath, mFileName);
+            dir = new File(mFilePath);
+
+            if(!dir.exists()){
+                dir.mkdirs();
+            }
+
             if(!file.exists()){
                 if(BuildConfig.DEBUG){
                     Log.d(TAG, "retrieveData File do not exist.");
@@ -73,24 +81,37 @@ public class FileReader {
     }
 
     public boolean presistData(String data){
-        File file = new File(mFilePath, mFileName);
+        File file = null;
+        File dir = null;
         FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(file);
-            fileWriter.write(data);
-            fileWriter.flush();
-            return true;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }finally {
+        if(Environment.isExternalStorageRemovable() == false) {
+            file = new File(mFilePath, mFileName);
+            dir = new File(mFilePath);
+
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
             try {
-                fileWriter.close();
+                fileWriter = new FileWriter(file);
+                fileWriter.write(data);
+                fileWriter.flush();
+                return true;
+
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
+            } finally {
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
+        return false;
     }
 
 
@@ -99,6 +120,7 @@ public class FileReader {
     }
 
     public void setmFilePath(String mFilePath) {
+        Log.d(TAG, "Set file path = " + mFilePath);
         this.mFilePath = mFilePath;
     }
 

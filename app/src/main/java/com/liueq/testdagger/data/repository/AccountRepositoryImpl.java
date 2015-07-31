@@ -6,11 +6,14 @@ import com.google.gson.stream.JsonReader;
 import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.domain.interactor.GetSpUseCase;
 import com.liueq.testdagger.utils.Encrypter;
 import com.liueq.testdagger.utils.FileReader;
 import com.liueq.testdagger.utils.JsonParser;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,24 +26,66 @@ public class AccountRepositoryImpl implements AccountRepository{
     FileReader mFileReader;
     List<Account> mAccountList;
     List<Account> mFilteredList;
+    GetSpUseCase mGetSpUseCase;
 
-    public AccountRepositoryImpl(FileReader fileReader){
+    public AccountRepositoryImpl(FileReader fileReader, GetSpUseCase getSpUseCase){
         mFileReader = fileReader;
+        mGetSpUseCase = getSpUseCase;
     }
 
     @Override
     public List<Account> getAccountList() {
-        JsonReader json = mFileReader.retrieveData();
+
+        List<Account> list_internal = null;
+        List<Account> list_external = null;
+
+
+        //文件位置选择
+        HashMap<String, Boolean> map = mGetSpUseCase.getFileSavePath();
+
+        if(map.get(Constants.SP_IS_SAVE_INTERNAL)){
+            Log.d(TAG, "getAccountList from INTERNAL");
+            mFileReader.setmFilePath(Constants.INTERNAL_STORAGE_PATH);
+            list_internal = getListFrom();
+
+        }else if(map.get(Constants.SP_IS_SAVE_EXTERNAL)){
+            Log.d(TAG, "getAccountList from EXTERNAL");
+            mFileReader.setmFilePath(Constants.EXTERNAL_STORAGE_PATH);
+            list_external = getListFrom();
+
+        }
+
         if(mAccountList != null){
             mAccountList.clear();
         }else{
             mAccountList = new ArrayList<Account>();
         }
 
-        mAccountList.addAll(JsonParser.jsonToObj(json));    //由于TypeToken的原因，无法使用泛型
+        if(list_external != null){
+            mAccountList.addAll(list_external);
+        }
+
+        if(list_internal != null){
+            mAccountList.addAll(list_internal);
+        }
+
+        return mAccountList;
+    }
+
+    private List<Account> getListFrom(){
+        List<Account> list = new ArrayList<>();
+
+        JsonReader json = mFileReader.retrieveData();
+        if(list != null){
+            list.clear();
+        }else{
+            list = new ArrayList<Account>();
+        }
+
+        list.addAll(JsonParser.jsonToObj(json));    //由于TypeToken的原因，无法使用泛型
 
         if(BuildConfig.DEBUG){
-            for(Account i : mAccountList){
+            for(Account i : list){
                 Log.i(TAG, "loadData id " + i.id);
                 Log.i(TAG, "loadData site" + i.site);
                 Log.i(TAG, "loadData userName" + i.userName);
@@ -51,7 +96,7 @@ public class AccountRepositoryImpl implements AccountRepository{
             }
         }
 
-        return mAccountList;
+        return list;
     }
 
     @Override
@@ -82,6 +127,30 @@ public class AccountRepositoryImpl implements AccountRepository{
 
     @Override
     public void saveAccountList(List<Account> accountList) {
-        mFileReader.presistData(JsonParser.objToJson(accountList));
+        //增加选择保存文件位置
+        HashMap<String, Boolean> map = mGetSpUseCase.getFileSavePath();
+
+        if(map.get(Constants.SP_IS_SAVE_EXTERNAL)){
+            mFileReader.setmFilePath(Constants.EXTERNAL_STORAGE_PATH);
+            mFileReader.presistData(JsonParser.objToJson(accountList));
+
+        }else{
+            File file = new File(Constants.EXTERNAL_STORAGE_PATH, Constants.STORAGE_FILE);
+            if(file.exists()) {
+                file.delete();
+            }
+        }
+
+
+        if(map.get(Constants.SP_IS_SAVE_INTERNAL)){
+            mFileReader.setmFilePath(Constants.INTERNAL_STORAGE_PATH);
+            mFileReader.presistData(JsonParser.objToJson(accountList));
+        }else{
+            File file = new File(Constants.INTERNAL_STORAGE_PATH, Constants.STORAGE_FILE);
+            if(file.exists()) {
+                file.delete();
+            }
+        }
+
     }
 }

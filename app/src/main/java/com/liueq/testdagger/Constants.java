@@ -1,5 +1,6 @@
 package com.liueq.testdagger;
 
+import android.content.Context;
 import android.os.Environment;
 
 /**
@@ -26,12 +27,13 @@ public class Constants {
 
     public final static String NO = "NO";
 
-    public final static String INTERNAL_STORAGE_PATH = Environment.getDataDirectory().toString() + "/" + STORAGE_FILE;
+    public static String INTERNAL_STORAGE_PATH;
 
-    public final static String EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory().toString() + "/IPassword/" + STORAGE_FILE;
+    public final static String EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory().toString() + "/IPassword";
 
     public final static String SP_IS_SAVE_INTERNAL = "is_save_internal";
 
     public final static String SP_IS_SAVE_EXTERNAL = "is_save_external";
+
 
 }

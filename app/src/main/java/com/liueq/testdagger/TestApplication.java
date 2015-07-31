@@ -17,7 +17,7 @@ public class TestApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Constants.INTERNAL_STORAGE_PATH = getFilesDir().toString();
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this, new ArrayList<Account>())).build();//注意这里的list，之后在listPresenter和detailPresenter中都注入了此对象，必须保持同步
     }
 
