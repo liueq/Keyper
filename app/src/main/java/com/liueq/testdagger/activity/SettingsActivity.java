@@ -258,7 +258,12 @@ public class SettingsActivity extends BaseActivity {
                 presenter.retrieveUIData();
             }
         });
-        builder.setNegativeButton("CANCEL", null);
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                presenter.retrieveUIData();
+            }
+        });
         builder.create().show();
     }
 

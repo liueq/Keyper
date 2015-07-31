@@ -6,6 +6,7 @@ import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
 import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,19 +17,25 @@ import javax.inject.Inject;
 public class GetAccountListUseCase extends UseCase {
 
     AccountRepositoryImpl mARI;
+    GetSpUseCase mGetSpUseCase;
 
     @Inject
-    public GetAccountListUseCase(AccountRepositoryImpl ARI){
+    public GetAccountListUseCase(AccountRepositoryImpl ARI, GetSpUseCase getSpUseCase){
         this.mARI = ARI;
+        this.mGetSpUseCase = getSpUseCase;
     }
 
     public List execute() {
         List<Account> list = mARI.getAccountList();
 
+        //获取AES密钥
+        HashMap<String, String> map = mGetSpUseCase.getAESPassword();
+        String aes_key = map.get(Constants.SP_AES);
+
         //解密
         for(Account a : list){
             String password_encrypt = a.password;
-            String password_plaint = Encrypter.decryptByAes(Constants.AES_KEY, password_encrypt);
+            String password_plaint = Encrypter.decryptByAes(aes_key, password_encrypt);
             a.password = password_plaint;
         }
         return list;
