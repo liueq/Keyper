@@ -1,5 +1,7 @@
 package com.liueq.testdagger.ui.activity.presenter;
 
+import android.util.Log;
+
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.activity.SettingsActivity;
@@ -20,8 +22,10 @@ import javax.inject.Inject;
  */
 public class SettingsActivityPresenter {
 
+    public final static String TAG = "settingsP";
+
     private SettingsActivity mSettingsActivity;
-    private List<Account> mList;
+    public List<Account> mList;
     private SetSpUseCase mSetSpUseCase;
     private GetSpUseCase mGetSpUseCase;
     private CheckPasswordUseCase checkPasswordUseCase;

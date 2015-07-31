@@ -94,6 +94,7 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 presenter.encryptPwd(isChecked);
+                presenter.saveData();
             }
         });
 
@@ -101,6 +102,7 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 presenter.encryptDesc(isChecked);
+                presenter.saveData();
             }
         });
     }
@@ -108,6 +110,7 @@ public class SettingsActivity extends BaseActivity {
     private void initData(){
         presenter.initialSwitch();
         presenter.retrieveUIData();
+
     }
 
     @Override
@@ -276,4 +279,5 @@ public class SettingsActivity extends BaseActivity {
     public void setShowPath(String file_path){
         mTextViewPath.setText(file_path);
     }
+
 }

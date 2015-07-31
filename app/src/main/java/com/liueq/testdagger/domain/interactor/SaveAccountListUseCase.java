@@ -7,6 +7,7 @@ import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
 import com.liueq.testdagger.utils.Encrypter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class SaveAccountListUseCase {
 
     AccountRepositoryImpl mARI;
     GetSpUseCase mGetSpUseCase;
+    public final static String TAG = "SaveAlus";
 
     @Inject
     public SaveAccountListUseCase(AccountRepositoryImpl ARI, GetSpUseCase getSpUseCase){
@@ -26,7 +28,21 @@ public class SaveAccountListUseCase {
         mGetSpUseCase = getSpUseCase;
     }
 
-    public Object execute(List<Account> list, Account account) {
+    public Object execute(List<Account> mList, Account account) {
+        List<Account> list = new ArrayList<>();//如果不新建一个list，那么加密的修改会影响到mList
+        for(Account a : mList){
+            Account tmp = null;
+            try {
+                tmp = a.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+
+            if(tmp != null){
+                list.add(tmp);
+            }
+        }
+
         if (account != null) {
             boolean insert_flag = true;
             for (int i = 0; i < list.size(); i++) {
@@ -43,14 +59,29 @@ public class SaveAccountListUseCase {
         }
 
         //从SP获取AES密钥
-        HashMap<String, String> map = mGetSpUseCase.getAESPassword();
-        String aes_key = map.get(Constants.SP_AES);
+        HashMap<String, String> map_aes = mGetSpUseCase.getAESPassword();
+        String aes_key = map_aes.get(Constants.SP_AES);
+
+        //选择加密字段
+        HashMap<String, String> map_enc_field = mGetSpUseCase.getEncStatus();
 
         //加密
         for(Account a : list){
-            String password_plaint = a.password;;
-            String password_encrypt = Encrypter.encryptByAes(aes_key, password_plaint);
-            a.password = password_encrypt;
+            String password_plaint = a.password;
+            String desc_plaint = a.description;
+
+            if(!map_enc_field.get(Constants.SP_IS_PWD_ENC).equals(Constants.NO)){
+                Log.d(TAG, "execute do encrypt password");
+                String password_encrypt = Encrypter.encryptByAes(aes_key, password_plaint);
+                a.password = password_encrypt;
+            }
+
+            if(!map_enc_field.get(Constants.SP_IS_DESC_ENC).equals(Constants.NO)){
+                Log.d(TAG, "execute do encrypt description");
+                String desc_encrypt = Encrypter.encryptByAes(aes_key, desc_plaint);
+                a.description = desc_encrypt;
+            }
+
         }
 
         mARI.saveAccountList(list);

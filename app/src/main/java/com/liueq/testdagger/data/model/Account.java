@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by liueq on 13/7/15.
  */
-public class Account implements Serializable, Comparable<Account> {
+public class Account implements Serializable, Comparable<Account>, Cloneable {
 
     public String id;
     public String site;
@@ -40,5 +40,18 @@ public class Account implements Serializable, Comparable<Account> {
         }
 
         return -1;
+    }
+
+    @Override
+    public Account clone() throws CloneNotSupportedException {
+        super.clone();
+        Account a = new Account();
+        a.id = this.id;
+        a.site = this.site;
+        a.userName = this.userName;
+        a.password = this.password;
+        a.mail = this.mail;
+        a.description = this.description;
+        return a;
     }
 }
