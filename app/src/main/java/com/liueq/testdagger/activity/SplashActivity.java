@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,8 @@ public class SplashActivity extends BaseActivity {
     EditText mEditTextPwd2;
     @Bind(R.id.submit)
     Button mButtonSubmit;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Inject
     SplashActivityPresenter presenter;
@@ -49,6 +52,14 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initView(){
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(R.string.app_name);
+
+        if(Build.VERSION.SDK_INT >= 21){
+            mToolbar.setElevation(10f);
+        }
+
         SharedPreferences sp = getSharedPreferences(Constants.SP_NAME, MODE_PRIVATE);
         if(sp.getString(Constants.SP_PWD, null) != null){
             if(BuildConfig.DEBUG){
