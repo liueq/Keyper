@@ -280,4 +280,10 @@ public class SettingsActivity extends BaseActivity {
         mTextViewPath.setText(file_path);
     }
 
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

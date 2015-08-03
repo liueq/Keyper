@@ -19,7 +19,7 @@
         android:textSize="15sp"
         android:clickable="true"
         android:background="@drawable/list_item_bg"
-        android:elevation="4dp"
+        android:elevation="2dp"
         tools:text="Hello World!"/>
 </RelativeLayout>
 
