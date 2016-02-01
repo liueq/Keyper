@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.liueq.testdagger.data.model.Account;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import java.util.ArrayList;
 
 /**
@@ -19,6 +21,9 @@ public class TestApplication extends Application{
         super.onCreate();
         Constants.INTERNAL_STORAGE_PATH = getFilesDir().toString();
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this, new ArrayList<Account>())).build();//注意这里的list，之后在listPresenter和detailPresenter中都注入了此对象，必须保持同步
+
+        //DB
+        SQLiteDatabase.loadLibs(this);
     }
 
     public static TestApplication get(Context context){
