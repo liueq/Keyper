@@ -1,6 +1,6 @@
 package com.liueq.testdagger.domain.interactor;
 
-import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
+import com.liueq.testdagger.data.repository.AccountRepository;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ import javax.inject.Inject;
  */
 public class SearchAccountUseCase extends UseCase {
 
-    AccountRepositoryImpl mARI;
+    AccountRepository mAR;
 
     @Inject
-    public SearchAccountUseCase(AccountRepositoryImpl ARI){
-        this.mARI = ARI;
+    public SearchAccountUseCase(AccountRepository AR){
+        this.mAR = AR;
     }
 
     public List execute(String key){
-        return mARI.searchAccount(key);
+        return mAR.searchAccount(key);
     }
 }

@@ -10,7 +10,7 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
 
     public String id;
     public String site;
-    public String userName;
+    public String username;
     public String password;
     public String mail;
     public String description;
@@ -25,7 +25,7 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
         return "Account{" +
                 "id='" + id + '\'' +
                 "site='" + site + '\'' +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
                 ", description='" + description + '\'' +
@@ -48,7 +48,7 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
         Account a = new Account();
         a.id = this.id;
         a.site = this.site;
-        a.userName = this.userName;
+        a.username = this.username;
         a.password = this.password;
         a.mail = this.mail;
         a.description = this.description;

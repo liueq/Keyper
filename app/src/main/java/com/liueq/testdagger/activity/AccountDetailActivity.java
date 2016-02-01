@@ -2,7 +2,6 @@ package com.liueq.testdagger.activity;
 
 import android.os.Build;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -126,7 +125,7 @@ public class AccountDetailActivity extends BaseActivity {
 
     public void updateUI(Account account){
         mEditTextSite.setText(account.site);
-        mEditTextName.setText(account.userName);
+        mEditTextName.setText(account.username);
         mEditTextPwd.setText(account.password);
         mEditTextMail.setText(account.mail);
         mEditTextDesc.setText(account.description);
@@ -142,7 +141,7 @@ public class AccountDetailActivity extends BaseActivity {
         }
 
         account.site = mEditTextSite.getText().toString();
-        account.userName = mEditTextName.getText().toString();
+        account.username = mEditTextName.getText().toString();
         account.password = mEditTextPwd.getText().toString();
         account.mail = mEditTextMail.getText().toString();
         account.description = mEditTextDesc.getText().toString();

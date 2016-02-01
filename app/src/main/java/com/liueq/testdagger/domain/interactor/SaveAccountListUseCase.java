@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
+import com.liueq.testdagger.data.repository.AccountRepository;
 import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import javax.inject.Inject;
  */
 public class SaveAccountListUseCase {
 
-    AccountRepositoryImpl mARI;
+    AccountRepository mAR;
     GetSpUseCase mGetSpUseCase;
     public final static String TAG = "SaveAlus";
 
     @Inject
-    public SaveAccountListUseCase(AccountRepositoryImpl ARI, GetSpUseCase getSpUseCase){
-        mARI = ARI;
+    public SaveAccountListUseCase(AccountRepository AR, GetSpUseCase getSpUseCase){
+        mAR = AR;
         mGetSpUseCase = getSpUseCase;
     }
 
@@ -84,7 +84,7 @@ public class SaveAccountListUseCase {
 
         }
 
-        mARI.saveAccountList(list);
+        mAR.saveAccountList(list);
         return account;
     }
 }

@@ -7,7 +7,6 @@ import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
-import com.liueq.testdagger.utils.Encrypter;
 import com.liueq.testdagger.utils.FileReader;
 import com.liueq.testdagger.utils.JsonParser;
 
@@ -88,7 +87,7 @@ public class AccountRepositoryImpl implements AccountRepository{
             for(Account i : list){
                 Log.i(TAG, "loadData id " + i.id);
                 Log.i(TAG, "loadData site" + i.site);
-                Log.i(TAG, "loadData userName" + i.userName);
+                Log.i(TAG, "loadData username" + i.username);
                 Log.i(TAG, "loadData password" + i.password);
                 Log.i(TAG, "loadData mail" + i.mail);
                 Log.i(TAG, "loadData description" + i.description);

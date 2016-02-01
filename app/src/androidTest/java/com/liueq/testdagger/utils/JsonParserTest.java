@@ -7,7 +7,6 @@ import static org.junit.Assert.assertThat;
 
 import com.liueq.testdagger.data.model.Account;
 
-import junit.framework.TestResult;
 import static org.hamcrest.CoreMatchers.is;
 
 import org.junit.After;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by liueq on 27/7/15.
@@ -40,7 +38,7 @@ public class JsonParserTest extends AndroidTestCase{
             account.id = "001" + i;
             account.site = "baidu" + i;
             account.password = "pass" + i;
-            account.userName = "name" + i;
+            account.username = "name" + i;
             account.mail = "mail" + i;
             account.description = "desc" + i;
 
@@ -78,7 +76,7 @@ public class JsonParserTest extends AndroidTestCase{
                     }else{
                         assertEquals("pass2", pass);
                     }
-                }else if(tagName.equals("userName")){
+                }else if(tagName.equals("username")){
                     String name = jr.nextString();
                     if(name.contains("1")){
                         assertEquals("name1", name);
@@ -109,7 +107,7 @@ public class JsonParserTest extends AndroidTestCase{
 
     @Test
     public void testJsonToObj(){
-        String source_data = "[{\"description\":\"Description\",\"id\":\"1437999132651\",\"mail\":\"123@email.com\",\"password\":\"74ZPWNWFVr832EvVn2OeBg\\u003d\\u003d\\n\",\"site\":\"www.baidu.com\",\"userName\":\"liuerqiang\"},{\"description\":\"\",\"id\":\"1437999179175\",\"mail\":\"\",\"password\":\"rRxzhcIRa/w5ZZKVNDCQ2A\\u003d\\u003d\\n\",\"site\":\"ceshi\",\"userName\":\"xiugai\"}]";
+        String source_data = "[{\"description\":\"Description\",\"id\":\"1437999132651\",\"mail\":\"123@email.com\",\"password\":\"74ZPWNWFVr832EvVn2OeBg\\u003d\\u003d\\n\",\"site\":\"www.baidu.com\",\"username\":\"liuerqiang\"},{\"description\":\"\",\"id\":\"1437999179175\",\"mail\":\"\",\"password\":\"rRxzhcIRa/w5ZZKVNDCQ2A\\u003d\\u003d\\n\",\"site\":\"ceshi\",\"username\":\"xiugai\"}]";
         StringReader sr = new StringReader(source_data);
         com.google.gson.stream.JsonReader jr = new com.google.gson.stream.JsonReader(sr);
         List<Account> list = JsonParser.jsonToObj(jr);
@@ -118,9 +116,9 @@ public class JsonParserTest extends AndroidTestCase{
         assertEquals("Description", list.get(0).description);
         assertEquals("123@email.com", list.get(0).mail);
         assertEquals("www.baidu.com", list.get(0).site);
-//        assertEquals("liuerqiang", list.get(0).userName);
+//        assertEquals("liuerqiang", list.get(0).username);
 
-        assertThat(list.get(0).userName, is("liuerqiang"));
+        assertThat(list.get(0).username, is("liuerqiang"));
     }
 
 

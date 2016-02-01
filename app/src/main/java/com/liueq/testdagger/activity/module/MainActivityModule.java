@@ -7,7 +7,6 @@ import com.liueq.testdagger.data.repository.AccountRepository;
 import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
-import com.liueq.testdagger.domain.interactor.GetAccountDetailUseCase;
 import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
 import com.liueq.testdagger.domain.interactor.SearchAccountUseCase;
@@ -49,8 +48,8 @@ public class MainActivityModule {
 
         AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUseCase);
 
-        GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase((AccountRepositoryImpl) ar, getSpUseCase);
-        SearchAccountUseCase searchAccountUseCase = new SearchAccountUseCase((AccountRepositoryImpl) ar);
+        GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase(ar, getSpUseCase);
+        SearchAccountUseCase searchAccountUseCase = new SearchAccountUseCase(ar);
 
         return new MainActivityPresenter(mainActivity, accountList, getAccountListUseCase, searchAccountUseCase);
     }

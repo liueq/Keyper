@@ -1,13 +1,10 @@
 package com.liueq.testdagger.domain.interactor;
 
-import android.util.Log;
-
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
+import com.liueq.testdagger.data.repository.AccountRepository;
 import com.liueq.testdagger.utils.Encrypter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,18 +15,18 @@ import javax.inject.Inject;
  */
 public class GetAccountListUseCase extends UseCase {
 
-    AccountRepositoryImpl mARI;
+    AccountRepository mAR;
     GetSpUseCase mGetSpUseCase;
     public final static String TAG = "GetALUS";
 
     @Inject
-    public GetAccountListUseCase(AccountRepositoryImpl ARI, GetSpUseCase getSpUseCase){
-        this.mARI = ARI;
+    public GetAccountListUseCase(AccountRepository AR, GetSpUseCase getSpUseCase){
+        this.mAR = AR;
         this.mGetSpUseCase = getSpUseCase;
     }
 
     public List execute() {
-        List<Account> list = mARI.getAccountList();
+        List<Account> list = mAR.getAccountList();
 
         //获取AES密钥
         HashMap<String, String> map = mGetSpUseCase.getAESPassword();
