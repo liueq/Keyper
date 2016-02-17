@@ -14,7 +14,7 @@ import com.liueq.testdagger.utils.Encrypter;
 /**
  * Created by liueq on 16/7/15.
  */
-public class SplashActivityPresenter {
+public class SplashActivityPresenter extends Presenter{
 
     public final static String TAG = "Splash P";
 

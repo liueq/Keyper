@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.liueq.testdagger.data.database.DBTables.Password;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
@@ -15,7 +16,6 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.liueq.testdagger.data.database.DBTables.Password;
 
 /**
  * Created by liueq on 1/2/2016.
@@ -41,9 +41,10 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		List<Account> list = new ArrayList<>();
 		Account account = null;
 		SQLiteDatabase db = null;
+		Cursor cursor = null;
 		try{
 			db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
-			Cursor cursor = db.query(Password.table_name, Password.ALL_COLUMN, null, null, null, null, null);
+			cursor = db.query(Password.table_name, Password.ALL_COLUMN, null, null, null, null, null);
 			if (cursor != null){
 				while (cursor.moveToNext()){
 					account = new Account();
@@ -60,6 +61,9 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		}finally{
 			if(db != null && db.isOpen()){
 				db.close();
+			}
+			if(cursor != null && !cursor.isClosed()){
+				cursor.close();
 			}
 		}
 		return list;
@@ -97,9 +101,10 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		String []selection_args = {"%" + key + "%"};
 
 		SQLiteDatabase db = null;
+		Cursor cursor = null;
 		try {
 			db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
-			Cursor cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
+			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
 			if (cursor != null) {
 				while (cursor.moveToNext()) {
 					account = new Account();
@@ -116,6 +121,9 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		}finally{
 			if(db != null && db.isOpen()){
 				db.close();
+			}
+			if(cursor != null && !cursor.isClosed()){
+				cursor.close();
 			}
 		}
 
@@ -149,17 +157,21 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		values.put(Password.email, account.mail);
 		values.put(Password.description, account.description);
 
-		SQLiteDatabase db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+		SQLiteDatabase db = null;
 		try{
+			db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
 			db.beginTransaction();
 			db.insertOrThrow(Password.table_name, null, values);
 			db.setTransactionSuccessful();
 
 			is_successful = true;
+			db.endTransaction();
 		}catch (SQLException exception){
 			exception.printStackTrace();
 		}finally {
-			db.endTransaction();
+			if(db != null && db.isOpen()){
+				db.close();
+			}
 		}
 
 		return is_successful;

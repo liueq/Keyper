@@ -20,7 +20,7 @@ import javax.inject.Inject;
 /**
  * Created by liueq on 29/7/15.
  */
-public class SettingsActivityPresenter {
+public class SettingsActivityPresenter extends Presenter{
 
     public final static String TAG = "settingsP";
 

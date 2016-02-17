@@ -8,6 +8,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -25,6 +27,8 @@ import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.MainActivityModule;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.ui.activity.presenter.MainActivityPresenter;
+import com.liueq.testdagger.ui.activity.presenter.Presenter;
+import com.liueq.testdagger.ui.adapter.MainPagerAdapter;
 import com.liueq.testdagger.ui.adapter.RecyclerListAdapter;
 
 import java.util.ArrayList;
@@ -46,15 +50,17 @@ public class MainActivity extends BaseActivity {
     Toolbar toolbar;
     @Bind(R.id.coordinator)
     CoordinatorLayout coordinatorLayout;
-    @Bind(R.id.recycler)
-    RecyclerView recyclerView;
     @Bind(R.id.floating)
     FloatingActionButton fab;
-
-    private RecyclerListAdapter recyclerListAdapter;
+    @Bind(R.id.tabs)
+    TabLayout mTabLayout;
+    @Bind(R.id.pager)
+    ViewPager mViewPager;
 
     @Inject
     MainActivityPresenter presenter;
+
+    private MainPagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +69,6 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initView();
-        initDate();
     }
 
     /**
@@ -80,85 +85,8 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.main_activity_title);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerListAdapter = new RecyclerListAdapter(this, new ArrayList<Account>());
-        recyclerView.setAdapter(recyclerListAdapter);
-
-        recyclerView.addOnScrollListener(new OnScrollListener() {
-
-            private boolean scrollUp = true;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if(BuildConfig.DEBUG)
-                    Log.i("liueq", "onScrolled dy = " + dy);
-
-                if(dy > 0 && scrollUp){
-                    Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_appear);
-                    anim.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            fab.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    fab.startAnimation(anim);
-
-                    scrollUp = false;
-                }else if(dy < 0 && !scrollUp){
-                    Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_disappear);
-                    anim.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            fab.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    fab.startAnimation(anim);
-
-                    scrollUp = true;
-                }
-            }
-        });
-    }
-
-    private void initDate(){
-        presenter.loadData();
-    }
-
-    /**
-     * 由Presenter获取好数据后调用此方法
-     * @param list
-     */
-    public void updateUI(List<Account> list){
-        recyclerListAdapter.clear();
-        recyclerListAdapter.addAll(list);
-        recyclerListAdapter.notifyDataSetChanged();
+        mViewPager.setAdapter(mPagerAdapter = new MainPagerAdapter(this, getSupportFragmentManager()));
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
@@ -231,4 +159,8 @@ public class MainActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    @Override
+    public Presenter getPresenter() {
+        return presenter;
+    }
 }

@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Created by liueq on 13/7/15.
  */
-public class AccountDetailActivityPresenter {
+public class AccountDetailActivityPresenter extends Presenter{
 
     public final static String TAG = "AccountDAPresenter";
 
@@ -65,6 +65,9 @@ public class AccountDetailActivityPresenter {
     public boolean saveData(Account account){
 
         if(!TextUtils.isEmpty(account.site)){
+//            mCurrentAccount = (Account) saveAccountListUseCase.execute(mAccountList, account);
+//            mAccountList.clear();
+//            mAccountList.addAll(getAccountListUseCase.execute());
             return saveAccountListUseCase.executeDB(account);
         }else{
             return false;

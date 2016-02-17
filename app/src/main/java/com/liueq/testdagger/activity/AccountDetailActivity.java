@@ -18,6 +18,7 @@ import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.AccountDetailActivityModule;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.ui.activity.presenter.AccountDetailActivityPresenter;
+import com.liueq.testdagger.ui.activity.presenter.Presenter;
 
 import javax.inject.Inject;
 
@@ -90,6 +91,11 @@ public class AccountDetailActivity extends BaseActivity {
         TestApplication.get(this).getAppComponent()
                 .plus(new AccountDetailActivityModule(this))
                 .inject(this);
+    }
+
+    @Override
+    protected Presenter getPresenter() {
+        return presenter;
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.SplashActivityModule;
+import com.liueq.testdagger.ui.activity.presenter.Presenter;
 import com.liueq.testdagger.ui.activity.presenter.SplashActivityPresenter;
 
 import javax.inject.Inject;
@@ -84,6 +85,11 @@ public class SplashActivity extends BaseActivity {
         TestApplication.get(this).getAppComponent()
                 .plus(new SplashActivityModule(this))
                 .inject(this);
+    }
+
+    @Override
+    protected Presenter getPresenter() {
+        return presenter;
     }
 
     @OnClick(R.id.submit)

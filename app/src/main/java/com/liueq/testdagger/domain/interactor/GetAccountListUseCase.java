@@ -55,7 +55,7 @@ public class GetAccountListUseCase extends UseCase {
         return list;
     }
 
-    public List executeDB(){
+    public List<Account> executeDB(){
         return mAR.getAccountList();
     }
 

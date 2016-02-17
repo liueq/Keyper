@@ -27,4 +27,8 @@
 
     <string name="external_path">External Storage</string>
     <string name="internal_path">Internal Storage</string>
+
+    <string name="tab_all">ALL</string>
+    <string name="tab_star">STAR</string>
+    <string name="tab_tag">TAG</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.liueq.testdagger.R;
+import com.liueq.testdagger.ui.activity.presenter.Presenter;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -16,4 +17,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract void setupActivityComponent();
+
+    protected abstract Presenter getPresenter();
 }
