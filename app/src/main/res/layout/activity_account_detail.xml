@@ -1,9 +1,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.liueq.testdagger.activity.AccountDetailActivity">
 
@@ -19,91 +19,155 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_site"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/site"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                tools:text="Site: "/>
 
-            <EditText
-                android:id="@+id/et_site"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                tools:text="www.google.com"/>
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                tools:text="Name: "/>
+                <TextView
+                    android:id="@+id/tv_site"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_language_grey600_24dp"
+                    android:drawablePadding="4dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:text="@string/site"
+                    android:textSize="16sp"
+                    tools:text="SITE: "/>
 
-            <EditText
-                android:id="@+id/et_name"
+                <EditText
+                    android:id="@+id/et_site"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="16sp"
+                    tools:text="www.google.com"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                tools:text="liueq"/>
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/password"
-                tools:text="Password: "/>
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_account_box_grey600_24dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center"
+                    android:text="@string/name"
+                    android:textSize="16sp"
+                    tools:text="NAME: "/>
 
-            <EditText
-                android:id="@+id/et_password"
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="16sp"
+                    tools:text="liueq"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                tools:text="******"/>
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_mail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mail"
-                tools:text="Mail:"/>
+                <TextView
+                    android:id="@+id/tv_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_vpn_key_grey600_24dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center"
+                    android:text="@string/password"
+                    android:textSize="16sp"
+                    tools:text="PASSWORD: "/>
 
-            <EditText
-                android:id="@+id/et_mail"
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="16sp"
+                    tools:text="******"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                tools:text="xxx@gmail.com"/>
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_mail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_mail_grey600_24dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center"
+                    android:text="@string/mail"
+                    android:textSize="16sp"
+                    tools:text="MAIL:"/>
+
+                <EditText
+                    android:id="@+id/et_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="16sp"
+                    tools:text="xxx@gmail.com"/>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@mipmap/ic_event_note_grey600_24dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
                 android:text="@string/description"
-                tools:text="Description: "/>
+                android:textSize="16sp"
+                tools:text="DESCRIPTION: "/>
 
             <EditText
                 android:id="@+id/et_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:minHeight="100dp"
+                android:gravity="left|top"
+                android:textSize="16sp"
+                android:background="@drawable/edit_bg"
+                android:padding="6dp"
                 tools:text="My Google account."/>
-
 
             <Button
                 android:id="@+id/btn_commit"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/commit_btn_bg"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/commit_btn_bg"
                 android:text="Save"
                 android:textColor="@android:color/white"
                 />
