@@ -52,21 +52,21 @@ public class SettingsActivityPresenter extends Presenter{
 
         //第一次启动的时候初始化，默认是加密
         if(pwd_enc_status == null && desc_enc_status == null){
-            mSettingsActivity.checkSwitchPwd(true);
-            mSettingsActivity.checkSwitchDesc(true);
+//            mSettingsActivity.checkSwitchPwd(true);
+//            mSettingsActivity.checkSwitchDesc(true);
             return ;
         }
 
         if(pwd_enc_status.equals(Constants.YES)){
-            mSettingsActivity.checkSwitchPwd(true);
+//            mSettingsActivity.checkSwitchPwd(true);
         }else{
-            mSettingsActivity.checkSwitchPwd(false);
+//            mSettingsActivity.checkSwitchPwd(false);
         }
 
         if(desc_enc_status.equals(Constants.YES)){
-            mSettingsActivity.checkSwitchDesc(true);
+//            mSettingsActivity.checkSwitchDesc(true);
         }else{
-            mSettingsActivity.checkSwitchDesc(false);
+//            mSettingsActivity.checkSwitchDesc(false);
         }
     }
 
@@ -77,7 +77,7 @@ public class SettingsActivityPresenter extends Presenter{
         String aes = aes_pwd_map.get(Constants.SP_AES);
 
         //设定到activity
-        mSettingsActivity.setShowAES(aes);
+//        mSettingsActivity.setShowAES(aes);
 
         StringBuffer sb = new StringBuffer();
         if (mFilePathState.get(Constants.SP_IS_SAVE_EXTERNAL)) {
@@ -90,7 +90,7 @@ public class SettingsActivityPresenter extends Presenter{
             sb.append(mSettingsActivity.getString(R.string.internal_path));
         }
 
-        mSettingsActivity.setShowPath(sb.toString());
+//        mSettingsActivity.setShowPath(sb.toString());
     }
     public void encryptPwd(boolean encrypt){
         mSetSpUseCase.savePwdEncStatus(encrypt);

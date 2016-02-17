@@ -41,6 +41,60 @@
         android:background="@color/divider"/>
 
     <RelativeLayout
+        android:id="@+id/rl_import"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeight"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="15dp"
+        android:background="@drawable/setting_item_bg"
+        android:clickable="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/import_data"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_export"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeight"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="15dp"
+        android:background="@drawable/setting_item_bg"
+        android:clickable="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/export_data"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
         android:id="@+id/rl_change_aes"
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeight"
@@ -50,6 +104,7 @@
         android:paddingRight="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:visibility="gone"
         >
 
         <LinearLayout
@@ -92,6 +147,7 @@
         android:paddingRight="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:visibility="gone"
         >
 
         <LinearLayout
@@ -133,6 +189,7 @@
         android:padding="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:visibility="gone"
         >
 
         <TextView
@@ -167,6 +224,7 @@
         android:padding="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:visibility="gone"
         >
 
         <TextView

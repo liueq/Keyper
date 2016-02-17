@@ -21,6 +21,7 @@ import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.SettingsActivityModule;
 import com.liueq.testdagger.ui.activity.presenter.Presenter;
 import com.liueq.testdagger.ui.activity.presenter.SettingsActivityPresenter;
+import com.liueq.testdagger.utils.BackUpTool;
 
 import javax.inject.Inject;
 
@@ -34,22 +35,27 @@ public class SettingsActivity extends BaseActivity {
     Toolbar mToolbar;
     @Bind(R.id.rl_change_pwd)
     RelativeLayout mRelativePwd;
-    @Bind(R.id.rl_change_aes)
-    RelativeLayout mRelativeAES;
-    @Bind(R.id.rl_change_path)
-    RelativeLayout mRelativePath;
-    @Bind(R.id.rl_encrypt_pwd)
-    RelativeLayout mRelativeEncPwd;
-    @Bind(R.id.rl_encrypt_desc)
-    RelativeLayout mRelativeEncDesc;
-    @Bind(R.id.switch_pwd)
-    Switch mSwitchPwd;
-    @Bind(R.id.switch_desc)
-    Switch mSwitchDesc;
-    @Bind(R.id.tv_show_aes)
-    TextView mTextViewAES;
-    @Bind(R.id.tv_show_path)
-    TextView mTextViewPath;
+    @Bind(R.id.rl_import)
+    RelativeLayout mRelativeImport;
+    @Bind(R.id.rl_export)
+    RelativeLayout mRelativeExport;
+
+//    @Bind(R.id.rl_change_aes)
+//    RelativeLayout mRelativeAES;
+//    @Bind(R.id.rl_change_path)
+//    RelativeLayout mRelativePath;
+//    @Bind(R.id.rl_encrypt_pwd)
+//    RelativeLayout mRelativeEncPwd;
+//    @Bind(R.id.rl_encrypt_desc)
+//    RelativeLayout mRelativeEncDesc;
+//    @Bind(R.id.switch_pwd)
+//    Switch mSwitchPwd;
+//    @Bind(R.id.switch_desc)
+//    Switch mSwitchDesc;
+//    @Bind(R.id.tv_show_aes)
+//    TextView mTextViewAES;
+//    @Bind(R.id.tv_show_path)
+//    TextView mTextViewPath;
 
     @Inject
     SettingsActivityPresenter presenter;
@@ -74,21 +80,21 @@ public class SettingsActivity extends BaseActivity {
             mToolbar.setElevation(8);
         }
 
-        mSwitchPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                presenter.encryptPwd(isChecked);
-                presenter.saveData();
-            }
-        });
+//        mSwitchPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                presenter.encryptPwd(isChecked);
+//                presenter.saveData();
+//            }
+//        });
 
-        mSwitchDesc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                presenter.encryptDesc(isChecked);
-                presenter.saveData();
-            }
-        });
+//        mSwitchDesc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                presenter.encryptDesc(isChecked);
+//                presenter.saveData();
+//            }
+//        });
     }
 
     private void initData(){
@@ -109,33 +115,40 @@ public class SettingsActivity extends BaseActivity {
         return presenter;
     }
 
-    public void checkSwitchPwd(boolean check){
-        mSwitchPwd.setChecked(check);
-    }
+//    public void checkSwitchPwd(boolean check){
+//        mSwitchPwd.setChecked(check);
+//    }
 
-    public void checkSwitchDesc(boolean check){
-        mSwitchDesc.setChecked(check);
-    }
+//    public void checkSwitchDesc(boolean check){
+//        mSwitchDesc.setChecked(check);
+//    }
 
-    @OnClick({R.id.rl_change_pwd, R.id.rl_change_aes, R.id.rl_change_path, R.id.rl_encrypt_pwd, R.id.rl_encrypt_desc})
+    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_change_aes, R.id.rl_change_path, R.id.rl_encrypt_pwd, R.id.rl_encrypt_desc})
     public void click(View v){
         int id = v.getId();
         switch (id){
             case R.id.rl_change_pwd:
                 createChangePasswordDialog();
                 break;
-            case R.id.rl_change_aes:
-                createChangeAESDialog();
+            case R.id.rl_import:
+                //TODO Import DB
+                BackUpTool.importDB(this);
                 break;
-            case R.id.rl_change_path:
-                createChooseSavePathDialog();
+            case R.id.rl_export:
+                //TODO Export DB
                 break;
-            case R.id.rl_encrypt_pwd:
-                mSwitchPwd.setChecked(!mSwitchPwd.isChecked());
-                break;
-            case R.id.rl_encrypt_desc:
-                mSwitchDesc.setChecked(!mSwitchDesc.isChecked());
-                break;
+//            case R.id.rl_change_aes:
+//                createChangeAESDialog();
+//                break;
+//            case R.id.rl_change_path:
+//                createChooseSavePathDialog();
+//                break;
+//            case R.id.rl_encrypt_pwd:
+//                mSwitchPwd.setChecked(!mSwitchPwd.isChecked());
+//                break;
+//            case R.id.rl_encrypt_desc:
+//                mSwitchDesc.setChecked(!mSwitchDesc.isChecked());
+//                break;
         }
     }
 
@@ -261,13 +274,13 @@ public class SettingsActivity extends BaseActivity {
         builder.create().show();
     }
 
-    public void setShowAES(String aes_pwd){
-        mTextViewAES.setText(aes_pwd);
-    }
+//    public void setShowAES(String aes_pwd){
+//        mTextViewAES.setText(aes_pwd);
+//    }
 
-    public void setShowPath(String file_path){
-        mTextViewPath.setText(file_path);
-    }
+//    public void setShowPath(String file_path){
+//        mTextViewPath.setText(file_path);
+//    }
 
 
     @Override

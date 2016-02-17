@@ -27,7 +27,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by liueq on 17/2/2016.
- * 主界面，所有Item list
+ * 主界面，ALL tab
  */
 public class ListFragment extends Fragment{
 
@@ -61,7 +61,7 @@ public class ListFragment extends Fragment{
 		ButterKnife.bind(this, v);
 
 		initView();
-		initData();
+		loadData();
 		return v;
 	}
 
@@ -134,7 +134,7 @@ public class ListFragment extends Fragment{
         });
 	}
 
-	private void initData(){
+	private void loadData(){
 		loadListOb().subscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe(loadListSub());
@@ -144,6 +144,12 @@ public class ListFragment extends Fragment{
         recyclerListAdapter.clear();
         recyclerListAdapter.addAll(list);
         recyclerListAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadData();
 	}
 
 	private Observable<List<Account>> loadListOb(){
