@@ -1,5 +1,6 @@
 package com.liueq.testdagger.domain.interactor;
 
+import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepository;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class SearchAccountUseCase extends UseCase {
         this.mAR = AR;
     }
 
-    public List execute(String key){
+    public List<Account> execute(String key){
         return mAR.searchAccount(key);
     }
 }

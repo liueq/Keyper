@@ -18,22 +18,13 @@
 
         <uses-library android:name="android.test.runner"/>
 
-        <meta-data
-            android:name="android.app.default_searchable"
-            android:value="com.liueq.testdagger.activity.MainActivity" />
-
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name=".activity.AccountDetailActivity"

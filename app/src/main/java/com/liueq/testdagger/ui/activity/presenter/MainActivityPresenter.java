@@ -21,8 +21,6 @@ public class MainActivityPresenter extends Presenter{
     GetAccountListUseCase getAccountListUseCase;
     SearchAccountUseCase searchAccountUseCase;
 
-    Subscription mSubscription;
-
     public MainActivityPresenter(MainActivity mainActivity, List<Account> list, GetAccountListUseCase getAccountListUseCase, SearchAccountUseCase searchAccountUseCase) {
         this.mainActivity = mainActivity;
         this.mAccountList = list;
@@ -40,8 +38,8 @@ public class MainActivityPresenter extends Presenter{
 //        mainActivity.updateUI(mAccountList);
     }
 
-    public void search(String searchKey){
-//        mainActivity.updateUI(searchAccountUseCase.execute(searchKey) );
+    public List<Account> search(String searchKey){
+        return searchAccountUseCase.execute(searchKey);
     }
 
 }

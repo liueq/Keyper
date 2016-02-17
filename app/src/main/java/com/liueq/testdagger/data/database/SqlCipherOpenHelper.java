@@ -17,6 +17,15 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
 	public static final String DATABASE_PASSWORD = "29Jan10:25";
 
+	private static SQLCipherOpenHelper mInstance;
+
+	public static SQLCipherOpenHelper getInstance(Context context){
+		if(mInstance == null){
+			mInstance = new SQLCipherOpenHelper(context);
+		}
+
+		return mInstance;
+	}
 
 	public SQLCipherOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

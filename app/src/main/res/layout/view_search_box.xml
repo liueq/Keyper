@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_searchbox"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="46dp"
+    android:layout_margin="5dp"
+    android:elevation="4dp"
+    android:transitionName="@string/search_box_shared"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/ic_arrow_back_grey600_24dp"/>
+
+    <ImageView
+        android:id="@+id/iv_clear"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_clear_grey600_24dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@id/iv_clear"
+        android:layout_toRightOf="@id/iv_back"
+        android:background="@null"
+        android:hint="@string/hint_article_search"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:textColor="@color/grey"
+        android:textColorHint="@color/grey"
+        android:textSize="15sp"
+        />
+
+</RelativeLayout>

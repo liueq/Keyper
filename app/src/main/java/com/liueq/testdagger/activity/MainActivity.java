@@ -1,46 +1,30 @@
 package com.liueq.testdagger.activity;
 
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
-import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.MainActivityModule;
-import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.ui.activity.presenter.MainActivityPresenter;
 import com.liueq.testdagger.ui.activity.presenter.Presenter;
 import com.liueq.testdagger.ui.adapter.MainPagerAdapter;
-import com.liueq.testdagger.ui.adapter.RecyclerListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.liueq.testdagger.ui.fragment.SearchDialogFragment;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.support.v7.widget.RecyclerView.*;
 
 public class MainActivity extends BaseActivity {
 
@@ -61,6 +45,8 @@ public class MainActivity extends BaseActivity {
     MainActivityPresenter presenter;
 
     private MainPagerAdapter mPagerAdapter;
+    SearchDialogFragment mSearchDialogFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,40 +85,6 @@ public class MainActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = null;
-        if(searchItem != null){
-            searchView = (SearchView) searchItem.getActionView();
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, MainActivity.class)));
-
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    presenter.search(query);
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    //进行Search
-                    presenter.search(newText);
-                    return false;
-                }
-            });
-
-            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-                @Override
-                public boolean onClose() {
-                    presenter.loadData();
-                    return false;
-                }
-            });
-
-        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -148,6 +100,12 @@ public class MainActivity extends BaseActivity {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
             return true;
+        }else if(id == R.id.action_search){
+            mSearchDialogFragment = SearchDialogFragment.newInstance(this);
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(mSearchDialogFragment, SearchDialogFragment.TAG);
+            fragmentTransaction.commit();
         }
 
         return super.onOptionsItemSelected(item);

@@ -31,4 +31,7 @@
     <string name="tab_all">ALL</string>
     <string name="tab_star">STAR</string>
     <string name="tab_tag">TAG</string>
+
+    <string name="hint_article_search">Search article</string>
+    <string name="search_box_shared">search_box_shared</string>
 </resources>

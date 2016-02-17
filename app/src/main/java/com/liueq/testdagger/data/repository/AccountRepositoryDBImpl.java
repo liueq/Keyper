@@ -33,7 +33,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 
 	public AccountRepositoryDBImpl(Context context, GetSpUseCase getSpUseCase) {
 		mGetSpUseCase = getSpUseCase;
-		mDBHelper = new SQLCipherOpenHelper(context);
+		mDBHelper = SQLCipherOpenHelper.getInstance(context);
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 	}
 
 	@Override
-	public List<Account> searchAccount(String key) {
+	public synchronized List<Account> searchAccount(String key) {
 		List<Account> list = new ArrayList<>();
 		Account account = null;
 
