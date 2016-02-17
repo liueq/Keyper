@@ -1,5 +1,6 @@
 package com.liueq.testdagger.data.repository;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.stream.JsonReader;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Created by liueq on 27/7/15.
  */
-public class AccountRepositoryImpl implements AccountRepository{
+public class AccountRepositoryImpl implements AccountRepository {
 
     public final static String TAG = "ARI";
 
@@ -27,7 +28,7 @@ public class AccountRepositoryImpl implements AccountRepository{
     List<Account> mFilteredList;
     GetSpUseCase mGetSpUseCase;
 
-    public AccountRepositoryImpl(FileReader fileReader, GetSpUseCase getSpUseCase){
+    public AccountRepositoryImpl(FileReader fileReader, GetSpUseCase getSpUseCase) {
         mFileReader = fileReader;
         mGetSpUseCase = getSpUseCase;
     }
@@ -42,49 +43,49 @@ public class AccountRepositoryImpl implements AccountRepository{
         //文件位置选择
         HashMap<String, Boolean> map = mGetSpUseCase.getFileSavePath();
 
-        if(map.get(Constants.SP_IS_SAVE_INTERNAL)){
+        if (map.get(Constants.SP_IS_SAVE_INTERNAL)) {
             Log.d(TAG, "getAccountList from INTERNAL");
             mFileReader.setmFilePath(Constants.INTERNAL_STORAGE_PATH);
             list_internal = getListFrom();
 
-        }else if(map.get(Constants.SP_IS_SAVE_EXTERNAL)){
+        } else if (map.get(Constants.SP_IS_SAVE_EXTERNAL)) {
             Log.d(TAG, "getAccountList from EXTERNAL");
             mFileReader.setmFilePath(Constants.EXTERNAL_STORAGE_PATH);
             list_external = getListFrom();
 
         }
 
-        if(mAccountList != null){
+        if (mAccountList != null) {
             mAccountList.clear();
-        }else{
+        } else {
             mAccountList = new ArrayList<Account>();
         }
 
-        if(list_external != null){
+        if (list_external != null) {
             mAccountList.addAll(list_external);
         }
 
-        if(list_internal != null){
+        if (list_internal != null) {
             mAccountList.addAll(list_internal);
         }
 
         return mAccountList;
     }
 
-    private List<Account> getListFrom(){
+    private List<Account> getListFrom() {
         List<Account> list = new ArrayList<>();
 
         JsonReader json = mFileReader.retrieveData();
-        if(list != null){
+        if (list != null) {
             list.clear();
-        }else{
+        } else {
             list = new ArrayList<Account>();
         }
 
         list.addAll(JsonParser.jsonToObj(json));    //由于TypeToken的原因，无法使用泛型
 
-        if(BuildConfig.DEBUG){
-            for(Account i : list){
+        if (BuildConfig.DEBUG) {
+            for (Account i : list) {
                 Log.i(TAG, "loadData id " + i.id);
                 Log.i(TAG, "loadData site" + i.site);
                 Log.i(TAG, "loadData username" + i.username);
@@ -105,19 +106,19 @@ public class AccountRepositoryImpl implements AccountRepository{
 
     @Override
     public List<Account> searchAccount(String key) {
-        if(mFilteredList == null){
+        if (mFilteredList == null) {
             mFilteredList = new ArrayList<Account>();
-        }else{
+        } else {
             mFilteredList.clear();
         }
 
-        if(mAccountList == null){
+        if (mAccountList == null) {
             getAccountList();
         }
 
-        for(Account a : mAccountList){
+        for (Account a : mAccountList) {
             String site_lower = a.site.toLowerCase();       //无视大小写
-            if(site_lower.contains(key.toLowerCase())){
+            if (site_lower.contains(key.toLowerCase())) {
                 mFilteredList.add(a);
             }
         }
@@ -129,27 +130,37 @@ public class AccountRepositoryImpl implements AccountRepository{
         //增加选择保存文件位置
         HashMap<String, Boolean> map = mGetSpUseCase.getFileSavePath();
 
-        if(map.get(Constants.SP_IS_SAVE_EXTERNAL)){
+        if (map.get(Constants.SP_IS_SAVE_EXTERNAL)) {
             mFileReader.setmFilePath(Constants.EXTERNAL_STORAGE_PATH);
             mFileReader.presistData(JsonParser.objToJson(accountList));
 
-        }else{
+        } else {
             File file = new File(Constants.EXTERNAL_STORAGE_PATH, Constants.STORAGE_FILE);
-            if(file.exists()) {
+            if (file.exists()) {
                 file.delete();
             }
         }
 
 
-        if(map.get(Constants.SP_IS_SAVE_INTERNAL)){
+        if (map.get(Constants.SP_IS_SAVE_INTERNAL)) {
             mFileReader.setmFilePath(Constants.INTERNAL_STORAGE_PATH);
             mFileReader.presistData(JsonParser.objToJson(accountList));
-        }else{
+        } else {
             File file = new File(Constants.INTERNAL_STORAGE_PATH, Constants.STORAGE_FILE);
-            if(file.exists()) {
+            if (file.exists()) {
                 file.delete();
             }
         }
 
+    }
+
+    @Override
+    public boolean insertOrUpdateAccount(@Nullable String id, Account account) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteAccount(String id) {
+        return false;
     }
 }

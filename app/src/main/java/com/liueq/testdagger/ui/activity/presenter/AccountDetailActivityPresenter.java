@@ -65,10 +65,7 @@ public class AccountDetailActivityPresenter {
     public boolean saveData(Account account){
 
         if(!TextUtils.isEmpty(account.site)){
-            mCurrentAccount = (Account) saveAccountListUseCase.execute(mAccountList, account);
-            mAccountList.clear();
-            mAccountList.addAll(getAccountListUseCase.execute());
-            return true;
+            return saveAccountListUseCase.executeDB(account);
         }else{
             return false;
         }
@@ -78,14 +75,8 @@ public class AccountDetailActivityPresenter {
         return mCurrentAccount;
     }
 
-    public void deleteAccount(){
-
-        List<Account> deleteResult = deleteAccountUseCase.execute(mAccountList, mCurrentAccount);
-        if(deleteResult != null){
-            saveAccountListUseCase.execute(deleteResult, null);
-            mAccountList.clear();
-            mAccountList.addAll(getAccountListUseCase.execute());
-        }
+    public boolean deleteAccount(){
+        return deleteAccountUseCase.executeDB(mCurrentAccount);
     }
 
 

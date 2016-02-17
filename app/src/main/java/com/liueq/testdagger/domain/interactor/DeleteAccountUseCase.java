@@ -4,16 +4,23 @@ import android.util.Log;
 
 import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.data.repository.AccountRepository;
+import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by liueq on 27/7/15.
  */
 public class DeleteAccountUseCase extends UseCase {
 
-    public DeleteAccountUseCase(){
+    AccountRepository mAR;
 
+    @Inject
+    public DeleteAccountUseCase(AccountRepository ar){
+        mAR = ar;
     }
 
     public List<Account> execute(List<Account> list, Account target){
@@ -28,5 +35,9 @@ public class DeleteAccountUseCase extends UseCase {
         }
 
         return null;
+    }
+
+    public boolean executeDB(Account account){
+        return mAR.deleteAccount(account.id);
     }
 }

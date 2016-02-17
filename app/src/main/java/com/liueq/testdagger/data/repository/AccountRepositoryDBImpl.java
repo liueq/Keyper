@@ -2,6 +2,7 @@ package com.liueq.testdagger.data.repository;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
@@ -39,20 +40,26 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 	public List<Account> getAccountList() {
 		List<Account> list = new ArrayList<>();
 		Account account = null;
+		SQLiteDatabase db = null;
+		try{
+			db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+			Cursor cursor = db.query(Password.table_name, Password.ALL_COLUMN, null, null, null, null, null);
+			if (cursor != null){
+				while (cursor.moveToNext()){
+					account = new Account();
+					account.id = String.valueOf(cursor.getInt(0));
+					account.site = cursor.getString(1);
+					account.username = cursor.getString(2);
+					account.password = cursor.getString(3);
+					account.mail = cursor.getString(4);
+					account.description = cursor.getString(5);
 
-		SQLiteDatabase db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
-		Cursor cursor = db.query(Password.table_name, Password.ALL_COLUMN, null, null, null, null, null);
-		if (cursor != null){
-			while (cursor.moveToNext()){
-				account = new Account();
-				account.id = String.valueOf(cursor.getInt(0));
-				account.site = cursor.getString(1);
-				account.username = cursor.getString(2);
-				account.password = cursor.getString(3);
-				account.mail = cursor.getString(4);
-				account.description = cursor.getString(5);
-
-				list.add(account);
+					list.add(account);
+				}
+			}
+		}finally{
+			if(db != null && db.isOpen()){
+				db.close();
 			}
 		}
 		return list;
@@ -86,22 +93,29 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		List<Account> list = new ArrayList<>();
 		Account account = null;
 
-		String selection = "site LIKE '%?%'";
-		String []selection_args = {Password.site};
+		String selection = "site LIKE ?";
+		String []selection_args = {"%" + key + "%"};
 
-		SQLiteDatabase db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
-		Cursor cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
-		if(cursor != null){
-			while (cursor.moveToNext()){
-				account = new Account();
-				account.id = String.valueOf(cursor.getInt(0));
-				account.site = cursor.getString(1);
-				account.username = cursor.getString(2);
-				account.password = cursor.getString(3);
-				account.mail = cursor.getString(4);
-				account.description = cursor.getString(5);
+		SQLiteDatabase db = null;
+		try {
+			db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+			Cursor cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
+			if (cursor != null) {
+				while (cursor.moveToNext()) {
+					account = new Account();
+					account.id = String.valueOf(cursor.getInt(0));
+					account.site = cursor.getString(1);
+					account.username = cursor.getString(2);
+					account.password = cursor.getString(3);
+					account.mail = cursor.getString(4);
+					account.description = cursor.getString(5);
 
-				list.add(account);
+					list.add(account);
+				}
+			}
+		}finally{
+			if(db != null && db.isOpen()){
+				db.close();
 			}
 		}
 
@@ -110,6 +124,17 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 
 	@Override
 	public void saveAccountList(List<Account> list) {}
+
+	@Override
+	public boolean insertOrUpdateAccount(@Nullable String id, Account account) {
+		if(TextUtils.isEmpty(id)){
+			//insert
+			return insertAccount(account);
+		}else{
+			//update
+			return updateAccount(id, account);
+		}
+	}
 
 	public boolean insertAccount(Account account){
 		boolean is_successful = false;
@@ -140,56 +165,66 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		return is_successful;
 	}
 
-	public boolean updateAccount(Account old_item, Account update_item){
+	public boolean updateAccount(String old_id, Account update_item){
 		boolean is_successful = false;
-		if(TextUtils.isEmpty(old_item.id) || !old_item.id.equals(update_item.id)){
+		if(TextUtils.isEmpty(old_id) || !old_id.equals(update_item.id)){
 			return is_successful;
 		}
 
-		SQLiteDatabase db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+		SQLiteDatabase db = null;
 		ContentValues values = new ContentValues();
 		values.put(Password.site, update_item.site);
 		values.put(Password.username, update_item.username);
 		values.put(Password.password, update_item.password);
 		values.put(Password.email, update_item.mail);
 		values.put(Password.description, update_item.description);
-		String where = "id = '?'";
-		String []where_args = {old_item.id};
+		String where = "id = ?";
+		String []where_args = {old_id};
 
 		try{
+			db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
 			db.beginTransaction();
 			db.update(Password.table_name, values, where, where_args);
 			db.setTransactionSuccessful();
 
+			db.endTransaction();
 			is_successful = true;
 		}catch (SQLException exception){
 			exception.printStackTrace();
 		}finally{
-			db.endTransaction();
+			if(db != null && db.isOpen()){
+				db.close();
+			}
 		}
 
 		return is_successful;
 	}
 
-	public boolean deleteAccount(Account delete_item){
+	@Override
+	public boolean deleteAccount(String id){
 		boolean is_successful = false;
-		if(TextUtils.isEmpty(delete_item.id)){
+		if(TextUtils.isEmpty(id)){
 			return is_successful;
 		}
 
-		SQLiteDatabase db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
-		String where = "id = '?'";
-		String []where_args = {delete_item.id};
+		SQLiteDatabase db = null;
+		String where = "id = ?";
+		String []where_args = {id};
+
 		try{
+			db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
 			db.beginTransaction();
 			db.delete(Password.table_name, where, where_args);
 			db.setTransactionSuccessful();
 
+			db.endTransaction();
 			is_successful = true;
 		}catch (SQLException exception){
 			exception.printStackTrace();
 		}finally {
-			db.endTransaction();
+			if(db != null && db.isOpen()){
+				db.close();
+			}
 		}
 
 		return is_successful;

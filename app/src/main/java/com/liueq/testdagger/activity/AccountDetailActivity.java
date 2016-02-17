@@ -114,9 +114,12 @@ public class AccountDetailActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-            presenter.deleteAccount();
-            Toast.makeText(AccountDetailActivity.this, "DELETED", Toast.LENGTH_SHORT).show();
-            finish();
+            if(presenter.deleteAccount()){
+                Toast.makeText(AccountDetailActivity.this, "DELETED", Toast.LENGTH_SHORT).show();
+                finish();
+            }else {
+                Toast.makeText(AccountDetailActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 

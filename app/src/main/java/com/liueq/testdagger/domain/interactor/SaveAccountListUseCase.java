@@ -87,4 +87,8 @@ public class SaveAccountListUseCase {
         mAR.saveAccountList(list);
         return account;
     }
+
+    public boolean executeDB(Account account) {
+        return mAR.insertOrUpdateAccount(account.id, account);
+    }
 }

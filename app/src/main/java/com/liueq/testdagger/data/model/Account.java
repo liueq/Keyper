@@ -16,8 +16,8 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
     public String description;
 
     public Account(){
-        Random random = new Random();
-        this.id = String.valueOf(System.currentTimeMillis() + random.nextInt(1000));
+//        Random random = new Random();
+//        this.id = String.valueOf(System.currentTimeMillis() + random.nextInt(1000));
     }
 
     @Override
