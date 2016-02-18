@@ -229,11 +229,12 @@ public class SearchDialogFragment extends AppCompatDialogFragment {
 
 			@Override
 			public void afterTextChanged(Editable editable) {
-				if (mEtSearch.getText().toString().length() > 0) {
+				if (mEtSearch.getText().toString().trim().length() > 0) {
 					mIvClear.setVisibility(View.VISIBLE);
 
 					searchData(mEtSearch.getText().toString().trim());
 				} else {
+					updateUI(new ArrayList<Account>()); //Clear
 					mIvClear.setVisibility(View.GONE);
 				}
 			}

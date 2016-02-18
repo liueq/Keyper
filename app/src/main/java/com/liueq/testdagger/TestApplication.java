@@ -3,6 +3,7 @@ package com.liueq.testdagger;
 import android.app.Application;
 import android.content.Context;
 
+import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -32,5 +33,11 @@ public class TestApplication extends Application{
 
     public AppComponent getAppComponent(){
         return appComponent;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        SQLCipherOpenHelper.getInstance(this).closeDatabase();
     }
 }

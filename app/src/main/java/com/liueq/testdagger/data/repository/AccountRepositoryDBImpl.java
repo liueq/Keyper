@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.liueq.testdagger.data.database.DBTables;
 import com.liueq.testdagger.data.database.DBTables.Password;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
@@ -43,7 +44,8 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try{
-			db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+			db = mDBHelper.getDatabase();
+			db.beginTransaction();
 			cursor = db.query(Password.table_name, Password.ALL_COLUMN, null, null, null, null, null);
 			if (cursor != null){
 				while (cursor.moveToNext()){
@@ -58,10 +60,10 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 					list.add(account);
 				}
 			}
+			db.setTransactionSuccessful();
+			db.endTransaction();
 		}finally{
-			if(db != null && db.isOpen()){
-				db.close();
-			}
+			db = null;
 			if(cursor != null && !cursor.isClosed()){
 				cursor.close();
 			}
@@ -73,20 +75,33 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 	public Account getAccountDetail(String accountId) {
 		Account account = null;
 
-		String selection = "id = '?'";
+		String selection = "id = ?";
 		String []selection_args = {accountId};
 
-		SQLiteDatabase db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
-		Cursor cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
-		if(cursor != null){
-			if(cursor.moveToNext()){
-				account = new Account();
-				account.id = String.valueOf(cursor.getInt(0));
-				account.site = cursor.getString(1);
-				account.username = cursor.getString(2);
-				account.password = cursor.getString(3);
-				account.mail = cursor.getString(4);
-				account.description = cursor.getString(5);
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		try {
+			db = mDBHelper.getDatabase();
+			db.beginTransaction();
+			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
+			if (cursor != null) {
+				if (cursor.moveToNext()) {
+					account = new Account();
+					account.id = String.valueOf(cursor.getInt(0));
+					account.site = cursor.getString(1);
+					account.username = cursor.getString(2);
+					account.password = cursor.getString(3);
+					account.mail = cursor.getString(4);
+					account.description = cursor.getString(5);
+				}
+			}
+
+			db.setTransactionSuccessful();
+			db.endTransaction();
+		}finally {
+			db = null;
+			if(cursor != null && !cursor.isClosed()){
+				cursor.close();
 			}
 		}
 		return account;
@@ -103,7 +118,8 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
-			db = mDBHelper.getReadableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+			db = mDBHelper.getDatabase();
+			db.beginTransaction();
 			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
 			if (cursor != null) {
 				while (cursor.moveToNext()) {
@@ -118,10 +134,11 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 					list.add(account);
 				}
 			}
+
+			db.setTransactionSuccessful();
+			db.endTransaction();
 		}finally{
-			if(db != null && db.isOpen()){
-				db.close();
-			}
+			db = null;
 			if(cursor != null && !cursor.isClosed()){
 				cursor.close();
 			}
@@ -159,7 +176,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 
 		SQLiteDatabase db = null;
 		try{
-			db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+			db = mDBHelper.getDatabase();
 			db.beginTransaction();
 			db.insertOrThrow(Password.table_name, null, values);
 			db.setTransactionSuccessful();
@@ -169,9 +186,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		}catch (SQLException exception){
 			exception.printStackTrace();
 		}finally {
-			if(db != null && db.isOpen()){
-				db.close();
-			}
+			db = null;
 		}
 
 		return is_successful;
@@ -194,7 +209,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		String []where_args = {old_id};
 
 		try{
-			db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+			db = mDBHelper.getDatabase();
 			db.beginTransaction();
 			db.update(Password.table_name, values, where, where_args);
 			db.setTransactionSuccessful();
@@ -204,9 +219,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		}catch (SQLException exception){
 			exception.printStackTrace();
 		}finally{
-			if(db != null && db.isOpen()){
-				db.close();
-			}
+			db = null;
 		}
 
 		return is_successful;
@@ -224,7 +237,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		String []where_args = {id};
 
 		try{
-			db = mDBHelper.getWritableDatabase(SQLCipherOpenHelper.DATABASE_PASSWORD);
+			db = mDBHelper.getDatabase();
 			db.beginTransaction();
 			db.delete(Password.table_name, where, where_args);
 			db.setTransactionSuccessful();
@@ -234,9 +247,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		}catch (SQLException exception){
 			exception.printStackTrace();
 		}finally {
-			if(db != null && db.isOpen()){
-				db.close();
-			}
+			db = null;
 		}
 
 		return is_successful;

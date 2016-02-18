@@ -2,4 +2,17 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Material Design Roboto Font -->
+    <dimen name="display_4_light">112sp</dimen>
+    <dimen name="display_3_regular">56sp</dimen>
+    <dimen name="display_2_regular">45sp</dimen>
+    <dimen name="display_1_regular">34sp</dimen>
+    <dimen name="headline_regular">24sp</dimen>
+    <dimen name="title_medium">20sp</dimen>
+    <dimen name="subhead_regular">16sp</dimen>
+    <dimen name="body_2_medium">14sp</dimen>
+    <dimen name="body_1_regular">14sp</dimen>
+    <dimen name="caption_regular">12sp</dimen>
+    <dimen name="button_medium">14sp</dimen>
 </resources>

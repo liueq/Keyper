@@ -19,9 +19,12 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
 	private static SQLCipherOpenHelper mInstance;
 
+	private static SQLiteDatabase mDatabase;
+
 	public static SQLCipherOpenHelper getInstance(Context context){
 		if(mInstance == null){
 			mInstance = new SQLCipherOpenHelper(context);
+			mDatabase = mInstance.getWritableDatabase(DATABASE_PASSWORD);
 		}
 
 		return mInstance;
@@ -40,5 +43,15 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 	@Override
 	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+	}
+
+	public SQLiteDatabase getDatabase(){
+		return mDatabase;
+	}
+
+	public void closeDatabase(){
+		if(mDatabase != null && mDatabase.isOpen()){
+			mDatabase.close();
+		}
 	}
 }

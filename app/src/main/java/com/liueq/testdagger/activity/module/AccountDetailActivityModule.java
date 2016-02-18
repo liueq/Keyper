@@ -8,6 +8,7 @@ import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
 import com.liueq.testdagger.domain.interactor.DeleteAccountUseCase;
+import com.liueq.testdagger.domain.interactor.GetAccountDetailUseCase;
 import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
 import com.liueq.testdagger.domain.interactor.GetSpUseCase;
 import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
@@ -49,7 +50,8 @@ public class AccountDetailActivityModule {
         SaveAccountListUseCase saveAccountListUseCase = new SaveAccountListUseCase(ar, getSpUseCase);
         GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase(ar, getSpUseCase);
         DeleteAccountUseCase deleteAccountUseCase = new DeleteAccountUseCase(ar);
+        GetAccountDetailUseCase getAccountDetailUseCase = new GetAccountDetailUseCase(ar);
 
-        return new AccountDetailActivityPresenter(accountDetailActivity, accountList, saveAccountListUseCase, getAccountListUseCase, deleteAccountUseCase);
+        return new AccountDetailActivityPresenter(accountDetailActivity, accountList, saveAccountListUseCase, getAccountListUseCase, deleteAccountUseCase, getAccountDetailUseCase);
     }
 }

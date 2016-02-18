@@ -33,28 +33,37 @@ public class AccountDetailActivityPresenter extends Presenter{
 
     private AccountDetailActivity activity;
     List<Account> mAccountList;
+    public String mId;
     private Account mCurrentAccount;
+
     SaveAccountListUseCase saveAccountListUseCase;
     GetAccountListUseCase getAccountListUseCase;
     DeleteAccountUseCase deleteAccountUseCase;
+    GetAccountDetailUseCase getAccountDetailUseCase;
 
     public AccountDetailActivityPresenter(AccountDetailActivity activity,
                                           List<Account> accountList,
                                           SaveAccountListUseCase saveAccountListUseCase,
                                           GetAccountListUseCase getAccountListUseCase,
-                                          DeleteAccountUseCase deleteAccountUseCase){
+                                          DeleteAccountUseCase deleteAccountUseCase,
+                                          GetAccountDetailUseCase getAccountDetailUseCase){
         this.activity = activity;
         this.mAccountList = accountList;
 
         this.saveAccountListUseCase = saveAccountListUseCase;
         this.getAccountListUseCase = getAccountListUseCase;
         this.deleteAccountUseCase = deleteAccountUseCase;
+        this.getAccountDetailUseCase = getAccountDetailUseCase;
     }
 
-    public void loadData(Bundle bundle){
-        mCurrentAccount = (Account) bundle.getSerializable("account");
-        activity.updateUI(mCurrentAccount);
+    public void init(Bundle bundle){
+        Account account = (Account) bundle.getSerializable("account");
+        mId = account.id;
+    }
 
+    public Account loadData(String id){
+        mCurrentAccount = getAccountDetailUseCase.execute(id);
+        return mCurrentAccount;
     }
 
     /**
@@ -63,11 +72,7 @@ public class AccountDetailActivityPresenter extends Presenter{
      * @return
      */
     public boolean saveData(Account account){
-
         if(!TextUtils.isEmpty(account.site)){
-//            mCurrentAccount = (Account) saveAccountListUseCase.execute(mAccountList, account);
-//            mAccountList.clear();
-//            mAccountList.addAll(getAccountListUseCase.execute());
             return saveAccountListUseCase.executeDB(account);
         }else{
             return false;
@@ -81,6 +86,5 @@ public class AccountDetailActivityPresenter extends Presenter{
     public boolean deleteAccount(){
         return deleteAccountUseCase.executeDB(mCurrentAccount);
     }
-
 
 }
