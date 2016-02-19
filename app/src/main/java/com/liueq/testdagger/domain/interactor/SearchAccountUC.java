@@ -2,6 +2,7 @@ package com.liueq.testdagger.domain.interactor;
 
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.StarRepo;
 
 import java.util.List;
 
@@ -14,13 +15,17 @@ import javax.inject.Inject;
 public class SearchAccountUC extends UseCase {
 
     AccountRepo mAR;
+    StarRepo mSR;
 
     @Inject
-    public SearchAccountUC(AccountRepo AR){
+    public SearchAccountUC(AccountRepo AR, StarRepo SR){
         this.mAR = AR;
+        this.mSR = SR;
     }
 
     public List<Account> execute(String key){
-        return mAR.searchAccount(key);
+        List<Account> list = mAR.searchAccount(key);
+        list = mSR.getStarStatusList(list);
+        return list;
     }
 }

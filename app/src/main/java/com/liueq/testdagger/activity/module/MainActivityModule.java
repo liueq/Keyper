@@ -7,9 +7,12 @@ import com.liueq.testdagger.data.repository.AccountRepo;
 import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
+import com.liueq.testdagger.data.repository.StarRepo;
+import com.liueq.testdagger.data.repository.StarRepoDBImpl;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
 import com.liueq.testdagger.domain.interactor.GetSpUC;
 import com.liueq.testdagger.domain.interactor.SearchAccountUC;
+import com.liueq.testdagger.domain.interactor.StarUC;
 import com.liueq.testdagger.ui.activity.presenter.MainActivityPresenter;
 import com.liueq.testdagger.utils.FileReader;
 
@@ -46,12 +49,15 @@ public class MainActivityModule {
         SharedPreferenceRepo spr = new SharedPreferenceRepoImpl(mainActivity);
         GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepoImpl) spr);
 
-//        AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUseCase);
+        //Repository
         AccountRepo ar = new AccountRepoDBImpl(mainActivity, getSpUC);
+        StarRepo sr = new StarRepoDBImpl(mainActivity);
 
-        GetAccountListUC getAccountListUC = new GetAccountListUC(ar, getSpUC);
-        SearchAccountUC searchAccountUC = new SearchAccountUC(ar);
+        //UseCase
+        GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr, getSpUC);
+        SearchAccountUC searchAccountUC = new SearchAccountUC(ar, sr);
+        StarUC starUC = new StarUC(sr);
 
-        return new MainActivityPresenter(mainActivity, accountList, getAccountListUC, searchAccountUC);
+        return new MainActivityPresenter(mainActivity, accountList, getAccountListUC, searchAccountUC, starUC);
     }
 }

@@ -2,6 +2,7 @@ package com.liueq.testdagger.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,9 @@ import com.liueq.testdagger.data.model.Account;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.annotation.Resources;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -30,16 +34,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 
     private Context mContext;
     private List<Account> mList = new ArrayList<Account>();
-    private View.OnClickListener mListener;
+    private OnItemClickListener mListener;
 
-    private static final int star_resource = R.mipmap.ic_star_black_24dp;
-    private static final int unstar_resource = R.mipmap.ic_star_outline_black_24dp;
-    private static final int star_tint_color = R.color.yellow;
-    private static final int unstar_tint_color = R.color.grey;
-
-    public RecyclerListAdapter(Context context, List<Account> list){
+    public RecyclerListAdapter(Context context, List<Account> list, OnItemClickListener listener){
         this.mContext = context;
         this.mList.addAll(list);
+        this.mListener = listener;
     }
 
     @Override
@@ -53,15 +53,27 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Account account = mList.get(position);
         holder.mTextView.setText(account.site);
+        if(account.is_stared){
+            starImage(holder);
+        }else {
+            unStarImage(holder);
+        }
+
+//        holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("account", account);
+//
+//                Intent intent = new Intent(mContext, AccountDetailActivity.class);
+//                intent.putExtras(bundle);
+//                mContext.startActivity(intent);
+//            }
+//        });
         holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("account", account);
-
-                Intent intent = new Intent(mContext, AccountDetailActivity.class);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                mListener.onItemClicked(holder.mLinearLayout, account, position);
             }
         });
 
@@ -69,14 +81,42 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             @Override
             public void onClick(View v) {
                 //TODO star or unstar
+                if(account.is_stared){
+                    //unstar
+                    unStarImage(holder);
+                }else{
+                    //star
+                    starImage(holder);
+                }
 
+                mListener.onItemClicked(holder.mImageView, account, position);
             }
         });
+    }
+
+    private void starImage(ViewHolder holder){
+        Drawable drawable = mContext.getDrawable(R.mipmap.ic_star_black_24dp);
+        drawable.setTint(mContext.getResources().getColor(R.color.yellow));
+        holder.mImageView.setImageDrawable(drawable);
+    }
+
+    private void unStarImage(ViewHolder holder){
+        Drawable drawable = mContext.getDrawable(R.mipmap.ic_star_outline_black_24dp);
+        drawable.setTint(mContext.getResources().getColor(R.color.grey));
+        holder.mImageView.setImageDrawable(drawable);
     }
 
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    public void clear(){
+        mList.clear();
+    }
+
+    public void addAll(List<Account> list){
+        mList.addAll(list);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -88,17 +128,17 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         @Bind(R.id.iv_star)
         ImageView mImageView;
 
+        public static int ID_LienarLayout = R.id.ll_container;
+        public static int ID_TextView = R.id.tv_item;
+        public static int ID_ImageView = R.id.iv_star;
+
         public ViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public void clear(){
-        mList.clear();
-    }
-
-    public void addAll(List<Account> list){
-        mList.addAll(list);
+    public interface OnItemClickListener{
+        void onItemClicked(View view, Object item, int position);
     }
 }

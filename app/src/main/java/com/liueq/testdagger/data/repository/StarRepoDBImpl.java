@@ -8,8 +8,11 @@ import com.liueq.testdagger.data.database.DBTables.Star;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
 
+import net.sqlcipher.Cursor;
 import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
+
+import java.util.List;
 
 /**
  * Created by liueq on 19/2/2016.
@@ -69,5 +72,34 @@ public class StarRepoDBImpl implements StarRepo{
 			db = null;
 		}
 		return result;
+	}
+
+	@Override
+	public Account getStarStatus(Account account) {
+		boolean stared = false;
+		SQLiteDatabase db = mDBHelper.getDatabase();
+		String selection = Star.link_id + " = ?";
+		String [] selectionArgs = {account.id};
+
+		Cursor cursor = db.query(Star.table_name, Star.ALL_COLUMN, selection, selectionArgs, null, null, null);
+		if(cursor.moveToNext()){
+			cursor.getInt(0);
+			String type = cursor.getString(1);
+
+			if(type.equals(Star.TYPE_ACCOUNT)){
+				stared = true;
+			}
+		}
+
+		account.is_stared = stared;
+		return account;
+	}
+
+	@Override
+	public List<Account> getStarStatusList(List<Account> list) {
+		for(Account account : list){
+			getStarStatus(account);
+		}
+		return list;
 	}
 }

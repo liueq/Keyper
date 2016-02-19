@@ -15,6 +15,8 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
     public String mail;
     public String description;
 
+    public boolean is_stared;
+
     public Account(){
 //        Random random = new Random();
 //        this.id = String.valueOf(System.currentTimeMillis() + random.nextInt(1000));
@@ -24,14 +26,14 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
     public String toString() {
         return "Account{" +
                 "id='" + id + '\'' +
-                "site='" + site + '\'' +
+                ", site='" + site + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
                 ", description='" + description + '\'' +
+                ", is_stared=" + is_stared +
                 '}';
     }
-
 
     @Override
     public int compareTo(Account another) {
@@ -52,6 +54,7 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
         a.password = this.password;
         a.mail = this.mail;
         a.description = this.description;
+        a.is_stared = this.is_stared;
         return a;
     }
 }

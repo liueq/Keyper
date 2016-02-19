@@ -1,5 +1,6 @@
 package com.liueq.testdagger.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.liueq.testdagger.R;
+import com.liueq.testdagger.activity.AccountDetailActivity;
 import com.liueq.testdagger.activity.MainActivity;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.ui.activity.presenter.MainActivityPresenter;
@@ -29,7 +31,7 @@ import rx.schedulers.Schedulers;
  * Created by liueq on 17/2/2016.
  * 主界面，ALL tab
  */
-public class ListFragment extends Fragment{
+public class ListFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener{
 
 	@Bind(R.id.recycler)
 	RecyclerView mRecycler;
@@ -68,7 +70,7 @@ public class ListFragment extends Fragment{
 	private void initView(){
 		mRecycler.setHasFixedSize(true);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerListAdapter = new RecyclerListAdapter(getActivity(), new ArrayList<Account>());
+        recyclerListAdapter = new RecyclerListAdapter(getActivity(), new ArrayList<Account>(), this);
 		mRecycler.setAdapter(recyclerListAdapter);
 
 		mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -179,5 +181,23 @@ public class ListFragment extends Fragment{
 				updateUI(accounts);
 			}
 		};
+	}
+
+	@Override
+	public void onItemClicked(View view, Object item, int position) {
+		int id = view.getId();
+		Account account = (Account) item;
+		if(id == RecyclerListAdapter.ViewHolder.ID_LienarLayout){
+			//Launch detail activity
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("account", account);
+
+			Intent intent = new Intent(mActivity, AccountDetailActivity.class);
+			intent.putExtras(bundle);
+			mActivity.startActivity(intent);
+		}else if(id == RecyclerListAdapter.ViewHolder.ID_ImageView){
+			//Star
+			mPresneter.starOrUnStar(account);
+		}
 	}
 }

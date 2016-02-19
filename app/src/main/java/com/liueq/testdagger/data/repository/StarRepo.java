@@ -2,6 +2,8 @@ package com.liueq.testdagger.data.repository;
 
 import com.liueq.testdagger.data.model.Account;
 
+import java.util.List;
+
 /**
  * Created by liueq on 19/2/2016.
  * 标星
@@ -21,5 +23,19 @@ public interface StarRepo {
 	 * @return
 	 */
 	boolean unStarAccount(Account account);
+
+	/**
+	 * 给Account 返回其Star 状态
+	 * @param account
+	 * @return
+	 */
+	Account getStarStatus(Account account);
+
+	/**
+	 * 给Account List 返回Star 状态
+	 * @param list
+	 * @return
+	 */
+	List<Account> getStarStatusList(List<Account> list);
 
 }

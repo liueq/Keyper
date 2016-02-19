@@ -3,6 +3,7 @@ package com.liueq.testdagger.domain.interactor;
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.StarRepo;
 import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.HashMap;
@@ -12,16 +13,22 @@ import javax.inject.Inject;
 
 /**
  * Created by liueq on 27/7/15.
+ * 获取AccountList的UseCase
+ *      包括从AccountRepo, StarRepo 获取数据
  */
 public class GetAccountListUC extends UseCase {
 
     AccountRepo mAR;
+    StarRepo mSR;
+
     GetSpUC mGetSpUC;
+
     public final static String TAG = "GetALUS";
 
     @Inject
-    public GetAccountListUC(AccountRepo AR, GetSpUC getSpUC){
+    public GetAccountListUC(AccountRepo AR, StarRepo SR, GetSpUC getSpUC){
         this.mAR = AR;
+        this.mSR = SR;
         this.mGetSpUC = getSpUC;
     }
 
@@ -56,7 +63,9 @@ public class GetAccountListUC extends UseCase {
     }
 
     public List<Account> executeDB(){
-        return mAR.getAccountList();
+        List<Account> list = mAR.getAccountList();
+        list = mSR.getStarStatusList(list);
+        return list;
     }
 
 }
