@@ -40,6 +40,8 @@ public class BackUpTool {
 			Log.e("liueq", "importDB: database is null");
 		}
 
+		database.close();
+
 		AccountRepoDBImpl ARI = new AccountRepoDBImpl(context, null);
 		for(Account a : accounts){
 			ARI.insertAccount(a);

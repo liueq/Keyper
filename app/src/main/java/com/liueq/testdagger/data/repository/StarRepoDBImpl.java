@@ -81,15 +81,23 @@ public class StarRepoDBImpl implements StarRepo{
 		String selection = Star.link_id + " = ?";
 		String [] selectionArgs = {account.id};
 
-		Cursor cursor = db.query(Star.table_name, Star.ALL_COLUMN, selection, selectionArgs, null, null, null);
-		if(cursor.moveToNext()){
-			cursor.getInt(0);
-			String type = cursor.getString(1);
+		Cursor cursor = null;
+		try {
+			cursor = db.query(Star.table_name, Star.ALL_COLUMN, selection, selectionArgs, null, null, null);
+			if (cursor.moveToNext()) {
+				cursor.getInt(0);
+				String type = cursor.getString(1);
 
-			if(type.equals(Star.TYPE_ACCOUNT)){
-				stared = true;
+				if (type.equals(Star.TYPE_ACCOUNT)) {
+					stared = true;
+				}
+			}
+		}finally {
+			if(cursor != null && !cursor.isClosed()){
+				cursor.close();
 			}
 		}
+
 
 		account.is_stared = stared;
 		return account;
