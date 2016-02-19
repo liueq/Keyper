@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,11 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     private List<Account> mList = new ArrayList<Account>();
     private View.OnClickListener mListener;
 
+    private static final int star_resource = R.mipmap.ic_star_black_24dp;
+    private static final int unstar_resource = R.mipmap.ic_star_outline_black_24dp;
+    private static final int star_tint_color = R.color.yellow;
+    private static final int unstar_tint_color = R.color.grey;
+
     public RecyclerListAdapter(Context context, List<Account> list){
         this.mContext = context;
         this.mList.addAll(list);
@@ -43,17 +50,26 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.mTextView.setText(mList.get(position).site);
-        holder.mTextView.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final Account account = mList.get(position);
+        holder.mTextView.setText(account.site);
+        holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("account", mList.get(position));
+                bundle.putSerializable("account", account);
 
                 Intent intent = new Intent(mContext, AccountDetailActivity.class);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
+            }
+        });
+
+        holder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO star or unstar
+
             }
         });
     }
@@ -65,8 +81,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
+        @Bind(R.id.ll_container)
+        LinearLayout mLinearLayout;
         @Bind(R.id.tv_item)
         TextView mTextView;
+        @Bind(R.id.iv_star)
+        ImageView mImageView;
 
         public ViewHolder(View itemView){
             super(itemView);
