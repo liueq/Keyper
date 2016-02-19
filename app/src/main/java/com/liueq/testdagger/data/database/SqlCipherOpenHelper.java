@@ -36,8 +36,14 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase sqLiteDatabase) {
-		String sql = DBTables.Password.SQL_CREATE;
-		sqLiteDatabase.execSQL(sql);
+		sqLiteDatabase.beginTransaction();
+
+		sqLiteDatabase.execSQL(DBTables.Password.SQL_CREATE);
+		sqLiteDatabase.execSQL(DBTables.Free.SQL_CREATE);
+		sqLiteDatabase.execSQL(DBTables.Star.SQL_CREATE);
+
+		sqLiteDatabase.setTransactionSuccessful();
+		sqLiteDatabase.endTransaction();
 	}
 
 	@Override
