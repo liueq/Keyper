@@ -46,7 +46,11 @@ public class DBTables {
 
 		public static final String type = "type";
 
+		public static final String TYPE_ACCOUNT = "account";
+		public static final String TYPE_FREE = "free";
+
 		public static final String link_id = "link_id"; //Foreign key
+
 
 		public static String SQL_CREATE = "CREATE TABLE " + table_name + " (" + id + " INTEGER NOT NULL PRIMARY KEY, " +
 				type + " TEXT NOT NULL, " +
