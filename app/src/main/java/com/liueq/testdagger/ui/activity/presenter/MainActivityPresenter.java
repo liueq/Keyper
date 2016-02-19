@@ -2,12 +2,10 @@ package com.liueq.testdagger.ui.activity.presenter;
 
 import com.liueq.testdagger.activity.MainActivity;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
-import com.liueq.testdagger.domain.interactor.SearchAccountUseCase;
+import com.liueq.testdagger.domain.interactor.GetAccountListUC;
+import com.liueq.testdagger.domain.interactor.SearchAccountUC;
 
 import java.util.List;
-
-import rx.Subscription;
 
 /**
  * Created by liueq on 13/7/15.
@@ -18,18 +16,18 @@ public class MainActivityPresenter extends Presenter{
 
     private MainActivity mainActivity;
     List<Account> mAccountList;
-    GetAccountListUseCase getAccountListUseCase;
-    SearchAccountUseCase searchAccountUseCase;
+    GetAccountListUC getAccountListUC;
+    SearchAccountUC searchAccountUC;
 
-    public MainActivityPresenter(MainActivity mainActivity, List<Account> list, GetAccountListUseCase getAccountListUseCase, SearchAccountUseCase searchAccountUseCase) {
+    public MainActivityPresenter(MainActivity mainActivity, List<Account> list, GetAccountListUC getAccountListUC, SearchAccountUC searchAccountUC) {
         this.mainActivity = mainActivity;
         this.mAccountList = list;
-        this.getAccountListUseCase = getAccountListUseCase;
-        this.searchAccountUseCase = searchAccountUseCase;
+        this.getAccountListUC = getAccountListUC;
+        this.searchAccountUC = searchAccountUC;
     }
 
     public List<Account> loadList(){
-        return getAccountListUseCase.executeDB();
+        return getAccountListUC.executeDB();
     }
 
     public void loadData(){
@@ -39,7 +37,7 @@ public class MainActivityPresenter extends Presenter{
     }
 
     public List<Account> search(String searchKey){
-        return searchAccountUseCase.execute(searchKey);
+        return searchAccountUC.execute(searchKey);
     }
 
 }

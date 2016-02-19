@@ -3,22 +3,24 @@ package com.liueq.testdagger.domain.interactor;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepository;
 
+import java.util.List;
+
 import javax.inject.Inject;
+
 
 /**
  * Created by liueq on 27/7/15.
- * 实际没有使用
  */
-public class GetAccountDetailUseCase extends UseCase {
+public class SearchAccountUC extends UseCase {
 
     AccountRepository mAR;
 
     @Inject
-    public GetAccountDetailUseCase(AccountRepository AR){
-        mAR = AR;
+    public SearchAccountUC(AccountRepository AR){
+        this.mAR = AR;
     }
 
-    public Account execute(String userId) {
-        return mAR.getAccountDetail(userId);
+    public List<Account> execute(String key){
+        return mAR.searchAccount(key);
     }
 }

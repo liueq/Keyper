@@ -6,11 +6,11 @@ import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepository;
 import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
-import com.liueq.testdagger.domain.interactor.CheckPasswordUseCase;
-import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
-import com.liueq.testdagger.domain.interactor.GetSpUseCase;
-import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
-import com.liueq.testdagger.domain.interactor.SetSpUseCase;
+import com.liueq.testdagger.domain.interactor.CheckPasswordUC;
+import com.liueq.testdagger.domain.interactor.GetAccountListUC;
+import com.liueq.testdagger.domain.interactor.GetSpUC;
+import com.liueq.testdagger.domain.interactor.SaveAccountListUC;
+import com.liueq.testdagger.domain.interactor.SetSpUC;
 import com.liueq.testdagger.ui.activity.presenter.SettingsActivityPresenter;
 import com.liueq.testdagger.utils.FileReader;
 
@@ -44,22 +44,22 @@ public class SettingsActivityModule {
 
         SharedPreferenceRepositoryImpl impl = new SharedPreferenceRepositoryImpl(settingsActivity);
 
-        GetSpUseCase getSpUseCase = new GetSpUseCase(impl);
-        SetSpUseCase setSpUseCase = new SetSpUseCase(impl);
+        GetSpUC getSpUC = new GetSpUC(impl);
+        SetSpUC setSpUC = new SetSpUC(impl);
 
-        AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUseCase);
+        AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUC);
 
-        SaveAccountListUseCase saveAccountListUseCase = new SaveAccountListUseCase(ar, getSpUseCase);
-        GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase(ar, getSpUseCase);
-        CheckPasswordUseCase checkPasswordUseCase = new CheckPasswordUseCase(impl);
+        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC);
+        GetAccountListUC getAccountListUC = new GetAccountListUC(ar, getSpUC);
+        CheckPasswordUC checkPasswordUC = new CheckPasswordUC(impl);
 
         return new SettingsActivityPresenter(settingsActivity,
                 accountList,
-                setSpUseCase,
-                getSpUseCase,
-                checkPasswordUseCase,
-                saveAccountListUseCase,
-                getAccountListUseCase
+                setSpUC,
+                getSpUC,
+                checkPasswordUC,
+                saveAccountListUC,
+                getAccountListUC
         );
     }
 }

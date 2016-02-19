@@ -7,7 +7,7 @@ import com.google.gson.stream.JsonReader;
 import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.domain.interactor.GetSpUseCase;
+import com.liueq.testdagger.domain.interactor.GetSpUC;
 import com.liueq.testdagger.utils.FileReader;
 import com.liueq.testdagger.utils.JsonParser;
 
@@ -26,11 +26,11 @@ public class AccountRepositoryImpl implements AccountRepository {
     FileReader mFileReader;
     List<Account> mAccountList;
     List<Account> mFilteredList;
-    GetSpUseCase mGetSpUseCase;
+    GetSpUC mGetSpUC;
 
-    public AccountRepositoryImpl(FileReader fileReader, GetSpUseCase getSpUseCase) {
+    public AccountRepositoryImpl(FileReader fileReader, GetSpUC getSpUC) {
         mFileReader = fileReader;
-        mGetSpUseCase = getSpUseCase;
+        mGetSpUC = getSpUC;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 
         //文件位置选择
-        HashMap<String, Boolean> map = mGetSpUseCase.getFileSavePath();
+        HashMap<String, Boolean> map = mGetSpUC.getFileSavePath();
 
         if (map.get(Constants.SP_IS_SAVE_INTERNAL)) {
             Log.d(TAG, "getAccountList from INTERNAL");
@@ -128,7 +128,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public void saveAccountList(List<Account> accountList) {
         //增加选择保存文件位置
-        HashMap<String, Boolean> map = mGetSpUseCase.getFileSavePath();
+        HashMap<String, Boolean> map = mGetSpUC.getFileSavePath();
 
         if (map.get(Constants.SP_IS_SAVE_EXTERNAL)) {
             mFileReader.setmFilePath(Constants.EXTERNAL_STORAGE_PATH);

@@ -11,14 +11,14 @@ import javax.inject.Inject;
 /**
  * Created by liueq on 30/7/15.
  */
-public class CheckPasswordUseCase extends UseCase {
+public class CheckPasswordUC extends UseCase {
 
     public final static String TAG = "CPUC";
 
     private SharedPreferenceRepositoryImpl impl;
 
     @Inject
-    public CheckPasswordUseCase(SharedPreferenceRepositoryImpl impl){
+    public CheckPasswordUC(SharedPreferenceRepositoryImpl impl){
         this.impl = impl;
     }
 

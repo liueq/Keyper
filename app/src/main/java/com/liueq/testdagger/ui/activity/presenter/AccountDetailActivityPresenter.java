@@ -1,27 +1,15 @@
 package com.liueq.testdagger.ui.activity.presenter;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.ProgressBar;
 
-import com.google.gson.stream.JsonReader;
-import com.liueq.testdagger.BuildConfig;
-import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.activity.AccountDetailActivity;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.domain.interactor.DeleteAccountUseCase;
-import com.liueq.testdagger.domain.interactor.GetAccountDetailUseCase;
-import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
-import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
-import com.liueq.testdagger.utils.Encrypter;
-import com.liueq.testdagger.utils.FileReader;
-import com.liueq.testdagger.utils.JsonParser;
+import com.liueq.testdagger.domain.interactor.DeleteAccountUC;
+import com.liueq.testdagger.domain.interactor.GetAccountDetailUC;
+import com.liueq.testdagger.domain.interactor.GetAccountListUC;
+import com.liueq.testdagger.domain.interactor.SaveAccountListUC;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,24 +24,24 @@ public class AccountDetailActivityPresenter extends Presenter{
     public String mId;
     private Account mCurrentAccount;
 
-    SaveAccountListUseCase saveAccountListUseCase;
-    GetAccountListUseCase getAccountListUseCase;
-    DeleteAccountUseCase deleteAccountUseCase;
-    GetAccountDetailUseCase getAccountDetailUseCase;
+    SaveAccountListUC saveAccountListUC;
+    GetAccountListUC getAccountListUC;
+    DeleteAccountUC deleteAccountUC;
+    GetAccountDetailUC getAccountDetailUC;
 
     public AccountDetailActivityPresenter(AccountDetailActivity activity,
                                           List<Account> accountList,
-                                          SaveAccountListUseCase saveAccountListUseCase,
-                                          GetAccountListUseCase getAccountListUseCase,
-                                          DeleteAccountUseCase deleteAccountUseCase,
-                                          GetAccountDetailUseCase getAccountDetailUseCase){
+                                          SaveAccountListUC saveAccountListUC,
+                                          GetAccountListUC getAccountListUC,
+                                          DeleteAccountUC deleteAccountUC,
+                                          GetAccountDetailUC getAccountDetailUC){
         this.activity = activity;
         this.mAccountList = accountList;
 
-        this.saveAccountListUseCase = saveAccountListUseCase;
-        this.getAccountListUseCase = getAccountListUseCase;
-        this.deleteAccountUseCase = deleteAccountUseCase;
-        this.getAccountDetailUseCase = getAccountDetailUseCase;
+        this.saveAccountListUC = saveAccountListUC;
+        this.getAccountListUC = getAccountListUC;
+        this.deleteAccountUC = deleteAccountUC;
+        this.getAccountDetailUC = getAccountDetailUC;
     }
 
     public void init(Bundle bundle){
@@ -62,7 +50,7 @@ public class AccountDetailActivityPresenter extends Presenter{
     }
 
     public Account loadData(String id){
-        mCurrentAccount = getAccountDetailUseCase.execute(id);
+        mCurrentAccount = getAccountDetailUC.execute(id);
         return mCurrentAccount;
     }
 
@@ -73,7 +61,7 @@ public class AccountDetailActivityPresenter extends Presenter{
      */
     public boolean saveData(Account account){
         if(!TextUtils.isEmpty(account.site)){
-            return saveAccountListUseCase.executeDB(account);
+            return saveAccountListUC.executeDB(account);
         }else{
             return false;
         }
@@ -84,7 +72,7 @@ public class AccountDetailActivityPresenter extends Presenter{
     }
 
     public boolean deleteAccount(){
-        return deleteAccountUseCase.executeDB(mCurrentAccount);
+        return deleteAccountUC.executeDB(mCurrentAccount);
     }
 
 }

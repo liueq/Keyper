@@ -7,9 +7,9 @@ import com.liueq.testdagger.data.repository.AccountRepository;
 import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
-import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
-import com.liueq.testdagger.domain.interactor.GetSpUseCase;
-import com.liueq.testdagger.domain.interactor.SearchAccountUseCase;
+import com.liueq.testdagger.domain.interactor.GetAccountListUC;
+import com.liueq.testdagger.domain.interactor.GetSpUC;
+import com.liueq.testdagger.domain.interactor.SearchAccountUC;
 import com.liueq.testdagger.ui.activity.presenter.MainActivityPresenter;
 import com.liueq.testdagger.utils.FileReader;
 
@@ -44,14 +44,14 @@ public class MainActivityModule {
 
 
         SharedPreferenceRepository spr = new SharedPreferenceRepositoryImpl(mainActivity);
-        GetSpUseCase getSpUseCase = new GetSpUseCase((SharedPreferenceRepositoryImpl) spr);
+        GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepositoryImpl) spr);
 
 //        AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUseCase);
-        AccountRepository ar = new AccountRepositoryDBImpl(mainActivity, getSpUseCase);
+        AccountRepository ar = new AccountRepositoryDBImpl(mainActivity, getSpUC);
 
-        GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase(ar, getSpUseCase);
-        SearchAccountUseCase searchAccountUseCase = new SearchAccountUseCase(ar);
+        GetAccountListUC getAccountListUC = new GetAccountListUC(ar, getSpUC);
+        SearchAccountUC searchAccountUC = new SearchAccountUC(ar);
 
-        return new MainActivityPresenter(mainActivity, accountList, getAccountListUseCase, searchAccountUseCase);
+        return new MainActivityPresenter(mainActivity, accountList, getAccountListUC, searchAccountUC);
     }
 }

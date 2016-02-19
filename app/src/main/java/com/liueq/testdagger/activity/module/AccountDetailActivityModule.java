@@ -7,11 +7,11 @@ import com.liueq.testdagger.data.repository.AccountRepository;
 import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
-import com.liueq.testdagger.domain.interactor.DeleteAccountUseCase;
-import com.liueq.testdagger.domain.interactor.GetAccountDetailUseCase;
-import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
-import com.liueq.testdagger.domain.interactor.GetSpUseCase;
-import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
+import com.liueq.testdagger.domain.interactor.DeleteAccountUC;
+import com.liueq.testdagger.domain.interactor.GetAccountDetailUC;
+import com.liueq.testdagger.domain.interactor.GetAccountListUC;
+import com.liueq.testdagger.domain.interactor.GetSpUC;
+import com.liueq.testdagger.domain.interactor.SaveAccountListUC;
 import com.liueq.testdagger.ui.activity.presenter.AccountDetailActivityPresenter;
 import com.liueq.testdagger.utils.FileReader;
 
@@ -43,15 +43,15 @@ public class AccountDetailActivityModule {
     AccountDetailActivityPresenter provideAccountDetailActivityPresenter(FileReader fileReader, List<Account> accountList){
 
         SharedPreferenceRepository spr = new SharedPreferenceRepositoryImpl(accountDetailActivity);
-        GetSpUseCase getSpUseCase = new GetSpUseCase((SharedPreferenceRepositoryImpl) spr);
+        GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepositoryImpl) spr);
 
-        AccountRepository ar = new AccountRepositoryDBImpl(accountDetailActivity, getSpUseCase);
+        AccountRepository ar = new AccountRepositoryDBImpl(accountDetailActivity, getSpUC);
 
-        SaveAccountListUseCase saveAccountListUseCase = new SaveAccountListUseCase(ar, getSpUseCase);
-        GetAccountListUseCase getAccountListUseCase = new GetAccountListUseCase(ar, getSpUseCase);
-        DeleteAccountUseCase deleteAccountUseCase = new DeleteAccountUseCase(ar);
-        GetAccountDetailUseCase getAccountDetailUseCase = new GetAccountDetailUseCase(ar);
+        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC);
+        GetAccountListUC getAccountListUC = new GetAccountListUC(ar, getSpUC);
+        DeleteAccountUC deleteAccountUC = new DeleteAccountUC(ar);
+        GetAccountDetailUC getAccountDetailUC = new GetAccountDetailUC(ar);
 
-        return new AccountDetailActivityPresenter(accountDetailActivity, accountList, saveAccountListUseCase, getAccountListUseCase, deleteAccountUseCase, getAccountDetailUseCase);
+        return new AccountDetailActivityPresenter(accountDetailActivity, accountList, saveAccountListUC, getAccountListUC, deleteAccountUC, getAccountDetailUC);
     }
 }

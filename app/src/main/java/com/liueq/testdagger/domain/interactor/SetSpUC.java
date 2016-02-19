@@ -13,12 +13,12 @@ import javax.inject.Inject;
 /**
  * Created by liueq on 29/7/15.
  */
-public class SetSpUseCase {
+public class SetSpUC {
 
     private SharedPreferenceRepositoryImpl impl;
 
     @Inject
-    public SetSpUseCase(SharedPreferenceRepositoryImpl impl){
+    public SetSpUC(SharedPreferenceRepositoryImpl impl){
         this.impl = impl;
     }
 

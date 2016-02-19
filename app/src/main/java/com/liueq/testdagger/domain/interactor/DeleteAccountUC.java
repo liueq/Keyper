@@ -14,12 +14,12 @@ import javax.inject.Inject;
 /**
  * Created by liueq on 27/7/15.
  */
-public class DeleteAccountUseCase extends UseCase {
+public class DeleteAccountUC extends UseCase {
 
     AccountRepository mAR;
 
     @Inject
-    public DeleteAccountUseCase(AccountRepository ar){
+    public DeleteAccountUC(AccountRepository ar){
         mAR = ar;
     }
 

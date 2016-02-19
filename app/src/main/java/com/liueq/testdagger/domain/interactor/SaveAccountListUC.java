@@ -16,16 +16,16 @@ import javax.inject.Inject;
 /**
  * Created by liueq on 27/7/15.
  */
-public class SaveAccountListUseCase {
+public class SaveAccountListUC {
 
     AccountRepository mAR;
-    GetSpUseCase mGetSpUseCase;
+    GetSpUC mGetSpUC;
     public final static String TAG = "SaveAlus";
 
     @Inject
-    public SaveAccountListUseCase(AccountRepository AR, GetSpUseCase getSpUseCase){
+    public SaveAccountListUC(AccountRepository AR, GetSpUC getSpUC){
         mAR = AR;
-        mGetSpUseCase = getSpUseCase;
+        mGetSpUC = getSpUC;
     }
 
     public Object execute(List<Account> mList, Account account) {
@@ -59,11 +59,11 @@ public class SaveAccountListUseCase {
         }
 
         //从SP获取AES密钥
-        HashMap<String, String> map_aes = mGetSpUseCase.getAESPassword();
+        HashMap<String, String> map_aes = mGetSpUC.getAESPassword();
         String aes_key = map_aes.get(Constants.SP_AES);
 
         //选择加密字段
-        HashMap<String, String> map_enc_field = mGetSpUseCase.getEncStatus();
+        HashMap<String, String> map_enc_field = mGetSpUC.getEncStatus();
 
         //加密
         for(Account a : list){

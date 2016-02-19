@@ -6,11 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.liueq.testdagger.data.database.DBTables;
 import com.liueq.testdagger.data.database.DBTables.Password;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.domain.interactor.GetSpUseCase;
+import com.liueq.testdagger.domain.interactor.GetSpUC;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.SQLException;
@@ -29,12 +28,12 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 
 	List<Account> mAccountList;
 	List<Account> mFilteredList;
-	GetSpUseCase mGetSpUseCase;
+	GetSpUC mGetSpUC;
 
 	SQLCipherOpenHelper mDBHelper;
 
-	public AccountRepositoryDBImpl(Context context, GetSpUseCase getSpUseCase) {
-		mGetSpUseCase = getSpUseCase;
+	public AccountRepositoryDBImpl(Context context, GetSpUC getSpUC) {
+		mGetSpUC = getSpUC;
 		mDBHelper = SQLCipherOpenHelper.getInstance(context);
 	}
 

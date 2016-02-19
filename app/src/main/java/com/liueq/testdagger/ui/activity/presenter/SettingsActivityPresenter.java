@@ -1,21 +1,17 @@
 package com.liueq.testdagger.ui.activity.presenter;
 
-import android.util.Log;
-
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.activity.SettingsActivity;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.domain.interactor.CheckPasswordUseCase;
-import com.liueq.testdagger.domain.interactor.GetAccountListUseCase;
-import com.liueq.testdagger.domain.interactor.GetSpUseCase;
-import com.liueq.testdagger.domain.interactor.SaveAccountListUseCase;
-import com.liueq.testdagger.domain.interactor.SetSpUseCase;
+import com.liueq.testdagger.domain.interactor.CheckPasswordUC;
+import com.liueq.testdagger.domain.interactor.GetAccountListUC;
+import com.liueq.testdagger.domain.interactor.GetSpUC;
+import com.liueq.testdagger.domain.interactor.SaveAccountListUC;
+import com.liueq.testdagger.domain.interactor.SetSpUC;
 
 import java.util.HashMap;
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Created by liueq on 29/7/15.
@@ -26,27 +22,27 @@ public class SettingsActivityPresenter extends Presenter{
 
     private SettingsActivity mSettingsActivity;
     public List<Account> mList;
-    private SetSpUseCase mSetSpUseCase;
-    private GetSpUseCase mGetSpUseCase;
-    private CheckPasswordUseCase checkPasswordUseCase;
-    private SaveAccountListUseCase mSaveAccountListUseCase;
-    private GetAccountListUseCase mGetAccountListUseCase;
+    private SetSpUC mSetSpUC;
+    private GetSpUC mGetSpUC;
+    private CheckPasswordUC checkPasswordUC;
+    private SaveAccountListUC mSaveAccountListUC;
+    private GetAccountListUC mGetAccountListUC;
 
     public HashMap<String, Boolean> mFilePathState;
 
-    public SettingsActivityPresenter(SettingsActivity settingsActivity, List<Account> list, SetSpUseCase setSpUseCase, GetSpUseCase getSpUseCase, CheckPasswordUseCase checkPasswordUseCase, SaveAccountListUseCase saveAccountListUseCase, GetAccountListUseCase getAccountListUseCase){
+    public SettingsActivityPresenter(SettingsActivity settingsActivity, List<Account> list, SetSpUC setSpUC, GetSpUC getSpUC, CheckPasswordUC checkPasswordUC, SaveAccountListUC saveAccountListUC, GetAccountListUC getAccountListUC){
         this.mSettingsActivity = settingsActivity;
         this.mList = list;
-        this.mSetSpUseCase = setSpUseCase;
-        this.mGetSpUseCase = getSpUseCase;
-        this.checkPasswordUseCase = checkPasswordUseCase;
-        this.mSaveAccountListUseCase = saveAccountListUseCase;
-        this.mGetAccountListUseCase = getAccountListUseCase;
+        this.mSetSpUC = setSpUC;
+        this.mGetSpUC = getSpUC;
+        this.checkPasswordUC = checkPasswordUC;
+        this.mSaveAccountListUC = saveAccountListUC;
+        this.mGetAccountListUC = getAccountListUC;
     }
 
     public void initialSwitch(){
         //从UseCase层获取设定
-        HashMap<String, String> status = mGetSpUseCase.getEncStatus();
+        HashMap<String, String> status = mGetSpUC.getEncStatus();
         String pwd_enc_status = status.get(Constants.SP_IS_PWD_ENC);
         String desc_enc_status = status.get(Constants.SP_IS_DESC_ENC);
 
@@ -72,8 +68,8 @@ public class SettingsActivityPresenter extends Presenter{
 
     public void retrieveUIData() {
         //从SP获取AES密码和文件的保存路径
-        HashMap<String, String> aes_pwd_map = mGetSpUseCase.getAESPassword();
-        mFilePathState = mGetSpUseCase.getFileSavePath();
+        HashMap<String, String> aes_pwd_map = mGetSpUC.getAESPassword();
+        mFilePathState = mGetSpUC.getFileSavePath();
         String aes = aes_pwd_map.get(Constants.SP_AES);
 
         //设定到activity
@@ -93,35 +89,35 @@ public class SettingsActivityPresenter extends Presenter{
 //        mSettingsActivity.setShowPath(sb.toString());
     }
     public void encryptPwd(boolean encrypt){
-        mSetSpUseCase.savePwdEncStatus(encrypt);
+        mSetSpUC.savePwdEncStatus(encrypt);
     }
 
     public void encryptDesc(boolean encrypt){
-        mSetSpUseCase.saveDescEncStatus(encrypt);
+        mSetSpUC.saveDescEncStatus(encrypt);
     }
 
     public boolean checkPassword(String password){
-        return checkPasswordUseCase.execute(password);
+        return checkPasswordUC.execute(password);
     }
 
     public boolean savePassword(String password){
-        return mSetSpUseCase.savePassword(password);
+        return mSetSpUC.savePassword(password);
     }
 
     public boolean saveAes(String aes_pwd){
-        return mSetSpUseCase.saveAES(aes_pwd);
+        return mSetSpUC.saveAES(aes_pwd);
     }
 
     public boolean savePath(HashMap<String, Boolean> state){
-        return mSetSpUseCase.saveFilePathState(state);
+        return mSetSpUC.saveFilePathState(state);
     }
 
     public void saveData(){
-        mSaveAccountListUseCase.execute(mList, null);
+        mSaveAccountListUC.execute(mList, null);
     }
 
     public void loadData(){
         mList.clear();
-        mList.addAll(mGetAccountListUseCase.execute());
+        mList.addAll(mGetAccountListUC.execute());
     }
 }

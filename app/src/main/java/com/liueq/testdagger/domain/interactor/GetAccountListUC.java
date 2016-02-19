@@ -13,27 +13,27 @@ import javax.inject.Inject;
 /**
  * Created by liueq on 27/7/15.
  */
-public class GetAccountListUseCase extends UseCase {
+public class GetAccountListUC extends UseCase {
 
     AccountRepository mAR;
-    GetSpUseCase mGetSpUseCase;
+    GetSpUC mGetSpUC;
     public final static String TAG = "GetALUS";
 
     @Inject
-    public GetAccountListUseCase(AccountRepository AR, GetSpUseCase getSpUseCase){
+    public GetAccountListUC(AccountRepository AR, GetSpUC getSpUC){
         this.mAR = AR;
-        this.mGetSpUseCase = getSpUseCase;
+        this.mGetSpUC = getSpUC;
     }
 
     public List execute() {
         List<Account> list = mAR.getAccountList();
 
         //获取AES密钥
-        HashMap<String, String> map = mGetSpUseCase.getAESPassword();
+        HashMap<String, String> map = mGetSpUC.getAESPassword();
         String aes_key = map.get(Constants.SP_AES);
 
         //选择解密字段
-        HashMap<String, String> map_enc_field = mGetSpUseCase.getEncStatus();
+        HashMap<String, String> map_enc_field = mGetSpUC.getEncStatus();
 
         //解密
         for(Account a : list){
