@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by liueq on 27/7/15.
  */
-public class AccountRepositoryImpl implements AccountRepository {
+public class AccountRepoImpl implements AccountRepo {
 
     public final static String TAG = "ARI";
 
@@ -28,7 +28,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     List<Account> mFilteredList;
     GetSpUC mGetSpUC;
 
-    public AccountRepositoryImpl(FileReader fileReader, GetSpUC getSpUC) {
+    public AccountRepoImpl(FileReader fileReader, GetSpUC getSpUC) {
         mFileReader = fileReader;
         mGetSpUC = getSpUC;
     }

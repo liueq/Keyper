@@ -1,11 +1,7 @@
 package com.liueq.testdagger.domain.interactor;
 
-import android.util.Log;
-
-import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
-import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
+import com.liueq.testdagger.data.repository.AccountRepo;
 
 import java.util.List;
 
@@ -16,10 +12,10 @@ import javax.inject.Inject;
  */
 public class DeleteAccountUC extends UseCase {
 
-    AccountRepository mAR;
+    AccountRepo mAR;
 
     @Inject
-    public DeleteAccountUC(AccountRepository ar){
+    public DeleteAccountUC(AccountRepo ar){
         mAR = ar;
     }
 

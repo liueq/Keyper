@@ -3,10 +3,10 @@ package com.liueq.testdagger.activity.module;
 import com.liueq.testdagger.activity.ActivityScope;
 import com.liueq.testdagger.activity.MainActivity;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
-import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
+import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
 import com.liueq.testdagger.domain.interactor.GetSpUC;
 import com.liueq.testdagger.domain.interactor.SearchAccountUC;
@@ -43,11 +43,11 @@ public class MainActivityModule {
         //然后从这里向Presenter中提供的时候，需要使用构造方法传入，不能在Presenter中直接@Inject注入
 
 
-        SharedPreferenceRepository spr = new SharedPreferenceRepositoryImpl(mainActivity);
-        GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepositoryImpl) spr);
+        SharedPreferenceRepo spr = new SharedPreferenceRepoImpl(mainActivity);
+        GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepoImpl) spr);
 
 //        AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUseCase);
-        AccountRepository ar = new AccountRepositoryDBImpl(mainActivity, getSpUC);
+        AccountRepo ar = new AccountRepoDBImpl(mainActivity, getSpUC);
 
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, getSpUC);
         SearchAccountUC searchAccountUC = new SearchAccountUC(ar);

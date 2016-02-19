@@ -2,7 +2,7 @@ package com.liueq.testdagger.domain.interactor;
 
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
+import com.liueq.testdagger.data.repository.AccountRepo;
 import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.HashMap;
@@ -15,12 +15,12 @@ import javax.inject.Inject;
  */
 public class GetAccountListUC extends UseCase {
 
-    AccountRepository mAR;
+    AccountRepo mAR;
     GetSpUC mGetSpUC;
     public final static String TAG = "GetALUS";
 
     @Inject
-    public GetAccountListUC(AccountRepository AR, GetSpUC getSpUC){
+    public GetAccountListUC(AccountRepo AR, GetSpUC getSpUC){
         this.mAR = AR;
         this.mGetSpUC = getSpUC;
     }

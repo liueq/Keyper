@@ -22,7 +22,7 @@ import java.util.List;
  * Created by liueq on 1/2/2016.
  * AccountRepository of Database
  */
-public class AccountRepositoryDBImpl implements AccountRepository{
+public class AccountRepoDBImpl implements AccountRepo {
 
 	public final static String TAG = "DBARI";
 
@@ -32,7 +32,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 
 	SQLCipherOpenHelper mDBHelper;
 
-	public AccountRepositoryDBImpl(Context context, GetSpUC getSpUC) {
+	public AccountRepoDBImpl(Context context, GetSpUC getSpUC) {
 		mGetSpUC = getSpUC;
 		mDBHelper = SQLCipherOpenHelper.getInstance(context);
 	}

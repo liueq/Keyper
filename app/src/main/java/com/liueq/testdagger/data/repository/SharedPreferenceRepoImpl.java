@@ -6,17 +6,16 @@ import android.content.SharedPreferences;
 import com.liueq.testdagger.Constants;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by liueq on 29/7/15.
  */
-public class SharedPreferenceRepositoryImpl implements SharedPreferenceRepository {
+public class SharedPreferenceRepoImpl implements SharedPreferenceRepo {
 
     private Context mContext;
 
-    public SharedPreferenceRepositoryImpl(Context context){
+    public SharedPreferenceRepoImpl(Context context){
         mContext = context;
     }
 

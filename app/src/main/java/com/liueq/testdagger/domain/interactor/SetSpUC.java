@@ -3,7 +3,7 @@ package com.liueq.testdagger.domain.interactor;
 import android.text.TextUtils;
 
 import com.liueq.testdagger.Constants;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.HashMap;
@@ -15,10 +15,10 @@ import javax.inject.Inject;
  */
 public class SetSpUC {
 
-    private SharedPreferenceRepositoryImpl impl;
+    private SharedPreferenceRepoImpl impl;
 
     @Inject
-    public SetSpUC(SharedPreferenceRepositoryImpl impl){
+    public SetSpUC(SharedPreferenceRepoImpl impl){
         this.impl = impl;
     }
 

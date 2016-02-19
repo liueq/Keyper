@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
+import com.liueq.testdagger.data.repository.AccountRepo;
 import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.ArrayList;
@@ -18,12 +18,12 @@ import javax.inject.Inject;
  */
 public class SaveAccountListUC {
 
-    AccountRepository mAR;
+    AccountRepo mAR;
     GetSpUC mGetSpUC;
     public final static String TAG = "SaveAlus";
 
     @Inject
-    public SaveAccountListUC(AccountRepository AR, GetSpUC getSpUC){
+    public SaveAccountListUC(AccountRepo AR, GetSpUC getSpUC){
         mAR = AR;
         mGetSpUC = getSpUC;
     }

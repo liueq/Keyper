@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by liueq on 29/7/15.
  */
-public interface SharedPreferenceRepository {
+public interface SharedPreferenceRepo {
 
     void saveProperties(HashMap<String, String> map);
 

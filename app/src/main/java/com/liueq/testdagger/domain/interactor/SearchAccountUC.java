@@ -1,7 +1,7 @@
 package com.liueq.testdagger.domain.interactor;
 
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
+import com.liueq.testdagger.data.repository.AccountRepo;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ import javax.inject.Inject;
  */
 public class SearchAccountUC extends UseCase {
 
-    AccountRepository mAR;
+    AccountRepo mAR;
 
     @Inject
-    public SearchAccountUC(AccountRepository AR){
+    public SearchAccountUC(AccountRepo AR){
         this.mAR = AR;
     }
 

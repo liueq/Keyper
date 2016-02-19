@@ -1,9 +1,7 @@
 package com.liueq.testdagger.domain.interactor;
 
-import android.content.Context;
-
 import com.liueq.testdagger.Constants;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 
 import java.util.HashMap;
 
@@ -14,10 +12,10 @@ import javax.inject.Inject;
  */
 public class GetSpUC extends UseCase {
 
-    private SharedPreferenceRepositoryImpl impl;
+    private SharedPreferenceRepoImpl impl;
 
     @Inject
-    public GetSpUC(SharedPreferenceRepositoryImpl impl){
+    public GetSpUC(SharedPreferenceRepoImpl impl){
         this.impl = impl;
     }
 

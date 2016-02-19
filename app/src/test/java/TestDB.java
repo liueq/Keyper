@@ -1,8 +1,8 @@
 import android.content.Context;
 
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
-import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
+import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class TestDB {
 	public void testInit(){
 		boolean flag = true;
 		try{
-			AccountRepository ar = new AccountRepositoryDBImpl(mMockContext, null);
+			AccountRepo ar = new AccountRepoDBImpl(mMockContext, null);
 		}catch(Exception e){
 			flag = false;
 		}finally {
@@ -35,7 +35,7 @@ public class TestDB {
 
 	@Test
 	public void testGetAccountList(){
-		AccountRepository ar = new AccountRepositoryDBImpl(mMockContext, null);
+		AccountRepo ar = new AccountRepoDBImpl(mMockContext, null);
 		List<Account> list = ar.getAccountList();
 		if(list == null || list.size() == 0){
 			Assert.assertTrue(false);

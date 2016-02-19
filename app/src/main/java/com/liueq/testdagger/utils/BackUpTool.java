@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.liueq.testdagger.data.database.DBTables;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
+import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -40,7 +40,7 @@ public class BackUpTool {
 			Log.e("liueq", "importDB: database is null");
 		}
 
-		AccountRepositoryDBImpl ARI = new AccountRepositoryDBImpl(context, null);
+		AccountRepoDBImpl ARI = new AccountRepoDBImpl(context, null);
 		for(Account a : accounts){
 			ARI.insertAccount(a);
 		}

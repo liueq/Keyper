@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by liueq on 27/7/15.
  */
-public interface AccountRepository {
+public interface AccountRepo {
 
     List<Account> getAccountList();
 

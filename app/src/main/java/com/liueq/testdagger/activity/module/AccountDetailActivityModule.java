@@ -3,10 +3,10 @@ package com.liueq.testdagger.activity.module;
 import com.liueq.testdagger.activity.AccountDetailActivity;
 import com.liueq.testdagger.activity.ActivityScope;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
-import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepository;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
+import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.domain.interactor.DeleteAccountUC;
 import com.liueq.testdagger.domain.interactor.GetAccountDetailUC;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
@@ -42,10 +42,10 @@ public class AccountDetailActivityModule {
     @ActivityScope
     AccountDetailActivityPresenter provideAccountDetailActivityPresenter(FileReader fileReader, List<Account> accountList){
 
-        SharedPreferenceRepository spr = new SharedPreferenceRepositoryImpl(accountDetailActivity);
-        GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepositoryImpl) spr);
+        SharedPreferenceRepo spr = new SharedPreferenceRepoImpl(accountDetailActivity);
+        GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepoImpl) spr);
 
-        AccountRepository ar = new AccountRepositoryDBImpl(accountDetailActivity, getSpUC);
+        AccountRepo ar = new AccountRepoDBImpl(accountDetailActivity, getSpUC);
 
         SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC);
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, getSpUC);

@@ -1,14 +1,11 @@
 package com.liueq.testdagger;
 
 import android.app.Application;
-import android.content.Context;
 import android.test.ApplicationTestCase;
 
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
-import com.liueq.testdagger.data.repository.AccountRepositoryDBImpl;
-
-import net.sqlcipher.database.SQLiteDatabase;
+import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +25,7 @@ public class TestDB extends ApplicationTestCase<Application> {
 	public void testInit(){
 		boolean flag = true;
 		try{
-			AccountRepository ar = new AccountRepositoryDBImpl(getContext(), null);
+			AccountRepo ar = new AccountRepoDBImpl(getContext(), null);
 		}catch(Exception e){
 			flag = false;
 		}finally {
@@ -38,7 +35,7 @@ public class TestDB extends ApplicationTestCase<Application> {
 
 	@Test
 	public void testGetAccountList(){
-		AccountRepository ar = new AccountRepositoryDBImpl(getContext(), null);
+		AccountRepo ar = new AccountRepoDBImpl(getContext(), null);
 		List<Account> list = ar.getAccountList();
 		if(list != null){
 			Assert.assertTrue(false);
@@ -47,7 +44,7 @@ public class TestDB extends ApplicationTestCase<Application> {
 
 	@Test
 	public void testInsertDB(){
-		AccountRepositoryDBImpl ardb = new AccountRepositoryDBImpl(getContext(), null);
+		AccountRepoDBImpl ardb = new AccountRepoDBImpl(getContext(), null);
 
 		Account account = new Account();
 		account.site = "site1";

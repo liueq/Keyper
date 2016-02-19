@@ -1,9 +1,7 @@
 package com.liueq.testdagger.domain.interactor;
 
-import android.util.Log;
-
 import com.liueq.testdagger.Constants;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.utils.Encrypter;
 
 import javax.inject.Inject;
@@ -15,10 +13,10 @@ public class CheckPasswordUC extends UseCase {
 
     public final static String TAG = "CPUC";
 
-    private SharedPreferenceRepositoryImpl impl;
+    private SharedPreferenceRepoImpl impl;
 
     @Inject
-    public CheckPasswordUC(SharedPreferenceRepositoryImpl impl){
+    public CheckPasswordUC(SharedPreferenceRepoImpl impl){
         this.impl = impl;
     }
 

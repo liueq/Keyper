@@ -5,4 +5,12 @@ package com.liueq.testdagger.domain.interactor;
  * 标星
  */
 public class StarUC extends UseCase{
+
+	private boolean star(){
+		return false;
+	}
+
+	private boolean unStar(){
+		return false;
+	}
 }

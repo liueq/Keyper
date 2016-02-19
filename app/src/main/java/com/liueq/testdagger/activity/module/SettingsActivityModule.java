@@ -3,9 +3,9 @@ package com.liueq.testdagger.activity.module;
 import com.liueq.testdagger.activity.ActivityScope;
 import com.liueq.testdagger.activity.SettingsActivity;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepository;
-import com.liueq.testdagger.data.repository.AccountRepositoryImpl;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepositoryImpl;
+import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.AccountRepoImpl;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.domain.interactor.CheckPasswordUC;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
 import com.liueq.testdagger.domain.interactor.GetSpUC;
@@ -42,12 +42,12 @@ public class SettingsActivityModule {
     SettingsActivityPresenter provideSettingsActivityPresenter(List<Account> accountList, FileReader fileReader){
 
 
-        SharedPreferenceRepositoryImpl impl = new SharedPreferenceRepositoryImpl(settingsActivity);
+        SharedPreferenceRepoImpl impl = new SharedPreferenceRepoImpl(settingsActivity);
 
         GetSpUC getSpUC = new GetSpUC(impl);
         SetSpUC setSpUC = new SetSpUC(impl);
 
-        AccountRepository ar = new AccountRepositoryImpl(fileReader, getSpUC);
+        AccountRepo ar = new AccountRepoImpl(fileReader, getSpUC);
 
         SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC);
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, getSpUC);
