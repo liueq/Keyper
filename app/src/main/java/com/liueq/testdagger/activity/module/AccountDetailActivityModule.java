@@ -24,6 +24,7 @@ import dagger.Provides;
 
 /**
  * Created by liueq on 13/7/15.
+ * Account Detail 的Module
  */
 @Module
 public class AccountDetailActivityModule {

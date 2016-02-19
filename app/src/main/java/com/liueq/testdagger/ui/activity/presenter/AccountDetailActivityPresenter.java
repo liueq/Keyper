@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by liueq on 13/7/15.
+ * Account Detail Presenter
  */
 public class AccountDetailActivityPresenter extends Presenter{
 

@@ -46,6 +46,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by liueq on 27/10/2015.
+ * Search Dialog Fragment
  */
 public class SearchDialogFragment extends AppCompatDialogFragment implements RecyclerListAdapter.OnItemClickListener{
 

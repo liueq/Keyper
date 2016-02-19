@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 /**
  * Created by liueq on 27/7/15.
+ * 搜索 UseCase
  */
 public class SearchAccountUC extends UseCase {
 

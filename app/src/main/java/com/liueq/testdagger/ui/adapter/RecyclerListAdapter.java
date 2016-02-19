@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by liueq on 13/7/15.
+ * 普通的ListView
  */
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ViewHolder> {
 
@@ -59,17 +60,6 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             unStarImage(holder);
         }
 
-//        holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("account", account);
-//
-//                Intent intent = new Intent(mContext, AccountDetailActivity.class);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
-//            }
-//        });
         holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
