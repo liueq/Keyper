@@ -2,6 +2,7 @@ package com.liueq.testdagger.data.repository;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -72,8 +73,11 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 	}
 
 	@Override
-	public Account getAccountDetail(String accountId) {
+	public Account getAccountDetail(@Nullable String accountId) {
 		Account account = null;
+		if (TextUtils.isEmpty(accountId)) {
+			return null;
+		}
 
 		String selection = "id = ?";
 		String []selection_args = {accountId};
@@ -108,9 +112,12 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 	}
 
 	@Override
-	public synchronized List<Account> searchAccount(String key) {
+	public synchronized List<Account> searchAccount(@Nullable String key) {
 		List<Account> list = new ArrayList<>();
 		Account account = null;
+		if(TextUtils.isEmpty(key)){
+			return new ArrayList<Account>();
+		}
 
 		String selection = "site LIKE ?";
 		String []selection_args = {"%" + key + "%"};
@@ -192,7 +199,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 		return is_successful;
 	}
 
-	public boolean updateAccount(String old_id, Account update_item){
+	public boolean updateAccount(@NonNull String old_id, Account update_item){
 		boolean is_successful = false;
 		if(TextUtils.isEmpty(old_id) || !old_id.equals(update_item.id)){
 			return is_successful;
@@ -226,7 +233,7 @@ public class AccountRepositoryDBImpl implements AccountRepository{
 	}
 
 	@Override
-	public boolean deleteAccount(String id){
+	public boolean deleteAccount(@NonNull String id){
 		boolean is_successful = false;
 		if(TextUtils.isEmpty(id)){
 			return is_successful;
