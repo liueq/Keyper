@@ -1,10 +1,12 @@
 package com.liueq.testdagger.domain.interactor;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.StarRepo;
 import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.ArrayList;
@@ -15,16 +17,19 @@ import javax.inject.Inject;
 
 /**
  * Created by liueq on 27/7/15.
+ * 保存
  */
 public class SaveAccountListUC {
 
     AccountRepo mAR;
+    StarRepo mSR;
     GetSpUC mGetSpUC;
     public final static String TAG = "SaveAlus";
 
     @Inject
-    public SaveAccountListUC(AccountRepo AR, GetSpUC getSpUC){
+    public SaveAccountListUC(AccountRepo AR, GetSpUC getSpUC, StarRepo SR){
         mAR = AR;
+        mSR = SR;
         mGetSpUC = getSpUC;
     }
 
@@ -88,7 +93,16 @@ public class SaveAccountListUC {
         return account;
     }
 
-    public boolean executeDB(Account account) {
-        return mAR.insertOrUpdateAccount(account.id, account);
+    public String executeDB(Account account) {
+        String result_id = null;
+        result_id = mAR.insertOrUpdateAccount(account.id, account);
+        account.id = result_id;
+        if(account.is_stared){
+            mSR.starAccount(account); //(已解决)如果是一个新的account，那么这里不能返回account生成的id，会报错。
+        }else{
+            mSR.unStarAccount(account);
+        }
+
+        return result_id;
     }
 }

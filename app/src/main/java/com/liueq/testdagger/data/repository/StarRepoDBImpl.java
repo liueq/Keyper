@@ -30,14 +30,14 @@ public class StarRepoDBImpl implements StarRepo{
 	public boolean starAccount(@NonNull Account account) {
 		boolean result = false;
 		SQLiteDatabase db = mDBHelper.getDatabase();
-		ContentValues valuse = new ContentValues();
-		valuse.put(Star.type, Star.TYPE_ACCOUNT);
-		valuse.put(Star.link_id, account.id);
+		ContentValues values = new ContentValues();
+		values.put(Star.type, Star.TYPE_ACCOUNT);
+		values.put(Star.link_id, account.id);
 
 		try {
 			db.beginTransaction();
 			{
-				db.insertOrThrow(Star.table_name, null, valuse);
+				db.insertOrThrow(Star.table_name, null, values);
 			}
 			db.setTransactionSuccessful();
 			result = true;
@@ -55,7 +55,7 @@ public class StarRepoDBImpl implements StarRepo{
 	public boolean unStarAccount(@NonNull Account account) {
 		boolean result = false;
 		SQLiteDatabase db = mDBHelper.getDatabase();
-		String where = "id = ?";
+		String where = Star.link_id + " = ? and type = 'account'";
 		String []whereArgs = {account.id};
 
 		try {
@@ -75,7 +75,7 @@ public class StarRepoDBImpl implements StarRepo{
 	}
 
 	@Override
-	public Account getStarStatus(Account account) {
+	public Account getStarStatus(@NonNull Account account) {
 		boolean stared = false;
 		SQLiteDatabase db = mDBHelper.getDatabase();
 		String selection = Star.link_id + " = ?";

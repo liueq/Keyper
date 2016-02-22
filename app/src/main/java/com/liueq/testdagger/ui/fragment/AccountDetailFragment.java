@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -72,7 +70,7 @@ public class AccountDetailFragment extends Fragment{
 
 		mActivity = (AccountDetailActivity) getActivity();
 		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
-		initData();
+		loadData();
 	}
 
 	@Nullable
@@ -96,7 +94,7 @@ public class AccountDetailFragment extends Fragment{
 	/**
 	 * TODO 从Bundle 中获取ID，Presenter 在DB中查找数据
 	 */
-	private void initData(){
+	private void loadData(){
 		getDetailOb(mPresenter.mId)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
@@ -116,7 +114,7 @@ public class AccountDetailFragment extends Fragment{
         Account account = mPresenter.getCurrentAccount();
         if(account == null){
             account = new Account();
-        }
+		}
 
         account.site = mEditTextSite.getText().toString();
         account.username = mEditTextName.getText().toString();
@@ -132,6 +130,7 @@ public class AccountDetailFragment extends Fragment{
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(saveDetailSub());
+
     }
 
 	private void showResult(boolean result){

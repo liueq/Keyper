@@ -45,6 +45,10 @@ public class AccountDetailActivityPresenter extends Presenter{
         this.getAccountDetailUC = getAccountDetailUC;
     }
 
+	/**
+     * 仅仅是获取mId
+     * @param bundle
+     */
     public void init(Bundle bundle){
         Account account = (Account) bundle.getSerializable("account");
         mId = account.id;
@@ -52,6 +56,9 @@ public class AccountDetailActivityPresenter extends Presenter{
 
     public Account loadData(String id){
         mCurrentAccount = getAccountDetailUC.execute(id);
+        if(mCurrentAccount == null){
+            mCurrentAccount = new Account();
+        }
         return mCurrentAccount;
     }
 
@@ -62,7 +69,14 @@ public class AccountDetailActivityPresenter extends Presenter{
      */
     public boolean saveData(Account account){
         if(!TextUtils.isEmpty(account.site)){
-            return saveAccountListUC.executeDB(account);
+            String result_id = saveAccountListUC.executeDB(account);
+            if(TextUtils.isEmpty(result_id)){
+                return false;
+            }else{
+                mId = result_id;
+                loadData(result_id);
+                return true;
+            }
         }else{
             return false;
         }

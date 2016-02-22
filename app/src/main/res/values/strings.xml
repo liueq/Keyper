@@ -21,6 +21,8 @@
     <string name="description">DESCRIPTION:</string>
     <string name="save">SAVE</string>
 
+    <string name="action_star">Star</string>
+    <string name="action_unstar">Unstar</string>
     <string name="action_delete">Delete</string>
     <string name="search_hint">Search</string>
     <string name="title_activity_splash">SplashActivity</string>

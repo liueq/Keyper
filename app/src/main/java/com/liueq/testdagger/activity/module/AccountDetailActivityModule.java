@@ -51,7 +51,7 @@ public class AccountDetailActivityModule {
         AccountRepo ar = new AccountRepoDBImpl(accountDetailActivity, getSpUC);
         StarRepo sr = new StarRepoDBImpl(accountDetailActivity);
 
-        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC);
+        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC, sr);
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr,  getSpUC);
         DeleteAccountUC deleteAccountUC = new DeleteAccountUC(ar);
         GetAccountDetailUC getAccountDetailUC = new GetAccountDetailUC(ar, sr);

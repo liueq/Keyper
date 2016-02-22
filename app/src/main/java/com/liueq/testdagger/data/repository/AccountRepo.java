@@ -19,7 +19,7 @@ public interface AccountRepo {
 
     void saveAccountList(List<Account> list);
 
-    boolean insertOrUpdateAccount(@Nullable  String id, Account account);
+    String insertOrUpdateAccount(@Nullable  String id, Account account);
 
     boolean deleteAccount(String id);
 }

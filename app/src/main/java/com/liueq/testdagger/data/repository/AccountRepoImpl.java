@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by liueq on 27/7/15.
+ * 旧版本的JSON实现，现在已经不再使用了
  */
 public class AccountRepoImpl implements AccountRepo {
 
@@ -155,8 +156,8 @@ public class AccountRepoImpl implements AccountRepo {
     }
 
     @Override
-    public boolean insertOrUpdateAccount(@Nullable String id, Account account) {
-        return false;
+    public String insertOrUpdateAccount(@Nullable String id, Account account) {
+        return null;
     }
 
     @Override

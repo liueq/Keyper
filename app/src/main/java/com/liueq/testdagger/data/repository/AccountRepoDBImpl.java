@@ -157,7 +157,7 @@ public class AccountRepoDBImpl implements AccountRepo {
 	public void saveAccountList(List<Account> list) {}
 
 	@Override
-	public boolean insertOrUpdateAccount(@Nullable String id, Account account) {
+	public String insertOrUpdateAccount(@Nullable String id, Account account) {
 		if(TextUtils.isEmpty(id)){
 			//insert
 			return insertAccount(account);
@@ -167,10 +167,9 @@ public class AccountRepoDBImpl implements AccountRepo {
 		}
 	}
 
-	public boolean insertAccount(Account account){
-		boolean is_successful = false;
+	public String insertAccount(Account account){
 		if(TextUtils.isEmpty(account.site)){
-			return is_successful;
+			return null;
 		}
 
 		ContentValues values = new ContentValues();
@@ -181,13 +180,18 @@ public class AccountRepoDBImpl implements AccountRepo {
 		values.put(Password.description, account.description);
 
 		SQLiteDatabase db = null;
+		String id = null;
 		try{
 			db = mDBHelper.getDatabase();
 			db.beginTransaction();
 			db.insertOrThrow(Password.table_name, null, values);
 			db.setTransactionSuccessful();
 
-			is_successful = true;
+			Cursor cursor = db.rawQuery("select last_insert_rowid() from " + Password.table_name, null);
+			if(cursor.moveToNext()){
+				id = String.valueOf(cursor.getInt(0));
+			}
+
 			db.endTransaction();
 		}catch (SQLException exception){
 			exception.printStackTrace();
@@ -195,13 +199,13 @@ public class AccountRepoDBImpl implements AccountRepo {
 			db = null;
 		}
 
-		return is_successful;
+		return id;
 	}
 
-	public boolean updateAccount(@NonNull String old_id, Account update_item){
-		boolean is_successful = false;
+	public String updateAccount(@NonNull String old_id, Account update_item){
+		String return_id = null;
 		if(TextUtils.isEmpty(old_id) || !old_id.equals(update_item.id)){
-			return is_successful;
+			return return_id;
 		}
 
 		SQLiteDatabase db = null;
@@ -220,15 +224,15 @@ public class AccountRepoDBImpl implements AccountRepo {
 			db.update(Password.table_name, values, where, where_args);
 			db.setTransactionSuccessful();
 
+			return_id = old_id;
 			db.endTransaction();
-			is_successful = true;
 		}catch (SQLException exception){
 			exception.printStackTrace();
 		}finally{
 			db = null;
 		}
 
-		return is_successful;
+		return return_id;
 	}
 
 	@Override

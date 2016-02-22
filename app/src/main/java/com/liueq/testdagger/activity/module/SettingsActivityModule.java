@@ -53,7 +53,7 @@ public class SettingsActivityModule {
         AccountRepo ar = new AccountRepoImpl(fileReader, getSpUC);
         StarRepo sr = new StarRepoDBImpl(settingsActivity);
 
-        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC);
+        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC, sr);
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr, getSpUC);
         CheckPasswordUC checkPasswordUC = new CheckPasswordUC(impl);
 

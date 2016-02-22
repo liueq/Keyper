@@ -24,7 +24,11 @@ public class GetAccountDetailUC extends UseCase {
 
     public Account execute(String userId) {
         Account account = mAR.getAccountDetail(userId);
-        account = mSR.getStarStatus(account);
-        return account;
+        if(account == null){
+            return null;
+        }else{
+            account = mSR.getStarStatus(account);
+            return account;
+        }
     }
 }

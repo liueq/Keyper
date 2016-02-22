@@ -1,10 +1,12 @@
 package com.liueq.testdagger.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.activity.module.AccountDetailActivityModule;
+import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.ui.activity.presenter.AccountDetailActivityPresenter;
 import com.liueq.testdagger.ui.activity.presenter.Presenter;
 import com.liueq.testdagger.ui.fragment.AccountDetailFragment;
@@ -97,6 +100,14 @@ public class AccountDetailActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_account_detail, menu);
+        //init
+        MenuItem item = menu.findItem(R.id.action_star);
+        Account account = presenter.getCurrentAccount();
+        if(account == null){
+            return true;
+        }
+
+        item.setIcon(getStarIcon(account.is_stared));
         return true;
     }
 
@@ -104,7 +115,26 @@ public class AccountDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_delete) {
+        if(id == R.id.action_star){
+            Account account = presenter.getCurrentAccount();
+            if(account == null){
+                return true;
+            }
+
+            if(TextUtils.isEmpty(account.id)){
+                account.is_stared = !account.is_stared;
+                item.setIcon(getStarIcon(account.is_stared));
+            }else{
+                account.is_stared = !account.is_stared;
+                item.setIcon(getStarIcon(account.is_stared));
+
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
+                if(fragment instanceof AccountDetailFragment){
+                    ((AccountDetailFragment) fragment).saveData();
+                }
+            }
+
+        }else if (id == R.id.action_delete) {
             deleteOb().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(deleteSub());
@@ -112,6 +142,19 @@ public class AccountDetailActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private Drawable getStarIcon(boolean state){
+        Drawable drawable = null;
+        if(state){
+            drawable = getDrawable(R.mipmap.ic_star_black_24dp);
+            drawable.setTint(getResources().getColor(R.color.yellow));
+        }else {
+            drawable = getDrawable(R.mipmap.ic_star_outline_black_24dp);
+            drawable.setTint(getResources().getColor(R.color.white));
+        }
+
+        return drawable;
     }
 
     private Observable<Boolean> deleteOb(){
