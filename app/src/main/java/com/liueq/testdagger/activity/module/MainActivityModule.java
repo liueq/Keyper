@@ -11,6 +11,7 @@ import com.liueq.testdagger.data.repository.StarRepo;
 import com.liueq.testdagger.data.repository.StarRepoDBImpl;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
 import com.liueq.testdagger.domain.interactor.GetSpUC;
+import com.liueq.testdagger.domain.interactor.GetStarListUC;
 import com.liueq.testdagger.domain.interactor.SearchAccountUC;
 import com.liueq.testdagger.domain.interactor.StarUC;
 import com.liueq.testdagger.ui.activity.presenter.MainActivityPresenter;
@@ -57,7 +58,8 @@ public class MainActivityModule {
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr, getSpUC);
         SearchAccountUC searchAccountUC = new SearchAccountUC(ar, sr);
         StarUC starUC = new StarUC(sr);
+        GetStarListUC getStarListUC = new GetStarListUC(ar, sr, getSpUC);
 
-        return new MainActivityPresenter(mainActivity, accountList, getAccountListUC, searchAccountUC, starUC);
+        return new MainActivityPresenter(mainActivity, accountList, getAccountListUC, searchAccountUC, starUC, getStarListUC);
     }
 }

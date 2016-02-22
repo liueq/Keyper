@@ -99,7 +99,7 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		return Observable.create(new Observable.OnSubscribe<List<Account>>() {
 			@Override
 			public void call(Subscriber<? super List<Account>> subscriber) {
-				List<Account> list = mPresenter.loadList();
+				List<Account> list = mPresenter.loadStarList();
 				subscriber.onNext(list);
 			}
 		});

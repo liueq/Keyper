@@ -3,6 +3,7 @@ package com.liueq.testdagger.ui.activity.presenter;
 import com.liueq.testdagger.activity.MainActivity;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
+import com.liueq.testdagger.domain.interactor.GetStarListUC;
 import com.liueq.testdagger.domain.interactor.SearchAccountUC;
 import com.liueq.testdagger.domain.interactor.StarUC;
 
@@ -23,18 +24,24 @@ public class MainActivityPresenter extends Presenter{
     GetAccountListUC getAccountListUC;
     SearchAccountUC searchAccountUC;
     StarUC mStarUC;
+    GetStarListUC getStarListUC;
 
-    public MainActivityPresenter(MainActivity mainActivity, List<Account> list, GetAccountListUC getAccountListUC, SearchAccountUC searchAccountUC, StarUC starUC) {
+    public MainActivityPresenter(MainActivity mainActivity, List<Account> list, GetAccountListUC getAccountListUC, SearchAccountUC searchAccountUC, StarUC starUC, GetStarListUC starListUC) {
         this.mainActivity = mainActivity;
         this.mAccountList = list;
 
         this.getAccountListUC = getAccountListUC;
         this.searchAccountUC = searchAccountUC;
         this.mStarUC = starUC;
+        this.getStarListUC = starListUC;
     }
 
     public List<Account> loadList(){
         return getAccountListUC.executeDB();
+    }
+
+    public List<Account> loadStarList(){
+        return getStarListUC.executeDB();
     }
 
     public void loadData(){
