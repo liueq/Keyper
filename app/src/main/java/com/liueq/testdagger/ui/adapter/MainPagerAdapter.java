@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.ui.fragment.ListFragment;
+import com.liueq.testdagger.ui.fragment.StarListFragment;
 
 /**
  * Created by liueq on 17/2/2016.
@@ -31,7 +32,16 @@ public class MainPagerAdapter extends FragmentPagerAdapter{
 
 	@Override
 	public Fragment getItem(int position) {
-		return ListFragment.newInstance();
+		switch (position){
+			case 0:
+				return ListFragment.newInstance();
+			case 1:
+				return StarListFragment.newInstance();
+			case 2:
+				return ListFragment.newInstance();
+		}
+
+		return null;
 	}
 
 	@Override
