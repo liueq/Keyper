@@ -82,7 +82,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void setupActivityComponent() {
-        TestApplication.get(this).getAppComponent()
+        TestApplication.getApplication().getAppComponent()
                 .plus(new SplashActivityModule(this))
                 .inject(this);
     }

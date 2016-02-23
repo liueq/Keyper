@@ -44,4 +44,10 @@ public class AppModule {
         return accountList;
     }
 
+    @Provides
+    @Singleton
+    public VisibleObserver provideVisibleObserver(){
+        return VisibleObserver.getInstance();
+    }
+
 }

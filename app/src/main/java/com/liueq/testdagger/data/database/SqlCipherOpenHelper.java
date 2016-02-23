@@ -58,6 +58,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 	public void closeDatabase(){
 		if(mDatabase != null && mDatabase.isOpen()){
 			mDatabase.close();
+			mInstance = null;
 		}
 	}
 }

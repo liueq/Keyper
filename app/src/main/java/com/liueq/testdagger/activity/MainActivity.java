@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity {
      */
     @Override
     protected void setupActivityComponent() {
-        TestApplication.get(this).getAppComponent()
+        TestApplication.getApplication().getAppComponent()
                 .plus(new MainActivityModule(this))
                 .inject(this);
     }

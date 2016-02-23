@@ -15,6 +15,9 @@ import dagger.Component;
 
 /**
  * Created by liueq on 13/7/15.
+ * Application Component
+ *
+ * All public module provided.
  */
 
 @Singleton

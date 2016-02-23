@@ -105,7 +105,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void setupActivityComponent() {
-        TestApplication.get(this).getAppComponent()
+        TestApplication.getApplication().getAppComponent()
                 .plus(new SettingsActivityModule(this))
                 .inject(this);
     }

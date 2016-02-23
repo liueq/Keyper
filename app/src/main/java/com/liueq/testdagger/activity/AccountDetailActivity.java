@@ -81,7 +81,7 @@ public class AccountDetailActivity extends BaseActivity {
 
     @Override
     protected void setupActivityComponent() {
-        TestApplication.get(this).getAppComponent()
+        TestApplication.getApplication().getAppComponent()
                 .plus(new AccountDetailActivityModule(this))
                 .inject(this);
     }
