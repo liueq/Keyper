@@ -1,5 +1,7 @@
 package com.liueq.testdagger.data.model;
 
+import net.sqlcipher.Cursor;
+
 import java.io.Serializable;
 
 /**
@@ -20,6 +22,15 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
     public Account(){
 //        Random random = new Random();
 //        this.id = String.valueOf(System.currentTimeMillis() + random.nextInt(1000));
+    }
+
+    public Account(Cursor cursor){
+        id = String.valueOf(cursor.getInt(0));
+        site = cursor.getString(1);
+        username = cursor.getString(2);
+        password = cursor.getString(3);
+        mail = cursor.getString(4);
+        description = cursor.getString(5);
     }
 
     @Override

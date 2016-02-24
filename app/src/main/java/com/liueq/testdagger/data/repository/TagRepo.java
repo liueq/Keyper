@@ -2,6 +2,7 @@ package com.liueq.testdagger.data.repository;
 
 import android.support.annotation.Nullable;
 
+import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
 
 import java.util.List;
@@ -36,5 +37,13 @@ public interface TagRepo {
 	 * @return
 	 */
 	List<Tag> searchTag(String tag_name);
+
+	List<Account> getAccountFromTag(Tag tag);
+
+	List<Tag> getTagFromAccount(Account account);
+
+	boolean addAccountTag(Account account, List<Tag> tags);
+
+	boolean deleteAccountTag(Account account, Tag tag);
 
 }
