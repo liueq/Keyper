@@ -7,7 +7,7 @@ import net.sqlcipher.database.SQLiteOpenHelper;
 
 /**
  * Created by liueq on 1/2/2016.
- *
+ * SQLCipher Open Helper
  */
 public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
@@ -41,6 +41,8 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 		sqLiteDatabase.execSQL(DBTables.Password.SQL_CREATE);
 		sqLiteDatabase.execSQL(DBTables.Free.SQL_CREATE);
 		sqLiteDatabase.execSQL(DBTables.Star.SQL_CREATE);
+		sqLiteDatabase.execSQL(DBTables.Tag.SQL_CREATE);
+		sqLiteDatabase.execSQL(DBTables.TagAndPassword.SQL_CREATE);
 
 		sqLiteDatabase.setTransactionSuccessful();
 		sqLiteDatabase.endTransaction();

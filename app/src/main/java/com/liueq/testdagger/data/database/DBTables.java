@@ -76,7 +76,7 @@ public class DBTables {
 		public static final String tag_num = "tag_num"; //Number of items in a tag
 
 		public static final String SQL_CREATE = "CREATE TABLE " + table_name + " (" + id + " INTEGER NOT NULL PRIMARY KEY, " +
-				tag_name + " TEXT NOT NULL, " +
+				tag_name + " TEXT NOT NULL UNIQUE, " +
 				tag_num + " TEXT NOT NULL) ";
 
 		public static String [] ALL_COLUMN = {id, tag_name, tag_num};

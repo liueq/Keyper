@@ -25,9 +25,6 @@ import java.util.List;
 public class AccountRepoDBImpl implements AccountRepo {
 
 	public final static String TAG = "DBARI";
-
-	List<Account> mAccountList;
-	List<Account> mFilteredList;
 	GetSpUC mGetSpUC;
 
 	SQLCipherOpenHelper mDBHelper;

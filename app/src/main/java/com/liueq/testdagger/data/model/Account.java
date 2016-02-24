@@ -1,10 +1,10 @@
 package com.liueq.testdagger.data.model;
 
 import java.io.Serializable;
-import java.util.Random;
 
 /**
  * Created by liueq on 13/7/15.
+ * Account obj
  */
 public class Account implements Serializable, Comparable<Account>, Cloneable {
 
