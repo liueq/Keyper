@@ -61,6 +61,45 @@ public class DBTables {
 
 	}
 
+
+	/**
+	 * 标签 table
+	 */
+	public static class Tag{
+
+		public static final String table_name = "tag";
+
+		public static final String id = "id";
+
+		public static final String tag_name = "tag_name";
+
+		public static final String tag_num = "tag_num"; //Number of items in a tag
+
+		public static final String SQL_CREATE = "CREATE TABLE " + table_name + " (" + id + " INTEGER NOT NULL PRIMARY KEY, " +
+				tag_name + " TEXT NOT NULL, " +
+				tag_num + " TEXT NOT NULL) ";
+
+		public static String [] ALL_COLUMN = {id, tag_name, tag_num};
+
+	}
+
+	/**
+	 * Tag and Password
+	 */
+	public static class TagAndPassword{
+
+		public static final String table_name ="tagandpassword";
+
+		public static final String password_id = "password_id";
+
+		public static final String tag_id = "tag_id";
+
+		public static final String SQL_CREATE = "CREATE TABLE " + table_name + " (" + password_id + " INTEGER NOT NULL, " +
+				tag_id + " INTEGER NOT NULL) ";
+
+		public static String [] ALL_COLUMN = {password_id, tag_id};
+	}
+
 	/**
 	 * 自定义Fields table
 	 * BLOB 存放的是HashMap
