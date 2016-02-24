@@ -26,6 +26,8 @@
     <string name="action_delete">Delete</string>
     <string name="search_hint">Search</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="status_saved">SAVED</string>
+    <string name="warning_site_not_null">Site can not be NULL</string>
 
     <!-- Welcome -->
     <string name="first_pwd">Password required</string>

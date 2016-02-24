@@ -59,21 +59,12 @@ public class VisibleObserver {
 			mHideLock.mHided = false;
 //			Log.d(Constants.DEFAULT_TAG, "onApplicationShow: ");
 
+			//RxJava do open db.
 			openDBOb().subscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe();
 		}
 
-	}
-
-	private void openDatabase(){
-		//Operation: Open DB
-		SQLCipherOpenHelper.getInstance(TestApplication.getApplication());
-	}
-
-	private void closeDatabase(){
-		//Operation: Close DB
-		SQLCipherOpenHelper.getInstance(TestApplication.getApplication()).closeDatabase();
 	}
 
 	private Observable<Void> closeDBOb(){
@@ -83,7 +74,7 @@ public class VisibleObserver {
 				synchronized (mHideLock){
 					if(mHideLock.mHided){
 //						Log.d(Constants.DEFAULT_TAG, "call: close database");
-						closeDatabase();
+						SQLCipherOpenHelper.getInstance(TestApplication.getApplication()).closeDatabase();
 					}
 				}
 			}
@@ -94,11 +85,15 @@ public class VisibleObserver {
 		return Observable.create(new Observable.OnSubscribe<Void>() {
 			@Override
 			public void call(Subscriber<? super Void> subscriber) {
-				openDatabase();
+				SQLCipherOpenHelper.getInstance(TestApplication.getApplication());
 			}
 		});
 	}
 
+	/**
+	 * final object for synchronized
+	 * boolean object for tell visibility
+	 */
 	private class HideLock{
 		public boolean mHided = false;
 	}

@@ -19,16 +19,14 @@ public class MainActivityPresenter extends Presenter{
     public final static String TAG = "MainActivityPresenter";
 
     private MainActivity mainActivity;
-    List<Account> mAccountList;
 
     GetAccountListUC getAccountListUC;
     SearchAccountUC searchAccountUC;
     StarUC mStarUC;
     GetStarListUC getStarListUC;
 
-    public MainActivityPresenter(MainActivity mainActivity, List<Account> list, GetAccountListUC getAccountListUC, SearchAccountUC searchAccountUC, StarUC starUC, GetStarListUC starListUC) {
+    public MainActivityPresenter(MainActivity mainActivity, GetAccountListUC getAccountListUC, SearchAccountUC searchAccountUC, StarUC starUC, GetStarListUC starListUC) {
         this.mainActivity = mainActivity;
-        this.mAccountList = list;
 
         this.getAccountListUC = getAccountListUC;
         this.searchAccountUC = searchAccountUC;
@@ -42,9 +40,6 @@ public class MainActivityPresenter extends Presenter{
 
     public List<Account> loadStarList(){
         return getStarListUC.executeDB();
-    }
-
-    public void loadData(){
     }
 
     public List<Account> search(String searchKey){

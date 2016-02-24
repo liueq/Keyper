@@ -69,16 +69,10 @@ public class MainActivity extends BaseActivity {
 
     private void initView(){
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.main_activity_title);
+        getSupportActionBar().setTitle(R.string.app_name);
 
         mViewPager.setAdapter(mPagerAdapter = new MainPagerAdapter(this, getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.loadData();
     }
 
     @Override

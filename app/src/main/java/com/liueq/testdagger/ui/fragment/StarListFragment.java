@@ -1,6 +1,5 @@
 package com.liueq.testdagger.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,6 @@ import com.liueq.testdagger.activity.AccountDetailActivity;
 import com.liueq.testdagger.activity.MainActivity;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.ui.activity.presenter.MainActivityPresenter;
-import com.liueq.testdagger.ui.adapter.RecyclerListAdapter;
 import com.liueq.testdagger.ui.adapter.RecyclerStarListAdapter;
 
 import java.util.ArrayList;
@@ -129,12 +127,7 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		int id = view.getId();
 		Account account = (Account) item;
 		if(id == RecyclerStarListAdapter.ViewHolder.ID_LinearLayout){
-			Bundle bundle = new Bundle();
-			bundle.putSerializable("account", account);
-
-			Intent intent = new Intent(mActivity, AccountDetailActivity.class);
-			intent.putExtras(bundle);
-			mActivity.startActivity(intent);
+			AccountDetailActivity.startActivity(mActivity, account);
 		}
 	}
 }

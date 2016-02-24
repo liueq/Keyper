@@ -43,7 +43,7 @@ public class MainActivityModule {
 
     @Provides
     @ActivityScope
-    MainActivityPresenter provideMainActivityPresenter(List<Account> accountList, FileReader fileReader){
+    MainActivityPresenter provideMainActivityPresenter(FileReader fileReader){
         //这里的FileReader是由AppModule中提供，不需要显示注入
         //然后从这里向Presenter中提供的时候，需要使用构造方法传入，不能在Presenter中直接@Inject注入
 
@@ -60,6 +60,6 @@ public class MainActivityModule {
         StarUC starUC = new StarUC(sr);
         GetStarListUC getStarListUC = new GetStarListUC(ar, sr, getSpUC);
 
-        return new MainActivityPresenter(mainActivity, accountList, getAccountListUC, searchAccountUC, starUC, getStarListUC);
+        return new MainActivityPresenter(mainActivity, getAccountListUC, searchAccountUC, starUC, getStarListUC);
     }
 }

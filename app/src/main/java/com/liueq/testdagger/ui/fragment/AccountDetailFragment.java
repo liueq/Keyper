@@ -92,7 +92,7 @@ public class AccountDetailFragment extends Fragment{
 	}
 
 	/**
-	 * TODO 从Bundle 中获取ID，Presenter 在DB中查找数据
+	 * 从Bundle 中获取ID，Presenter 在DB中查找数据
 	 */
 	private void loadData(){
 		getDetailOb(mPresenter.mId)
@@ -135,13 +135,15 @@ public class AccountDetailFragment extends Fragment{
 
 	private void showResult(boolean result){
 		if(result){
-            Snackbar snackbar = Snackbar.make(mLinearLayout, "SAVED", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.status_saved, Snackbar.LENGTH_SHORT);
             snackbar.show();
         }else{
-            Snackbar snackbar = Snackbar.make(mLinearLayout, "Site can't be NULL", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.warning_site_not_null, Snackbar.LENGTH_SHORT);
             snackbar.show();
         }
 	}
+
+	/***** Observable and Subscriber *****/
 
 	private Observable<Account> getDetailOb(final String id){
 		return Observable.create(new Observable.OnSubscribe<Account>() {

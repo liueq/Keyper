@@ -1,5 +1,7 @@
 package com.liueq.testdagger.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -43,6 +43,19 @@ public class AccountDetailActivity extends BaseActivity {
     @Inject
     AccountDetailActivityPresenter presenter;
 
+	/**
+     * Launch this activity
+     * @param activity from activity
+     * @param account Account Object
+     */
+    public static void startActivity(Activity activity, Account account){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("account", account);
+
+        Intent intent = new Intent(activity, AccountDetailActivity.class);
+        intent.putExtras(bundle);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,9 +135,11 @@ public class AccountDetailActivity extends BaseActivity {
             }
 
             if(TextUtils.isEmpty(account.id)){
+                //When create, just change the icon and account data
                 account.is_stared = !account.is_stared;
                 item.setIcon(getStarIcon(account.is_stared));
             }else{
+                //When update, save data to db
                 account.is_stared = !account.is_stared;
                 item.setIcon(getStarIcon(account.is_stared));
 

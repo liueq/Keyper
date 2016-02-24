@@ -51,7 +51,6 @@ import rx.schedulers.Schedulers;
 public class SearchDialogFragment extends AppCompatDialogFragment implements RecyclerListAdapter.OnItemClickListener{
 
 	public final static String TAG = "SearchDialogFragment";
-	public final static int REQUEST_CODE = 1234;
 
 	@Bind(R.id.rl_searchbox)
 	RelativeLayout mSearchBox;
@@ -181,6 +180,8 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements Rec
 		recyclerListAdapter.notifyDataSetChanged();
 	}
 
+	/***** Observable and Subscriber*****/
+
 	private Observable<List<Account>> searchListOb(final String key){
 		return Observable.create(new Observable.OnSubscribe<List<Account>>() {
 			@Override
@@ -240,23 +241,6 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements Rec
 					updateUI(new ArrayList<Account>()); //Clear
 					mIvClear.setVisibility(View.GONE);
 				}
-			}
-		});
-
-		mEtSearch.setOnKeyListener(new View.OnKeyListener() {
-			@Override
-			public boolean onKey(View view, int i, KeyEvent keyEvent) {
-				if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-					//不跳转新页面
-					/*String searchKey = mEtSearch.getText().toString().trim();
-					if (!TextUtils.isEmpty(searchKey)) {
-						GoldenHammer.hideInputMethod(getActivity(), mEtSearch);
-						getActivity().startActivityForResult(SearchListActivity.getStartIntent(getActivity(), searchKey), REQUEST_CODE, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
-					}
-					*/
-					return true;
-				}
-				return false;
 			}
 		});
 	}
@@ -328,7 +312,7 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements Rec
 		anim.addListener(new Animator.AnimatorListener() {
 			@Override
 			public void onAnimationStart(Animator animator) {
-
+				mRecycler.setVisibility(View.INVISIBLE);
 			}
 
 			@Override

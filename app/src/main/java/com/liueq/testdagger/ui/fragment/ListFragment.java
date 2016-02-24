@@ -1,6 +1,5 @@
 package com.liueq.testdagger.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.activity.AccountDetailActivity;
@@ -24,7 +22,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -61,7 +58,7 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_list, null);
+		View v = inflater.inflate(R.layout.fragment_list, container, false);
 		ButterKnife.bind(this, v);
 
 		initView();
@@ -223,12 +220,7 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 		Account account = (Account) item;
 		if(id == RecyclerListAdapter.ViewHolder.ID_LienarLayout){
 			//Launch detail activity
-			Bundle bundle = new Bundle();
-			bundle.putSerializable("account", account);
-
-			Intent intent = new Intent(mActivity, AccountDetailActivity.class);
-			intent.putExtras(bundle);
-			mActivity.startActivity(intent);
+			AccountDetailActivity.startActivity(mActivity, account);
 		}else if(id == RecyclerListAdapter.ViewHolder.ID_ImageView){
 			//Star
 			starObj(account).subscribeOn(Schedulers.io())
