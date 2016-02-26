@@ -74,6 +74,10 @@ public class TagRepoDBImpl implements TagRepo{
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		String insert_id = null;
+
+		if(TextUtils.isEmpty(tag.tag_name) || TextUtils.isEmpty(tag.tag_num)){
+			return null;
+		}
 		ContentValues values = new ContentValues();
 		values.put(DBTables.Tag.tag_name, tag.tag_name);
 		values.put(DBTables.Tag.tag_num, tag.tag_num);

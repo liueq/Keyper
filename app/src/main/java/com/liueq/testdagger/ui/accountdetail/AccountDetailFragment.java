@@ -21,7 +21,6 @@ import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
-import com.liueq.testdagger.ui.main.SearchDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +81,7 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 
 		mActivity = (AccountDetailActivity) getActivity();
 		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
+		mPresenter.attachFragment(this.getClass(), this);
 	}
 
 	@Nullable
@@ -111,7 +111,16 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 
 	@Override
 	public void onDetach() {
+		mPresenter.detachFragment(this.getClass());
 		super.onDetach();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if(mPresenter.getCurrentAccount() != null){
+			updateUI(mPresenter.getCurrentAccount()); //Just memory, not from db
+		}
 	}
 
 	/**

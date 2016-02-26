@@ -24,15 +24,20 @@
                 android:maxLines="1"
                 android:hint="@string/choose_tag_hint"/>
 
-            <ImageView
-                android:id="@+id/iv_add_tag"
+            <TextView
+                android:id="@+id/tv_add_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:src="@mipmap/ic_add_white_18dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:drawableLeft="@mipmap/ic_add_white_18dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="@string/choose_tag_dialog_new_tag"
                 android:background="@drawable/shape_round_rect"
                 android:visibility="gone"
                 tools:visibility="visible"

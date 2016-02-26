@@ -93,6 +93,15 @@ public class AccountDetailActivityPresenter extends Presenter {
        return addTagUC.addTag(mCurrentAccount, tag);
     }
 
+	/**
+	 * Search available tags
+     * @param str
+     * @return
+     */
+    public List<Tag> searchAvailableTag(String str){
+        return addTagUC.searchTags(mCurrentAccount, str);
+    }
+
 
     /**
      * 包括更新和插入

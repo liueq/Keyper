@@ -10,12 +10,17 @@ public class Tag implements Comparable<Tag>{
 
 	public String id;
 	public String tag_name;
-	public String tag_num;
+	public String tag_num = "1";
 
 	public Tag(){}
 
 	public Tag(String id){
 		this.id = id;
+	}
+
+	public Tag(String name, String num){
+		this.tag_name = name;
+		this.tag_num = num;
 	}
 
 	public Tag(Cursor cursor){

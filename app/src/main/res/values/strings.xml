@@ -32,6 +32,7 @@
 
     <string name="choose_tag_hint">Search or create tag</string>
     <string name="choose_tag_dialog_title">Tag</string>
+    <string name="choose_tag_dialog_new_tag">NEW TAG</string>
 
     <!-- Welcome -->
     <string name="first_pwd">Password required</string>
