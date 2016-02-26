@@ -19,7 +19,7 @@
         <uses-library android:name="android.test.runner"/>
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -27,10 +27,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AccountDetailActivity"
+            android:name=".ui.accountdetail.AccountDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".ui.launch.SplashActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" >
             <intent-filter>
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

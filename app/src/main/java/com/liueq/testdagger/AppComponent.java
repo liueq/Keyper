@@ -1,13 +1,13 @@
 package com.liueq.testdagger;
 
-import com.liueq.testdagger.activity.component.AccountDetailActivityComponent;
-import com.liueq.testdagger.activity.component.MainActivityComponent;
-import com.liueq.testdagger.activity.component.SettingsActivityComponent;
-import com.liueq.testdagger.activity.component.SplashActivityComponent;
-import com.liueq.testdagger.activity.module.AccountDetailActivityModule;
-import com.liueq.testdagger.activity.module.MainActivityModule;
-import com.liueq.testdagger.activity.module.SettingsActivityModule;
-import com.liueq.testdagger.activity.module.SplashActivityModule;
+import com.liueq.testdagger.ui.accountdetail.AccountDetailActivityComponent;
+import com.liueq.testdagger.ui.main.MainActivityComponent;
+import com.liueq.testdagger.ui.settings.SettingsActivityComponent;
+import com.liueq.testdagger.ui.launch.SplashActivityComponent;
+import com.liueq.testdagger.ui.accountdetail.AccountDetailActivityModule;
+import com.liueq.testdagger.ui.main.MainActivityModule;
+import com.liueq.testdagger.ui.settings.SettingsActivityModule;
+import com.liueq.testdagger.ui.launch.SplashActivityModule;
 
 import javax.inject.Singleton;
 
