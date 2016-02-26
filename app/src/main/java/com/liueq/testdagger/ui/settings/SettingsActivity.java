@@ -80,7 +80,7 @@ public class SettingsActivity extends BaseActivity {
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                presenter.encryptPwd(isChecked);
-//                presenter.saveData();
+//                presenter.saveDataToDB();
 //            }
 //        });
 
@@ -88,7 +88,7 @@ public class SettingsActivity extends BaseActivity {
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                presenter.encryptDesc(isChecked);
-//                presenter.saveData();
+//                presenter.saveDataToDB();
 //            }
 //        });
     }

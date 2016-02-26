@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liueq.testdagger.R;
@@ -63,6 +62,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 
 		mActivity = (AccountDetailActivity) getActivity();
 		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
+		mPresenter.attachFragment(ChooseTagDialog.class, this);
 	}
 
 	@Nullable
@@ -74,6 +74,12 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 		getDialog().setTitle(R.string.choose_tag_dialog_title);
 		initView();
 		return view;
+	}
+
+	@Override
+	public void onDetach() {
+		mPresenter.detachFragment(ChooseTagDialog.class);
+		super.onDetach();
 	}
 
 	private void initView(){
@@ -90,15 +96,12 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				String str = s.toString().trim();
-				if(TextUtils.isEmpty(str)){
+				String search = s.toString().trim();
+				if(TextUtils.isEmpty(search)){
 					mRecyclerAdapter.replaceAll(new ArrayList<Tag>());
 				}else{
 					//Search
-					searchAvailableTagOb(str)
-							.subscribeOn(Schedulers.io())
-							.observeOn(AndroidSchedulers.mainThread())
-							.subscribe(searchAvailableTagSub());
+					mPresenter.searchAvailableTag(search);
 				}
 
 			}
@@ -111,9 +114,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 				String tag_name = mEditTextTag.getText().toString().trim();
 				Tag tag = new Tag(tag_name, "1");
 
-				createNewTagOb(tag).subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(createNewTagSub());
+				mPresenter.createNewTag(tag);
 			}
 		});
 
@@ -123,7 +124,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 		mRecyclerTag.setAdapter(mRecyclerAdapter = new TagRecyclerAdapter(getActivity(), this));
 	}
 
-	private void updateUI(List<Tag> list){
+	public void updateUI(List<Tag> list){
 		mRecyclerAdapter.replaceAll(list);
 
 		/** When the list size is 0, show create tag button**/
@@ -138,65 +139,6 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 	@Override
 	public void onItemClick(View view, Object obj, int position) {
 
-	}
-
-
-	/** Observable and Subscriber **/
-	private Observable<List<Tag>> searchAvailableTagOb(final String search){
-		return Observable.create(new Observable.OnSubscribe<List<Tag>>() {
-			@Override
-			public void call(Subscriber<? super List<Tag>> subscriber) {
-				subscriber.onNext(mPresenter.searchAvailableTag(search));
-			}
-		});
-	}
-
-	private Subscriber<List<Tag>> searchAvailableTagSub(){
-		return new Subscriber<List<Tag>>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(List<Tag> list) {
-				updateUI(list);
-			}
-		};
-	}
-
-	private Observable<Tag> createNewTagOb(final Tag tag){
-		return Observable.create(new Observable.OnSubscribe<Tag>() {
-			@Override
-			public void call(Subscriber<? super Tag> subscriber) {
-				mPresenter.addTag(tag);
-				subscriber.onNext(tag);
-			}
-		});
-	}
-
-	private Subscriber<Tag> createNewTagSub(){
-		return new Subscriber<Tag>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(Tag tag) {
-				getDialog().dismiss();
-			}
-		};
 	}
 
 	public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.ViewHolder>{

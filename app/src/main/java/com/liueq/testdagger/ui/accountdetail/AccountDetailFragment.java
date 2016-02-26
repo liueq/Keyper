@@ -23,16 +23,10 @@ import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by liueq on 18/2/2016.
@@ -118,20 +112,13 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	@Override
 	public void onResume() {
 		super.onResume();
-		if(mPresenter.getCurrentAccount() != null){
-			updateUI(mPresenter.getCurrentAccount()); //Just memory, not from db
-		}
 	}
 
 	/**
 	 * 从Bundle 中获取ID，Presenter 在DB中查找数据
 	 */
 	private void loadData(){
-		getDetailOb(mPresenter.mId)
-				.map(addTagOb())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribeOn(Schedulers.io())
-				.subscribe(getDetailSub());
+		mPresenter.loadDataFromDB(this);
 	}
 
 	public void updateUI(Account account){
@@ -159,17 +146,13 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
         account.description = mEditTextDesc.getText().toString();
 
         if(BuildConfig.DEBUG){
-            Log.d(TAG, "saveData account is " + account.toString());
+            Log.d(TAG, "saveDataToDB account is " + account.toString());
         }
 
-		saveDetailOb(account)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribeOn(Schedulers.io())
-				.subscribe(saveDetailSub());
-
+		mPresenter.saveDataToDB(account);
     }
 
-	private void showResult(boolean result){
+	public void showResult(boolean result){
 		if(result){
             Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.status_saved, Snackbar.LENGTH_SHORT);
             snackbar.show();
@@ -177,79 +160,6 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
             Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.warning_site_not_null, Snackbar.LENGTH_SHORT);
             snackbar.show();
         }
-	}
-
-	/***** Observable and Subscriber *****/
-
-	private Observable<Account> getDetailOb(final String id){
-		return Observable.create(new Observable.OnSubscribe<Account>() {
-			@Override
-			public void call(Subscriber<? super Account> subscriber) {
-				Account account = mPresenter.loadData(id);
-				subscriber.onNext(account);
-			}
-		});
-	}
-
-	private Func1<Account, Account> addTagOb(){
-		return new Func1<Account, Account>() {
-			@Override
-			public Account call(Account account) {
-				// Get Account Tag
-				List<Tag> list = mPresenter.getTagList(account);
-				list.add(0, new Tag("-1"));
-				account.tag_list.addAll(list);
-				return account;
-			}
-		};
-	}
-
-	private Subscriber<Account> getDetailSub(){
-		return new Subscriber<Account>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(Account account) {
-				updateUI(account);
-			}
-		};
-	}
-
-	private Observable<Boolean> saveDetailOb(final Account account){
-		return Observable.create(new Observable.OnSubscribe<Boolean>() {
-			@Override
-			public void call(Subscriber<? super Boolean> subscriber) {
-				boolean result = mPresenter.saveData(account);
-				subscriber.onNext(result);
-			}
-		});
-	}
-
-	private Subscriber<Boolean> saveDetailSub(){
-		return new Subscriber<Boolean>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(Boolean aBoolean) {
-				showResult(aBoolean);
-			}
-		};
 	}
 
 	@Override

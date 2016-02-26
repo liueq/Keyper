@@ -87,12 +87,12 @@ public class AccountRepoImpl implements AccountRepo {
 
         if (BuildConfig.DEBUG) {
             for (Account i : list) {
-                Log.i(TAG, "loadData id " + i.id);
-                Log.i(TAG, "loadData site" + i.site);
-                Log.i(TAG, "loadData username" + i.username);
-                Log.i(TAG, "loadData password" + i.password);
-                Log.i(TAG, "loadData mail" + i.mail);
-                Log.i(TAG, "loadData description" + i.description);
+                Log.i(TAG, "loadDataFromDB id " + i.id);
+                Log.i(TAG, "loadDataFromDB site" + i.site);
+                Log.i(TAG, "loadDataFromDB username" + i.username);
+                Log.i(TAG, "loadDataFromDB password" + i.password);
+                Log.i(TAG, "loadDataFromDB mail" + i.mail);
+                Log.i(TAG, "loadDataFromDB description" + i.description);
 
             }
         }
