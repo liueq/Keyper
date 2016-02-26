@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
+import com.liueq.testdagger.ui.main.SearchDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,8 +249,11 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		if(id == HorizontalTagAdapter.ViewHolder.ID_LinearLayout){
 			//TODO Open Tag detail
 		}else if(id == HorizontalTagAdapter.ViewHolder.ID_ImageViewAdd){
-			//TODO show add dialog
-
+			//Show add dialog
+			FragmentManager manager = mActivity.getSupportFragmentManager();
+			FragmentTransaction transaction = manager.beginTransaction();
+			transaction.add(ChooseTagDialog.newInstance(), null);
+			transaction.commit();
 
 		}else if(id == HorizontalTagAdapter.ViewHolder.ID_ImageViewDel){
 			//TODO Del tag

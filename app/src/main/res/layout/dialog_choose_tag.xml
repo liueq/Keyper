@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/body_1_regular"
+                android:maxLines="1"
+                android:hint="@string/choose_tag_hint"/>
+
+            <ImageView
+                android:id="@+id/iv_add_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:src="@mipmap/ic_add_white_18dp"
+                android:background="@drawable/shape_round_rect"
+                android:visibility="gone"
+                tools:visibility="visible"
+                />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_tag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -30,6 +30,9 @@
     <string name="status_saved">SAVED</string>
     <string name="warning_site_not_null">Site can not be NULL</string>
 
+    <string name="choose_tag_hint">Search or create tag</string>
+    <string name="choose_tag_dialog_title">Tag</string>
+
     <!-- Welcome -->
     <string name="first_pwd">Password required</string>
     <string name="sec_pwd">Password repeat</string>
