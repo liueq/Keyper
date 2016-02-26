@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,12 @@ import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.activity.AccountDetailActivity;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.data.model.Tag;
 import com.liueq.testdagger.ui.activity.presenter.AccountDetailActivityPresenter;
+import com.liueq.testdagger.ui.adapter.HorizontalTagAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,13 +32,14 @@ import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by liueq on 18/2/2016.
  * 详情页面的Fragment
  */
-public class AccountDetailFragment extends Fragment{
+public class AccountDetailFragment extends Fragment implements HorizontalTagAdapter.OnItemClickListener {
 
 	public final static String TAG = "Detail";
 
@@ -50,9 +58,13 @@ public class AccountDetailFragment extends Fragment{
 
 	@Bind(R.id.linear)
 	LinearLayout mLinearLayout;
+	@Bind(R.id.recycler_tag)
+	RecyclerView mRecyclerTag;
 
 	AccountDetailActivity mActivity;
 	AccountDetailActivityPresenter mPresenter;
+
+	HorizontalTagAdapter mHorizontalTagAdapter;
 
 
 	public static AccountDetailFragment newInstance() {
@@ -70,7 +82,6 @@ public class AccountDetailFragment extends Fragment{
 
 		mActivity = (AccountDetailActivity) getActivity();
 		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
-		loadData();
 	}
 
 	@Nullable
@@ -78,7 +89,19 @@ public class AccountDetailFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_account_detail, null);
 		ButterKnife.bind(this, view);
+
+		initView();
+		loadData();
 		return view;
+	}
+
+	/**
+	 * Init the UI
+	 */
+	private void initView(){
+		mRecyclerTag.setHasFixedSize(true);
+		mRecyclerTag.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+		mRecyclerTag.setAdapter(mHorizontalTagAdapter = new HorizontalTagAdapter(mActivity, new ArrayList<Tag>(), this));
 	}
 
 	@Override
@@ -96,6 +119,7 @@ public class AccountDetailFragment extends Fragment{
 	 */
 	private void loadData(){
 		getDetailOb(mPresenter.mId)
+				.map(addTagOb())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(getDetailSub());
@@ -107,6 +131,9 @@ public class AccountDetailFragment extends Fragment{
         mEditTextPwd.setText(account.password);
         mEditTextMail.setText(account.mail);
         mEditTextDesc.setText(account.description);
+
+		mHorizontalTagAdapter.replaceAll(account.tag_list);
+		mHorizontalTagAdapter.notifyDataSetChanged();
     }
 
 	@OnClick(R.id.tv_commit)
@@ -155,6 +182,19 @@ public class AccountDetailFragment extends Fragment{
 		});
 	}
 
+	private Func1<Account, Account> addTagOb(){
+		return new Func1<Account, Account>() {
+			@Override
+			public Account call(Account account) {
+				// Get Account Tag
+				List<Tag> list = mPresenter.getTagList(account);
+				list.add(0, new Tag("-1"));
+				account.tag_list.addAll(list);
+				return account;
+			}
+		};
+	}
+
 	private Subscriber<Account> getDetailSub(){
 		return new Subscriber<Account>() {
 			@Override
@@ -201,5 +241,19 @@ public class AccountDetailFragment extends Fragment{
 				showResult(aBoolean);
 			}
 		};
+	}
+
+	@Override
+	public void onItemClicked(View view, Object item, int position) {
+		int id = view.getId();
+		if(id == HorizontalTagAdapter.ViewHolder.ID_LinearLayout){
+			//TODO Open Tag detail
+		}else if(id == HorizontalTagAdapter.ViewHolder.ID_ImageViewAdd){
+			//TODO show add dialog
+
+
+		}else if(id == HorizontalTagAdapter.ViewHolder.ID_ImageViewDel){
+			//TODO Del tag
+		}
 	}
 }

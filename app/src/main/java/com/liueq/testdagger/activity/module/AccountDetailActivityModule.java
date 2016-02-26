@@ -9,6 +9,9 @@ import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.data.repository.StarRepo;
 import com.liueq.testdagger.data.repository.StarRepoDBImpl;
+import com.liueq.testdagger.data.repository.TagRepo;
+import com.liueq.testdagger.data.repository.TagRepoDBImpl;
+import com.liueq.testdagger.domain.interactor.AddTagUC;
 import com.liueq.testdagger.domain.interactor.DeleteAccountUC;
 import com.liueq.testdagger.domain.interactor.GetAccountDetailUC;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
@@ -50,12 +53,19 @@ public class AccountDetailActivityModule {
 
         AccountRepo ar = new AccountRepoDBImpl(accountDetailActivity, getSpUC);
         StarRepo sr = new StarRepoDBImpl(accountDetailActivity);
+        TagRepo tr = new TagRepoDBImpl(accountDetailActivity);
 
         SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC, sr);
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr,  getSpUC);
         DeleteAccountUC deleteAccountUC = new DeleteAccountUC(ar);
-        GetAccountDetailUC getAccountDetailUC = new GetAccountDetailUC(ar, sr);
+        GetAccountDetailUC getAccountDetailUC = new GetAccountDetailUC(ar, sr, tr);
+        AddTagUC addTagUC = new AddTagUC(tr);
 
-        return new AccountDetailActivityPresenter(accountDetailActivity, accountList, saveAccountListUC, getAccountListUC, deleteAccountUC, getAccountDetailUC);
+        return new AccountDetailActivityPresenter(accountDetailActivity, accountList,
+                saveAccountListUC,
+                getAccountListUC,
+                deleteAccountUC,
+                getAccountDetailUC,
+                addTagUC);
     }
 }

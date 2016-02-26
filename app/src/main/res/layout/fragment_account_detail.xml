@@ -25,6 +25,35 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_local_offer_grey600_24dp"
+                    android:drawablePadding="4dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:text="@string/tag"
+                    android:textSize="16sp"
+                    tools:text="TAG: "/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:listPreferredItemHeightSmall"
+                    android:layout_marginLeft="6dp"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
                     android:id="@+id/tv_site"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

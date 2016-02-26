@@ -3,6 +3,8 @@ package com.liueq.testdagger.data.model;
 import net.sqlcipher.Cursor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liueq on 13/7/15.
@@ -18,6 +20,8 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
     public String description;
 
     public boolean is_stared;
+
+    public List<Tag> tag_list = new ArrayList<Tag>();
 
     public Account(){
 //        Random random = new Random();

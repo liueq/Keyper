@@ -5,6 +5,9 @@ import android.text.TextUtils;
 
 import com.liueq.testdagger.activity.AccountDetailActivity;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.data.model.Tag;
+import com.liueq.testdagger.data.repository.TagRepo;
+import com.liueq.testdagger.domain.interactor.AddTagUC;
 import com.liueq.testdagger.domain.interactor.DeleteAccountUC;
 import com.liueq.testdagger.domain.interactor.GetAccountDetailUC;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
@@ -29,13 +32,15 @@ public class AccountDetailActivityPresenter extends Presenter{
     GetAccountListUC getAccountListUC;
     DeleteAccountUC deleteAccountUC;
     GetAccountDetailUC getAccountDetailUC;
+    AddTagUC addTagUC;
 
     public AccountDetailActivityPresenter(AccountDetailActivity activity,
                                           List<Account> accountList,
                                           SaveAccountListUC saveAccountListUC,
                                           GetAccountListUC getAccountListUC,
                                           DeleteAccountUC deleteAccountUC,
-                                          GetAccountDetailUC getAccountDetailUC){
+                                          GetAccountDetailUC getAccountDetailUC,
+                                          AddTagUC addTagUC){
         this.activity = activity;
         this.mAccountList = accountList;
 
@@ -43,6 +48,7 @@ public class AccountDetailActivityPresenter extends Presenter{
         this.getAccountListUC = getAccountListUC;
         this.deleteAccountUC = deleteAccountUC;
         this.getAccountDetailUC = getAccountDetailUC;
+        this.addTagUC = addTagUC;
     }
 
 	/**
@@ -61,6 +67,33 @@ public class AccountDetailActivityPresenter extends Presenter{
         }
         return mCurrentAccount;
     }
+
+	/**
+     * Get tag list from account
+     * @param account
+     * @return
+     */
+    public List<Tag> getTagList(Account account){
+        return getAccountDetailUC.getTagList(account);
+    }
+
+	/**
+     * Get available tags
+     * @return
+     */
+    public List<Tag> getAvailableTags(){
+        return addTagUC.getAvailableTags(mCurrentAccount);
+    }
+
+	/**
+     * Add tag to account, tag could be a new tag
+     * @param tag
+     * @return
+     */
+    public boolean addTag(Tag tag){
+       return addTagUC.addTag(mCurrentAccount, tag);
+    }
+
 
     /**
      * 包括更新和插入

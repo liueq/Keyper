@@ -100,7 +100,7 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements Rec
 	}
 
 	private void initView(){
-		mRecycler.setHasFixedSize(true);
+		mRecycler.setHasFixedSize(false);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 		recyclerListAdapter = new RecyclerListAdapter(getActivity(), new ArrayList<Account>(), this);
 		mRecycler.setAdapter(recyclerListAdapter);

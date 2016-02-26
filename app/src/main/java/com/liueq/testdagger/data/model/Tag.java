@@ -6,13 +6,17 @@ import net.sqlcipher.Cursor;
  * Created by liueq on 24/2/2016.
  * Tag obj
  */
-public class Tag {
+public class Tag implements Comparable<Tag>{
 
 	public String id;
 	public String tag_name;
 	public String tag_num;
 
 	public Tag(){}
+
+	public Tag(String id){
+		this.id = id;
+	}
 
 	public Tag(Cursor cursor){
 		id = String.valueOf(cursor.getInt(0));
@@ -27,5 +31,14 @@ public class Tag {
 				", tag_name='" + tag_name + '\'' +
 				", tag_num='" + tag_num + '\'' +
 				'}';
+	}
+
+	@Override
+	public int compareTo(Tag another) {
+		if(this.id.equals(another.id) && this.tag_name.equals(another.tag_name)){
+			return 0;
+		}else {
+			return -1;
+		}
 	}
 }
