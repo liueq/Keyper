@@ -7,6 +7,8 @@ import com.liueq.testdagger.data.repository.AccountRepoImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.data.repository.StarRepo;
 import com.liueq.testdagger.data.repository.StarRepoDBImpl;
+import com.liueq.testdagger.data.repository.TagRepo;
+import com.liueq.testdagger.data.repository.TagRepoDBImpl;
 import com.liueq.testdagger.domain.interactor.CheckPasswordUC;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
 import com.liueq.testdagger.domain.interactor.GetSpUC;
@@ -50,8 +52,9 @@ public class SettingsActivityModule {
 
         AccountRepo ar = new AccountRepoImpl(fileReader, getSpUC);
         StarRepo sr = new StarRepoDBImpl(settingsActivity);
+        TagRepo tr = new TagRepoDBImpl(settingsActivity);
 
-        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC, sr);
+        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC, sr, tr);
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr, getSpUC);
         CheckPasswordUC checkPasswordUC = new CheckPasswordUC(impl);
 

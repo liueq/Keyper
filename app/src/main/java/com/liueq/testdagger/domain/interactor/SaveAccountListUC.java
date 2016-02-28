@@ -7,6 +7,7 @@ import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepo;
 import com.liueq.testdagger.data.repository.StarRepo;
+import com.liueq.testdagger.data.repository.TagRepo;
 import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.ArrayList;
@@ -23,13 +24,17 @@ public class SaveAccountListUC {
 
     AccountRepo mAR;
     StarRepo mSR;
+    TagRepo mTR;
+
     GetSpUC mGetSpUC;
+
     public final static String TAG = "SaveAlus";
 
     @Inject
-    public SaveAccountListUC(AccountRepo AR, GetSpUC getSpUC, StarRepo SR){
+    public SaveAccountListUC(AccountRepo AR, GetSpUC getSpUC, StarRepo SR, TagRepo TR){
         mAR = AR;
         mSR = SR;
+        mTR = TR;
         mGetSpUC = getSpUC;
     }
 
@@ -102,6 +107,8 @@ public class SaveAccountListUC {
         }else{
             mSR.unStarAccount(account);
         }
+
+        mTR.addAccountTag(account, account.tag_list);
 
         return result_id;
     }

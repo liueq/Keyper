@@ -45,29 +45,11 @@ public class HorizontalTagAdapter extends RecyclerView.Adapter<HorizontalTagAdap
 	public void onBindViewHolder(ViewHolder holder, final int position) {
 		final Tag tag = mList.get(position);
 
-		if(tag.id.equals("-1")){
-			//Holder add
-			holder.mImageViewAdd.setVisibility(View.VISIBLE);
-			holder.mTextViewTag.setVisibility(View.GONE);
-			holder.mImageViewDel.setVisibility(View.GONE);
-		}else{
-			holder.mImageViewAdd.setVisibility(View.GONE);
-			holder.mTextViewTag.setVisibility(View.VISIBLE);
-			holder.mImageViewDel.setVisibility(View.VISIBLE);
-
-			holder.mTextViewTag.setText(tag.tag_name);
-		}
+		holder.mTextViewTag.setText(tag.tag_name);
 
 		/** Set listener **/
 
 		holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mListener.onItemClicked(v, tag, position);
-			}
-		});
-
-		holder.mImageViewAdd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mListener.onItemClicked(v, tag, position);
@@ -99,14 +81,11 @@ public class HorizontalTagAdapter extends RecyclerView.Adapter<HorizontalTagAdap
 		LinearLayout mLinearLayout;
 		@Bind(R.id.tv_tag)
 		TextView mTextViewTag;
-		@Bind(R.id.iv_add)
-		ImageView mImageViewAdd;
 		@Bind(R.id.iv_del)
 		ImageView mImageViewDel;
 
 		public final static int ID_LinearLayout = R.id.ll_container;
 		public final static int ID_TextViewTag = R.id.tv_tag;
-		public final static int ID_ImageViewAdd = R.id.iv_add;
 		public final static int ID_ImageViewDel = R.id.iv_del;
 
 		public ViewHolder(View itemView) {

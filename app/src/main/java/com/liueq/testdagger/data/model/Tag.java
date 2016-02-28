@@ -46,4 +46,18 @@ public class Tag implements Comparable<Tag>{
 			return -1;
 		}
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Tag){
+			Tag another = (Tag) o;
+			if (this.id.equals(another.id) && this.tag_name.equals(another.tag_name)) {
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
 }

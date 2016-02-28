@@ -165,8 +165,7 @@ public class TagRepoDBImpl implements TagRepo{
 		return is_successful;
 	}
 
-	@Override
-	public List<Tag> searchTag(String tag_name) {
+	public List<Tag> searchTag(String tag_name, boolean exact) {
 		List<Tag> list = new ArrayList<>();
 		Tag tag = null;
 		if(TextUtils.isEmpty(tag_name)){
@@ -174,7 +173,13 @@ public class TagRepoDBImpl implements TagRepo{
 		}
 
 		String selection = DBTables.Tag.tag_name + " LIKE ?";
-		String []selection_args = {"%" + tag_name + "%"};
+		String []selection_args = new String[1];
+		if(exact){
+			selection_args[0] = tag_name;
+		}else{
+			selection_args[0] = "%" + tag_name + "%";
+		}
+
 
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
@@ -203,6 +208,17 @@ public class TagRepoDBImpl implements TagRepo{
 		}
 
 		return list;
+	}
+
+	@Override
+	public List<Tag> searchTag(String tag_name){
+		 return searchTag(tag_name, false);
+	}
+
+	@Override
+	public boolean hasTag(String tag_name) {
+		List<Tag> tag = searchTag(tag_name, true);
+		return tag.size() > 0;
 	}
 
 	@Override
@@ -253,6 +269,9 @@ public class TagRepoDBImpl implements TagRepo{
 	@Override
 	public List<Tag> getTagFromAccount(Account account) {
 		List<Tag> list = new ArrayList<Tag>();
+		if(TextUtils.isEmpty(account.id)){
+			return list;
+		}
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		Cursor cursor_in = null;
@@ -265,7 +284,7 @@ public class TagRepoDBImpl implements TagRepo{
 			{
 				cursor = db.query(DBTables.TagAndPassword.table_name, DBTables.TagAndPassword.ALL_COLUMN, selection, selectionArgs, null, null, null);
 				while(cursor.moveToNext()){
-					String tag_id = cursor_in.getString(1);
+					String tag_id = String.valueOf(cursor.getInt(1));
 
 					selection = DBTables.Tag.id + " = ?";
 					selectionArgs = new String[1];
@@ -299,7 +318,7 @@ public class TagRepoDBImpl implements TagRepo{
 		boolean result = false;
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
-		String selection = DBTables.TagAndPassword.password_id + " = ? && " + DBTables.TagAndPassword.tag_id + " = ?";
+		String selection = DBTables.TagAndPassword.password_id + " = ? and " + DBTables.TagAndPassword.tag_id + " = ?";
 		String []selectionArgs = new String[2];
 
 		try{
@@ -342,7 +361,7 @@ public class TagRepoDBImpl implements TagRepo{
 	public boolean deleteAccountTag(Account account, Tag tag) {
 		boolean result = false;
 		SQLiteDatabase db = null;
-		String where = DBTables.TagAndPassword.password_id + " = ? && "+ DBTables.TagAndPassword.tag_id + " = ?";
+		String where = DBTables.TagAndPassword.password_id + " = ? and "+ DBTables.TagAndPassword.tag_id + " = ?";
 		String []whereArgs = {account.id, tag.id};
 
 		try{

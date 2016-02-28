@@ -102,6 +102,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 				}else{
 					//Search
 					mPresenter.searchAvailableTag(search);
+					mPresenter.hasTag(search);
 				}
 
 			}
@@ -124,15 +125,17 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 		mRecyclerTag.setAdapter(mRecyclerAdapter = new TagRecyclerAdapter(getActivity(), this));
 	}
 
-	public void updateUI(List<Tag> list){
+	public void updateList(List<Tag> list){
 		mRecyclerAdapter.replaceAll(list);
+		mRecyclerAdapter.notifyDataSetChanged();
+	}
 
-		/** When the list size is 0, show create tag button**/
-		if(list.size() == 0){
+	public void updateAddTag(boolean has_tag){
+		if(has_tag){
+			mTextViewAdd.setVisibility(View.GONE);
+		}else{
 			//Show create new tag button
 			mTextViewAdd.setVisibility(View.VISIBLE);
-		}else{
-			mTextViewAdd.setVisibility(View.GONE);
 		}
 	}
 

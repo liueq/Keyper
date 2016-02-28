@@ -38,6 +38,13 @@ public interface TagRepo {
 	 */
 	List<Tag> searchTag(String tag_name);
 
+	/**
+	 * Search db, is there tag exist with same name.
+	 * @param tag_name
+	 * @return
+	 */
+	boolean hasTag(String tag_name);
+
 	List<Account> getAccountFromTag(Tag tag);
 
 	List<Tag> getTagFromAccount(Account account);

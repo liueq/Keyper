@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,8 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	EditText mEditTextMail;
 	@Bind(R.id.et_desc)
 	EditText mEditTextDesc;
+	@Bind(R.id.iv_add)
+	ImageView mImageViewAdd;
 
 	@Bind(R.id.linear)
 	LinearLayout mLinearLayout;
@@ -132,25 +135,53 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		mHorizontalTagAdapter.notifyDataSetChanged();
     }
 
-	@OnClick(R.id.tv_commit)
-    public void saveData(){
-        Account account = mPresenter.getCurrentAccount();
-        if(account == null){
-            account = new Account();
+	@OnClick({R.id.tv_commit, R.id.iv_add})
+    public void onClick(View view){
+		int id = view.getId();
+		if(id == R.id.tv_commit) {
+			saveData();
+		}else if(id == R.id.iv_add){
+			//Before show tag, need save change to memory
+			syncData();
+			//Show tag dialog
+			FragmentManager manager = mActivity.getSupportFragmentManager();
+			FragmentTransaction transaction = manager.beginTransaction();
+			transaction.add(ChooseTagDialog.newInstance(), null);
+			transaction.commit();
+		}
+    }
+
+	/**
+	 * Save UI change to mCurrentAccount
+	 * @return
+	 */
+	public Account syncData(){
+		Account account = mPresenter.getCurrentAccount();
+		if (account == null) {
+			account = new Account();
 		}
 
-        account.site = mEditTextSite.getText().toString();
-        account.username = mEditTextName.getText().toString();
-        account.password = mEditTextPwd.getText().toString();
-        account.mail = mEditTextMail.getText().toString();
-        account.description = mEditTextDesc.getText().toString();
+		account.site = mEditTextSite.getText().toString();
+		account.username = mEditTextName.getText().toString();
+		account.password = mEditTextPwd.getText().toString();
+		account.mail = mEditTextMail.getText().toString();
+		account.description = mEditTextDesc.getText().toString();
 
-        if(BuildConfig.DEBUG){
-            Log.d(TAG, "saveDataToDB account is " + account.toString());
-        }
+		return account;
+	}
+
+	/**
+	 * Call presenter save to db
+	 */
+	public void saveData(){
+		Account account = syncData();
+
+		if (BuildConfig.DEBUG) {
+			Log.d(TAG, "saveDataToDB account is " + account.toString());
+		}
 
 		mPresenter.saveDataToDB(account);
-    }
+	}
 
 	public void showResult(boolean result){
 		if(result){
@@ -167,13 +198,6 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		int id = view.getId();
 		if(id == HorizontalTagAdapter.ViewHolder.ID_LinearLayout){
 			//TODO Open Tag detail
-		}else if(id == HorizontalTagAdapter.ViewHolder.ID_ImageViewAdd){
-			//Show add dialog
-			FragmentManager manager = mActivity.getSupportFragmentManager();
-			FragmentTransaction transaction = manager.beginTransaction();
-			transaction.add(ChooseTagDialog.newInstance(), null);
-			transaction.commit();
-
 		}else if(id == HorizontalTagAdapter.ViewHolder.ID_ImageViewDel){
 			//TODO Del tag
 		}

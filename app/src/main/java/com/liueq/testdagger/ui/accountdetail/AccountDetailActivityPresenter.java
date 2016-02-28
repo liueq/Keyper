@@ -17,7 +17,7 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -69,7 +69,6 @@ public class AccountDetailActivityPresenter extends Presenter {
 
     public void loadDataFromDB(AccountDetailFragment accountDetailFragment){
         getDetailOb(mId)
-                .map(addTagOb())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(getDetailSub());
@@ -90,19 +89,6 @@ public class AccountDetailActivityPresenter extends Presenter {
                 subscriber.onNext(account);
             }
         });
-    }
-
-    private Func1<Account, Account> addTagOb(){
-        return new Func1<Account, Account>() {
-            @Override
-            public Account call(Account account) {
-                // Get Account Tag
-                List<Tag> list = getTagList(account);
-                list.add(0, new Tag("-1"));
-                account.tag_list.addAll(list);
-                return account;
-            }
-        };
     }
 
     private Subscriber<Account> getDetailSub(){
@@ -180,6 +166,12 @@ public class AccountDetailActivityPresenter extends Presenter {
                 .subscribe(createNewTagSub());
     }
 
+    public void hasTag(String tag_name){
+        hasTagOb(tag_name).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(hasTagSub());
+    }
+
     private Observable<List<Tag>> searchAvailableTagOb(final String search){
         return Observable.create(new Observable.OnSubscribe<List<Tag>>() {
             @Override
@@ -203,7 +195,7 @@ public class AccountDetailActivityPresenter extends Presenter {
 
             @Override
             public void onNext(List<Tag> list) {
-                ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).updateUI(list);
+                ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).updateList(list);
             }
         };
     }
@@ -238,13 +230,27 @@ public class AccountDetailActivityPresenter extends Presenter {
         };
     }
 
+    public Observable<Boolean> hasTagOb(final String tag_name){
+        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                subscriber.onNext(addTagUC.hasTag(tag_name));
+            }
+        });
+    }
+
+    public Action1<Boolean> hasTagSub(){
+        return new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).updateAddTag(aBoolean);
+            }
+        };
+    }
 
 
     public Account loadDataFromDB(String id){
         mCurrentAccount = getAccountDetailUC.execute(id);
-        if(mCurrentAccount == null){
-            mCurrentAccount = new Account();
-        }
         return mCurrentAccount;
     }
 

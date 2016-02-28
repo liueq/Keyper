@@ -86,4 +86,13 @@ public class AddTagUC extends UseCase{
 		account.tag_list.add(tag);
 		return true;
 	}
+
+	/**
+	 * If the same tag exists in db
+	 * @param tag_name
+	 * @return
+	 */
+	public boolean hasTag(String tag_name){
+		return mTR.hasTag(tag_name);
+	}
 }
