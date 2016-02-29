@@ -199,7 +199,10 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		if(id == HorizontalTagAdapter.ViewHolder.ID_LinearLayout){
 			//TODO Open Tag detail
 		}else if(id == HorizontalTagAdapter.ViewHolder.ID_ImageViewDel){
-			//TODO Del tag
+			//Delete tag
+			if(item instanceof Tag){
+				mPresenter.removeTagAction((Tag) item);
+			}
 		}
 	}
 }

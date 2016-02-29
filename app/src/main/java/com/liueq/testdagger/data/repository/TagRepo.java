@@ -53,4 +53,11 @@ public interface TagRepo {
 
 	boolean deleteAccountTag(Account account, Tag tag);
 
+	/**
+	 * Replace an account`s all tags
+	 * @param account
+	 * @param tag_list
+	 * @return
+	 */
+	boolean replaceAccountTag(Account account, List<Tag> tag_list);
 }

@@ -141,7 +141,14 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 
 	@Override
 	public void onItemClick(View view, Object obj, int position) {
-
+		int id = view.getId();
+		switch (id){
+			case TagRecyclerAdapter.ViewHolder.ID_TextView:
+				if(obj instanceof Tag){
+					mPresenter.addTagAction((Tag) obj);
+				}
+				break;
+		}
 	}
 
 	public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.ViewHolder>{
@@ -190,6 +197,8 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 
 			@Bind(android.R.id.text1)
 			public TextView mTextView;
+
+			public final static int ID_TextView = android.R.id.text1;
 
 			public ViewHolder(View itemView) {
 				super(itemView);

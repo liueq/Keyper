@@ -17,6 +17,7 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -79,6 +80,12 @@ public class AccountDetailActivityPresenter extends Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(saveDetailSub());
+    }
+
+    public void removeTagAction(Tag tag){
+        removeTagOb(tag).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(removeTagSub());
     }
 
     private Observable<Account> getDetailOb(final String id){
@@ -151,6 +158,26 @@ public class AccountDetailActivityPresenter extends Presenter {
         };
     }
 
+    private Observable<Tag> removeTagOb(final Tag tag){
+        return Observable.create(new Observable.OnSubscribe<Tag>() {
+            @Override
+            public void call(Subscriber<? super Tag> subscriber) {
+                mCurrentAccount.tag_list.remove(tag);
+                subscriber.onNext(null);
+            }
+        });
+    }
+
+    private Action1<Tag> removeTagSub(){
+        return new Action1<Tag>() {
+            @Override
+            public void call(Tag tag) {
+                ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).updateUI(mCurrentAccount);
+            }
+        };
+    }
+
+
     /******************** ChooseTagDialog Operation ********************/
 
     public void searchAvailableTag(String search){
@@ -170,6 +197,12 @@ public class AccountDetailActivityPresenter extends Presenter {
         hasTagOb(tag_name).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hasTagSub());
+    }
+
+    public void addTagAction(Tag tag){
+        addTagOb(tag).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(addTagSub());
     }
 
     private Observable<List<Tag>> searchAvailableTagOb(final String search){
@@ -230,7 +263,7 @@ public class AccountDetailActivityPresenter extends Presenter {
         };
     }
 
-    public Observable<Boolean> hasTagOb(final String tag_name){
+    private Observable<Boolean> hasTagOb(final String tag_name){
         return Observable.create(new Observable.OnSubscribe<Boolean>() {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
@@ -239,11 +272,31 @@ public class AccountDetailActivityPresenter extends Presenter {
         });
     }
 
-    public Action1<Boolean> hasTagSub(){
+    private Action1<Boolean> hasTagSub(){
         return new Action1<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
                 ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).updateAddTag(aBoolean);
+            }
+        };
+    }
+
+    private Observable<Tag> addTagOb(final Tag tag){
+        return Observable.create(new Observable.OnSubscribe<Tag>() {
+            @Override
+            public void call(Subscriber<? super Tag> subscriber) {
+                addTag(tag);
+                subscriber.onNext(null);
+            }
+        });
+    }
+
+    private Action1<Tag> addTagSub(){
+        return new Action1<Tag>() {
+            @Override
+            public void call(Tag tag) {
+                ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).dismiss();
+                ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).updateUI(mCurrentAccount);
             }
         };
     }
@@ -288,7 +341,6 @@ public class AccountDetailActivityPresenter extends Presenter {
     public List<Tag> searchAvailableTagFromDB(String str){
         return addTagUC.searchTags(mCurrentAccount, str);
     }
-
 
     public Account getCurrentAccount(){
         return mCurrentAccount;

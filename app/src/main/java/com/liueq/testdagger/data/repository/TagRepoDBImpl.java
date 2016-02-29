@@ -381,4 +381,49 @@ public class TagRepoDBImpl implements TagRepo{
 
 		return result;
 	}
+
+	/**
+	 * Replace a account tags
+	 * 先删除account-tag 条目
+	 * 再插入account-tag 条目
+	 * @param account
+	 * @param tag_list
+	 * @return
+	 */
+	public boolean replaceAccountTag(Account account, List<Tag> tag_list){
+		//1. delete account-tag in TagAndPassword tab
+		//2. insert all account-tag int TagAndPassword tab
+		boolean return_flag = false;
+		SQLiteDatabase db = null;
+		String where = DBTables.TagAndPassword.password_id + " like ? ";
+		String []whereArgs = new String[1];
+
+		try{
+			db = mOpenHelper.getDatabase();
+			db.beginTransaction();
+			{
+				//Delete
+				whereArgs[0] = account.id;
+				db.delete(DBTables.TagAndPassword.table_name, where, whereArgs);
+
+				//Insert
+				for(Tag t : account.tag_list){
+					ContentValues values = new ContentValues();
+					values.put(DBTables.TagAndPassword.password_id, account.id);
+					values.put(DBTables.TagAndPassword.tag_id, t.id);
+					db.insertOrThrow(DBTables.TagAndPassword.table_name, null, values);
+				}
+			}
+
+			return_flag = true;
+			db.setTransactionSuccessful();
+			db.endTransaction();
+		}catch(SQLiteException e){
+			e.printStackTrace();
+		}finally {
+
+		}
+
+		return return_flag;
+	}
 }

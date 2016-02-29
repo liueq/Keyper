@@ -31,7 +31,7 @@ public class AddTagUC extends UseCase{
 	 */
 	public List<Tag> getAvailableTags(Account account){
 		List<Tag> all_list = mTR.getAllTags();
-		List<Tag> has_list = mTR.getTagFromAccount(account);
+		List<Tag> has_list = account.tag_list;//这里不应该在db中查询，只要看当前account所包含的tag list即可
 		List<Tag> available_list = new ArrayList<Tag>();
 
 		for(Tag t : all_list){

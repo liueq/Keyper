@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.data.model.Tag;
 import com.liueq.testdagger.data.repository.AccountRepo;
 import com.liueq.testdagger.data.repository.StarRepo;
 import com.liueq.testdagger.data.repository.TagRepo;
@@ -108,8 +109,8 @@ public class SaveAccountListUC {
             mSR.unStarAccount(account);
         }
 
-        mTR.addAccountTag(account, account.tag_list);
-
+        //更新TagAndPassword tab 数据
+        mTR.replaceAccountTag(account, account.tag_list);
         return result_id;
     }
 }
