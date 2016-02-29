@@ -7,6 +7,9 @@ import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.data.repository.StarRepo;
 import com.liueq.testdagger.data.repository.StarRepoDBImpl;
+import com.liueq.testdagger.data.repository.TagRepo;
+import com.liueq.testdagger.data.repository.TagRepoDBImpl;
+import com.liueq.testdagger.domain.interactor.AddTagUC;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
 import com.liueq.testdagger.domain.interactor.GetSpUC;
 import com.liueq.testdagger.domain.interactor.GetStarListUC;
@@ -48,13 +51,15 @@ public class MainActivityModule {
         //Repository
         AccountRepo ar = new AccountRepoDBImpl(mainActivity, getSpUC);
         StarRepo sr = new StarRepoDBImpl(mainActivity);
+        TagRepo tr = new TagRepoDBImpl(mainActivity);
 
         //UseCase
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr, getSpUC);
         SearchAccountUC searchAccountUC = new SearchAccountUC(ar, sr);
         StarUC starUC = new StarUC(sr);
         GetStarListUC getStarListUC = new GetStarListUC(ar, sr, getSpUC);
+        AddTagUC addTagUC = new AddTagUC(tr);
 
-        return new MainActivityPresenter(mainActivity, getAccountListUC, searchAccountUC, starUC, getStarListUC);
+        return new MainActivityPresenter(mainActivity, getAccountListUC, searchAccountUC, starUC, getStarListUC, addTagUC);
     }
 }

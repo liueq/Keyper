@@ -1,11 +1,13 @@
 package com.liueq.testdagger.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -55,5 +57,15 @@ public class GoldenHammer {
 		}
 
 	}
+
+	/**
+	 * Pixel To Dp
+	 */
+	public static int pixelToDp(int dp, Context context){
+		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+		Float f = px;
+		return f.intValue();
+	}
+
 
 }

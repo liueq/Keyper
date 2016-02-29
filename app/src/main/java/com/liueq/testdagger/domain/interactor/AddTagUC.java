@@ -95,4 +95,12 @@ public class AddTagUC extends UseCase{
 	public boolean hasTag(String tag_name){
 		return mTR.hasTag(tag_name);
 	}
+
+	/**
+	 * All tag
+	 * @return
+	 */
+	public List<Tag> getAllTag(){
+		return mTR.getAllTags();
+	}
 }

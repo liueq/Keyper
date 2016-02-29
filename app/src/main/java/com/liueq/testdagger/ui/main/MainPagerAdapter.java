@@ -38,7 +38,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter{
 			case 1:
 				return StarListFragment.newInstance();
 			case 2:
-				return ListFragment.newInstance();
+				return TagListFragment.newInstance();
 		}
 
 		return null;
