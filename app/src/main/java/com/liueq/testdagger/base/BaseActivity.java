@@ -25,8 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
         mVisibleObserver.onApplicationShow();
+        super.onResume();
     }
 
     @Override

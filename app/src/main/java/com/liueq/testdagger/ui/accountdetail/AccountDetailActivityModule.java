@@ -57,7 +57,7 @@ public class AccountDetailActivityModule {
         GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr,  getSpUC);
         DeleteAccountUC deleteAccountUC = new DeleteAccountUC(ar);
         GetAccountDetailUC getAccountDetailUC = new GetAccountDetailUC(ar, sr, tr);
-        AddTagUC addTagUC = new AddTagUC(tr);
+        AddTagUC addTagUC = new AddTagUC(tr, sr);
 
         return new AccountDetailActivityPresenter(accountDetailActivity, accountList,
                 saveAccountListUC,

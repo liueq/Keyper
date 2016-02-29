@@ -53,4 +53,7 @@
     <string name="external_path">External Storage</string>
     <string name="internal_path">Internal Storage</string>
 
+    <!-- TagDetail -->
+    <string name="delete_tag_ok">Delete tag succeed</string>
+
 </resources>

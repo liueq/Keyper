@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
+import com.liueq.testdagger.data.repository.StarRepo;
 import com.liueq.testdagger.data.repository.TagRepo;
 
 import java.util.ArrayList;
@@ -18,10 +19,12 @@ import javax.inject.Inject;
 public class AddTagUC extends UseCase{
 
 	TagRepo mTR;
+	StarRepo mSR;
 
 	@Inject
-	public AddTagUC(TagRepo TR) {
+	public AddTagUC(TagRepo TR, StarRepo SR) {
 		mTR = TR;
+		mSR = SR;
 	}
 
 	/**
@@ -102,5 +105,25 @@ public class AddTagUC extends UseCase{
 	 */
 	public List<Tag> getAllTag(){
 		return mTR.getAllTags();
+	}
+
+	/**
+	 * All Account
+	 * @param tag
+	 * @return
+	 */
+	public List<Account> getAllAccount(Tag tag){
+		List<Account> list = mTR.getAccountFromTag(tag);
+		list = mSR.getStarStatusList(list);
+		return list;
+	}
+
+	/**
+	 * Delete tag
+	 * @param tag
+	 * @return
+	 */
+	public boolean deleteUC(Tag tag){
+		return mTR.deleteTag(tag);
 	}
 }

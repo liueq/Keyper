@@ -2,11 +2,13 @@ package com.liueq.testdagger.data.model;
 
 import net.sqlcipher.Cursor;
 
+import java.io.Serializable;
+
 /**
  * Created by liueq on 24/2/2016.
  * Tag obj
  */
-public class Tag implements Comparable<Tag>{
+public class Tag implements Comparable<Tag>, Serializable{
 
 	public String id;
 	public String tag_name;

@@ -20,10 +20,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by liueq on 17/2/2016.
@@ -54,6 +50,13 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 
 		mActivity = (MainActivity) getActivity();
 		mPresneter = (MainActivityPresenter) mActivity.getPresenter();
+		mPresneter.attachFragment(ListFragment.class, this);
+	}
+
+	@Override
+	public void onDetach() {
+		mPresneter.detachFragment(ListFragment.class);
+		super.onDetach();
 	}
 
 	@Nullable
@@ -140,12 +143,10 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	}
 
 	private void loadData(){
-		loadListOb().subscribeOn(Schedulers.io())
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(loadListSub());
+		mPresneter.loadListAction();
 	}
 
-	private void updateUI(List<Account> list){
+	public void updateUI(List<Account> list){
 		if(mRefreshLayout.isRefreshing()){
 			mRefreshLayout.setRefreshing(false);
 			Toast.makeText(mActivity, R.string.toast_sync_db, Toast.LENGTH_SHORT).show();
@@ -157,84 +158,15 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		loadData();
-	}
-
-	private Observable<List<Account>> loadListOb(){
-		return Observable.create(new Observable.OnSubscribe<List<Account>>() {
-			@Override
-			public void call(Subscriber<? super List<Account>> subscriber) {
-				List<Account> list = mPresneter.loadList();
-				subscriber.onNext(list);
-			}
-		});
-	}
-
-	private Subscriber<List<Account>> loadListSub(){
-		return new Subscriber<List<Account>>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(List<Account> accounts) {
-				updateUI(accounts);
-			}
-		};
-	}
-
-	private Observable<Boolean> starObj(final Account account){
-		return Observable.create(new Observable.OnSubscribe<Boolean>() {
-			@Override
-			public void call(Subscriber<? super Boolean> subscriber) {
-				boolean result = mPresneter.starOrUnStar(account);
-				subscriber.onNext(result);
-			}
-		});
-	}
-
-	private Subscriber<Boolean> starSub(){
-		return new Subscriber<Boolean>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(Boolean aBoolean) {
-				if(aBoolean){
-					loadData();
-				}
-			}
-		};
-	}
-
-
-	@Override
 	public void onItemClicked(View view, Object item, int position) {
 		int id = view.getId();
 		Account account = (Account) item;
 		if(id == RecyclerListAdapter.ViewHolder.ID_LienarLayout){
 			//Launch detail activity
-			AccountDetailActivity.startActivity(mActivity, account);
+			AccountDetailActivity.launchActivity(mActivity, account);
 		}else if(id == RecyclerListAdapter.ViewHolder.ID_ImageView){
 			//Star
-			starObj(account).subscribeOn(Schedulers.io())
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(starSub());
+			mPresneter.starAction(account);
 		}
 	}
 

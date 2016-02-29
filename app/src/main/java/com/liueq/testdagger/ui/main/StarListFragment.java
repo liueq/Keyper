@@ -136,7 +136,7 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		int id = view.getId();
 		Account account = (Account) item;
 		if(id == RecyclerStarListAdapter.ViewHolder.ID_LinearLayout){
-			AccountDetailActivity.startActivity(mActivity, account);
+			AccountDetailActivity.launchActivity(mActivity, account);
 		}
 	}
 

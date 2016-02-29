@@ -58,7 +58,7 @@ public class MainActivityModule {
         SearchAccountUC searchAccountUC = new SearchAccountUC(ar, sr);
         StarUC starUC = new StarUC(sr);
         GetStarListUC getStarListUC = new GetStarListUC(ar, sr, getSpUC);
-        AddTagUC addTagUC = new AddTagUC(tr);
+        AddTagUC addTagUC = new AddTagUC(tr, sr);
 
         return new MainActivityPresenter(mainActivity, getAccountListUC, searchAccountUC, starUC, getStarListUC, addTagUC);
     }

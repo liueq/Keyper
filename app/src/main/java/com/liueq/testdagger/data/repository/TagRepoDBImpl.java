@@ -149,15 +149,21 @@ public class TagRepoDBImpl implements TagRepo{
 		}
 
 		SQLiteDatabase db = null;
-		String where = "id = ?";
+		String where_tap = DBTables.TagAndPassword.tag_id + " = ?";
+		String where = DBTables.Tag.id + " = ?";
 		String []where_args = {tag.id};
 
 		try{
 			db = mOpenHelper.getDatabase();
 			db.beginTransaction();
-			db.delete(DBTables.Tag.table_name, where, where_args);
-			db.setTransactionSuccessful();
+			{
+				//Delele TagAndPassword
+				db.delete(DBTables.TagAndPassword.table_name, where_tap, where_args);
 
+				//Delete Tag
+				db.delete(DBTables.Tag.table_name, where, where_args);
+			}
+			db.setTransactionSuccessful();
 			db.endTransaction();
 			is_successful = true;
 		}catch (SQLException exception){

@@ -46,7 +46,7 @@ public class AccountDetailActivity extends BaseActivity {
      * @param activity from activity
      * @param account Account Object
      */
-    public static void startActivity(Activity activity, Account account){
+    public static void launchActivity(Activity activity, Account account){
         Bundle bundle = new Bundle();
         bundle.putSerializable("account", account);
 

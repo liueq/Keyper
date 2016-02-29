@@ -1,5 +1,7 @@
 package com.liueq.testdagger.ui.main;
 
+import android.support.v4.app.*;
+
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
@@ -52,12 +54,86 @@ public class MainActivityPresenter extends Presenter {
 
 
     /******************** RxJava ********************/
+
+    public void loadListAction(){
+        loadListOb().subscribeOn(Schedulers.io())
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(loadListSub());
+    }
+
     public void loadTagListAction(){
         getAllTagOb().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(divideListFun())
                 .subscribe(getAllTagSub());
 
+    }
+
+    public void starAction(Account account){
+        starObj(account).subscribeOn(Schedulers.io())
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(starSub());
+    }
+
+    private Observable<List<Account>> loadListOb(){
+        return Observable.create(new Observable.OnSubscribe<List<Account>>() {
+            @Override
+            public void call(Subscriber<? super List<Account>> subscriber) {
+                List<Account> list = loadList();
+                subscriber.onNext(list);
+            }
+        });
+    }
+
+    private Subscriber<List<Account>> loadListSub(){
+        return new Subscriber<List<Account>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<Account> accounts) {
+                ((ListFragment) getFragment(ListFragment.class)).updateUI(accounts);
+            }
+        };
+    }
+
+
+    private Observable<Boolean> starObj(final Account account){
+        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                boolean result = starOrUnStar(account);
+                subscriber.onNext(result);
+            }
+        });
+    }
+
+    private Subscriber<Boolean> starSub(){
+        return new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                if(aBoolean){
+                    loadListAction();
+                }
+            }
+        };
     }
 
     private Observable<List<Tag>> getAllTagOb(){

@@ -8,6 +8,8 @@ import com.liueq.testdagger.ui.accountdetail.AccountDetailActivityModule;
 import com.liueq.testdagger.ui.main.MainActivityModule;
 import com.liueq.testdagger.ui.settings.SettingsActivityModule;
 import com.liueq.testdagger.ui.launch.SplashActivityModule;
+import com.liueq.testdagger.ui.tagdetail.TagDetailComponent;
+import com.liueq.testdagger.ui.tagdetail.TagDetailModule;
 
 import javax.inject.Singleton;
 
@@ -28,11 +30,13 @@ import dagger.Component;
 )
 public interface AppComponent {
 
-    MainActivityComponent plus(MainActivityModule mainActivityModule);
+    MainActivityComponent plus(MainActivityModule module);
 
-    AccountDetailActivityComponent plus(AccountDetailActivityModule accountDetailActivityModule);
+    AccountDetailActivityComponent plus(AccountDetailActivityModule module);
 
-    SplashActivityComponent plus(SplashActivityModule splashActivityModule);
+    SplashActivityComponent plus(SplashActivityModule module);
 
-    SettingsActivityComponent plus(SettingsActivityModule settingsActivityModule);
+    SettingsActivityComponent plus(SettingsActivityModule module);
+
+    TagDetailComponent plus(TagDetailModule module);
 }
