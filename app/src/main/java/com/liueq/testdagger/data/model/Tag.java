@@ -40,10 +40,10 @@ public class Tag implements Comparable<Tag>{
 
 	@Override
 	public int compareTo(Tag another) {
-		if(this.id.equals(another.id) && this.tag_name.equals(another.tag_name)){
-			return 0;
-		}else {
-			return -1;
+		if(this.tag_name.compareTo(another.tag_name) == 0){
+			return this.id.compareTo(another.id);
+		}else{
+			return this.tag_name.compareTo(another.tag_name);
 		}
 	}
 

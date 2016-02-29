@@ -12,6 +12,7 @@ import net.sqlcipher.Cursor;
 import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -108,6 +109,8 @@ public class StarRepoDBImpl implements StarRepo{
 		for(Account account : list){
 			getStarStatus(account);
 		}
+
+		Collections.sort(list);
 		return list;
 	}
 }

@@ -52,11 +52,11 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
 
     @Override
     public int compareTo(Account another) {
-        if(this.site.equals(another.site) || this.id.equals(another.id)){
-            return 0;
+        if(this.site.compareTo(another.site) == 0){
+            return this.id.compareTo(another.id);
+        }else{
+            return this.site.compareTo(another.site);
         }
-
-        return -1;
     }
 
     @Override

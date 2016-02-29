@@ -94,12 +94,6 @@ public class TagListFragment extends Fragment implements OnItemClickListener {
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		loadData();
-	}
-
-	@Override
 	public void onItemClick(View view, Object item, int position) {
 		int id = view.getId();
 		if(id == NonAlignGridView.ID_TextView){

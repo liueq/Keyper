@@ -16,6 +16,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,6 +51,8 @@ public class TagRepoDBImpl implements TagRepo{
 
 				tag_list.add(tag);
 			}
+		}catch (SQLException e){
+			e.printStackTrace();
 		}finally {
 			if(cursor != null && !cursor.isClosed()){
 				cursor.close();
@@ -58,6 +61,7 @@ public class TagRepoDBImpl implements TagRepo{
 			db = null;
 		}
 
+		Collections.sort(tag_list);
 		return tag_list;
 	}
 
@@ -207,6 +211,7 @@ public class TagRepoDBImpl implements TagRepo{
 			}
 		}
 
+		Collections.sort(list);
 		return list;
 	}
 
@@ -267,6 +272,8 @@ public class TagRepoDBImpl implements TagRepo{
 			db = null;
 		}
 
+		Collections.sort(list);
+
 		return list;
 	}
 
@@ -317,6 +324,8 @@ public class TagRepoDBImpl implements TagRepo{
 			}
 			db = null;
 		}
+
+		Collections.sort(list);
 		return list;
 	}
 

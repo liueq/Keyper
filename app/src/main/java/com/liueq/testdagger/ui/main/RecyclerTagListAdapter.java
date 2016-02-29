@@ -72,7 +72,7 @@ public class RecyclerTagListAdapter extends RecyclerView.Adapter<RecyclerTagList
 		}
 	}
 
-	public static class TagItem{
+	public static class TagItem implements Comparable{
 		public String tag_label;
 		public List<Tag> tag_list;
 
@@ -84,5 +84,14 @@ public class RecyclerTagListAdapter extends RecyclerView.Adapter<RecyclerTagList
 			this.tag_list = tag_list;
 		}
 
+		@Override
+		public int compareTo(Object another) {
+			if(another instanceof TagItem){
+				TagItem ti = (TagItem) another;
+				return this.tag_label.compareTo(ti.tag_label);
+			}else{
+				return -1;
+			}
+		}
 	}
 }

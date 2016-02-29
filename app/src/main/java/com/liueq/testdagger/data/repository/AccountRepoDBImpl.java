@@ -16,6 +16,7 @@ import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,12 +39,13 @@ public class AccountRepoDBImpl implements AccountRepo {
 	public List<Account> getAccountList() {
 		List<Account> list = new ArrayList<>();
 		Account account = null;
+		String orderBy = Password.site;
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try{
 			db = mDBHelper.getDatabase();
 			db.beginTransaction();
-			cursor = db.query(Password.table_name, Password.ALL_COLUMN, null, null, null, null, null);
+			cursor = db.query(Password.table_name, Password.ALL_COLUMN, null, null, null, null, orderBy);
 			if (cursor != null){
 				while (cursor.moveToNext()){
 					account = new Account();
@@ -65,6 +67,8 @@ public class AccountRepoDBImpl implements AccountRepo {
 				cursor.close();
 			}
 		}
+
+		Collections.sort(list);
 		return list;
 	}
 
@@ -77,13 +81,14 @@ public class AccountRepoDBImpl implements AccountRepo {
 
 		String selection = "id = ?";
 		String []selection_args = {accountId};
+		String orderBy = Password.site;
 
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = mDBHelper.getDatabase();
 			db.beginTransaction();
-			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
+			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, orderBy);
 			if (cursor != null) {
 				if (cursor.moveToNext()) {
 					account = new Account();
@@ -117,13 +122,14 @@ public class AccountRepoDBImpl implements AccountRepo {
 
 		String selection = "site LIKE ?";
 		String []selection_args = {"%" + key + "%"};
+		String orderBy = Password.site;
 
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = mDBHelper.getDatabase();
 			db.beginTransaction();
-			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, null);
+			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, orderBy);
 			if (cursor != null) {
 				while (cursor.moveToNext()) {
 					account = new Account();
@@ -147,6 +153,7 @@ public class AccountRepoDBImpl implements AccountRepo {
 			}
 		}
 
+		Collections.sort(list);
 		return list;
 	}
 

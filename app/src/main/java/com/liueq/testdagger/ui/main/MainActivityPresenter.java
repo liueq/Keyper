@@ -10,6 +10,7 @@ import com.liueq.testdagger.domain.interactor.SearchAccountUC;
 import com.liueq.testdagger.domain.interactor.StarUC;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,6 +77,11 @@ public class MainActivityPresenter extends Presenter {
                 final String WIDE = "*";
                 for(Tag t : tags){
                     String c = t.tag_name.substring(0, 1);
+
+                    if(Character.isLetter(c.charAt(0))){
+                        c = c.toUpperCase();
+                    }
+
                     if(!Character.isLetter(c.charAt(0))){
                         //当不是字母的情况，用一个字符标示
                         if(mapCharToTags.get(WIDE) == null){
@@ -106,6 +112,7 @@ public class MainActivityPresenter extends Presenter {
                     item_list.add(item);
                 }
 
+                Collections.sort(item_list);
                 return item_list;
             }
         };
