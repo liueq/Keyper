@@ -132,6 +132,7 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.rl_export:
                 //TODO Export DB
+                BackUpTool.exportDB(this);
                 break;
 //            case R.id.rl_change_aes:
 //                createChangeAESDialog();

@@ -11,6 +11,11 @@ import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,5 +53,32 @@ public class BackUpTool {
 		}
 
 		return true;
+	}
+
+	public static void exportDB(Context context){
+		String db_path = context.getFilesDir().getAbsolutePath() + "/databases" + "/encrypted3.db";
+		String output = Environment.getExternalStorageDirectory() + "/encrypted3.db";
+		File file = new File(db_path);
+		File file_out = new File(output);
+		if(file.exists()){
+			try {
+				FileInputStream fis = new FileInputStream(file);
+				FileOutputStream fos = new FileOutputStream(file_out);
+
+				byte [] tmp = new byte[1024];
+
+				while(fis.read(tmp) > 0){
+					fos.write(tmp);
+				}
+
+				fos.flush();
+				fis.close();
+				fos.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -13,7 +13,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
 	public static final String DATABASE_NAME = "encrypted3.db";
 
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 
 	public static final String DATABASE_PASSWORD = "29Jan10:25";
 
@@ -49,11 +49,17 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int old_ver, int new_ver) {
+		if(old_ver == 1 && new_ver == 2){
+			sqLiteDatabase.execSQL(DBTables.Tag.SQL_CREATE);
+			sqLiteDatabase.execSQL(DBTables.TagAndPassword.SQL_CREATE);
+		}
 	}
 
 	public SQLiteDatabase getDatabase(){
+		if(mDatabase == null || !mDatabase.isOpen()) {
+			mDatabase = mInstance.getWritableDatabase(DATABASE_PASSWORD);
+		}
 		return mDatabase;
 	}
 
