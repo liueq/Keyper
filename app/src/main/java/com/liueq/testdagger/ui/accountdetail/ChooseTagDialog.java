@@ -98,7 +98,8 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 			public void afterTextChanged(Editable s) {
 				String search = s.toString().trim();
 				if(TextUtils.isEmpty(search)){
-					mRecyclerAdapter.replaceAll(new ArrayList<Tag>());
+					//Show all available tag
+					mPresenter.getAvailableTagAction();
 				}else{
 					//Search
 					mPresenter.searchAvailableTag(search);
@@ -107,6 +108,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 
 			}
 		});
+		mEditTextTag.setText("");//Trigger get all available tags
 
 		mTextViewAdd.setOnClickListener(new View.OnClickListener() {
 			@Override

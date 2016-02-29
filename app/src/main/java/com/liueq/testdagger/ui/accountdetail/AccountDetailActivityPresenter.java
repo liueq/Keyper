@@ -3,6 +3,7 @@ package com.liueq.testdagger.ui.accountdetail;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
 import com.liueq.testdagger.domain.interactor.AddTagUC;
@@ -10,14 +11,12 @@ import com.liueq.testdagger.domain.interactor.DeleteAccountUC;
 import com.liueq.testdagger.domain.interactor.GetAccountDetailUC;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
 import com.liueq.testdagger.domain.interactor.SaveAccountListUC;
-import com.liueq.testdagger.base.Presenter;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -205,6 +204,15 @@ public class AccountDetailActivityPresenter extends Presenter {
                 .subscribe(addTagSub());
     }
 
+	/**
+	 * 当搜索输入为空的时候，默认获取所有的可选tag
+     */
+    public void getAvailableTagAction(){
+        getAvailableTagOb().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getAvailableTagSub());
+    }
+
     private Observable<List<Tag>> searchAvailableTagOb(final String search){
         return Observable.create(new Observable.OnSubscribe<List<Tag>>() {
             @Override
@@ -301,6 +309,25 @@ public class AccountDetailActivityPresenter extends Presenter {
         };
     }
 
+    private Observable<List<Tag>> getAvailableTagOb(){
+        return Observable.create(new Observable.OnSubscribe<List<Tag>>() {
+            @Override
+            public void call(Subscriber<? super List<Tag>> subscriber) {
+                subscriber.onNext(getAvailableTags());
+            }
+        });
+    }
+
+    private Action1<List<Tag>> getAvailableTagSub(){
+        return new Action1<List<Tag>>() {
+            @Override
+            public void call(List<Tag> tags) {
+                ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).updateList(tags);
+            }
+        };
+    }
+
+    /******************** UseCase Operation ********************/
 
     public Account loadDataFromDB(String id){
         mCurrentAccount = getAccountDetailUC.execute(id);

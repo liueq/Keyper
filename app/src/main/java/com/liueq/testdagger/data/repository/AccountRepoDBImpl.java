@@ -188,6 +188,9 @@ public class AccountRepoDBImpl implements AccountRepo {
 			if(cursor.moveToNext()){
 				id = String.valueOf(cursor.getInt(0));
 			}
+			if(!cursor.isClosed()){
+				cursor.close();
+			}
 
 			db.endTransaction();
 		}catch (SQLException exception){

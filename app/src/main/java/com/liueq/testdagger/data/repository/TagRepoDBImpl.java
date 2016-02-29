@@ -247,6 +247,10 @@ public class TagRepoDBImpl implements TagRepo{
 						Account account = new Account(cursor_in);
 						list.add(account);
 					}
+
+					if(!cursor_in.isClosed()){
+						cursor_in.close();
+					}
 				}
 			}
 			db.setTransactionSuccessful();
@@ -294,6 +298,9 @@ public class TagRepoDBImpl implements TagRepo{
 					if(cursor_in.moveToNext()){
 						Tag tag = new Tag(cursor_in);
 						list.add(tag);
+					}
+					if(!cursor_in.isClosed()){
+						cursor_in.close();
 					}
 				}
 			}
