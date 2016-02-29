@@ -3,11 +3,13 @@ package com.liueq.testdagger.ui.main;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
@@ -27,10 +29,12 @@ import rx.schedulers.Schedulers;
  * Created by liueq on 17/2/2016.
  * 主界面，ALL tab
  */
-public class ListFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener{
+public class ListFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
 	@Bind(R.id.recycler)
 	RecyclerView mRecycler;
+	@Bind(R.id.refresh_layout)
+	SwipeRefreshLayout mRefreshLayout;
 
 	private RecyclerListAdapter recyclerListAdapter;
 
@@ -64,6 +68,9 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	}
 
 	private void initView(){
+		mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+		mRefreshLayout.setOnRefreshListener(this);
+
 		mRecycler.setHasFixedSize(true);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerListAdapter = new RecyclerListAdapter(getActivity(), new ArrayList<Account>(), this);
@@ -139,7 +146,12 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	}
 
 	private void updateUI(List<Account> list){
-        recyclerListAdapter.clear();
+		if(mRefreshLayout.isRefreshing()){
+			mRefreshLayout.setRefreshing(false);
+			Toast.makeText(mActivity, R.string.toast_sync_db, Toast.LENGTH_SHORT).show();
+		}
+
+		recyclerListAdapter.clear();
         recyclerListAdapter.addAll(list);
         recyclerListAdapter.notifyDataSetChanged();
 	}
@@ -224,5 +236,10 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe(starSub());
 		}
+	}
+
+	@Override
+	public void onRefresh() {
+		loadData();
 	}
 }

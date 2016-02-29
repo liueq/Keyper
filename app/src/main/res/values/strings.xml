@@ -13,6 +13,8 @@
     <string name="hint_article_search">Search article</string>
     <string name="search_box_shared">search_box_shared</string>
 
+    <string name="toast_sync_db">Sync Database Completed</string>
+
     <!-- AccountDetail -->
     <string name="tag">TAG:</string>
     <string name="site">SITE:</string>
