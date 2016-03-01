@@ -1,12 +1,15 @@
 package com.liueq.testdagger.ui.accountdetail;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -25,7 +28,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AccountDetailActivity extends BaseActivity {
+public class AccountDetailActivity extends BaseActivity implements DialogInterface.OnClickListener{
 
     public final static String TAG = "AccountDA";
 
@@ -143,7 +146,8 @@ public class AccountDetailActivity extends BaseActivity {
             }
 
         }else if (id == R.id.action_delete) {
-            presenter.deleteAccountAction();
+            //Show dialog
+            showDialog().show();
             return true;
         }
 
@@ -164,6 +168,28 @@ public class AccountDetailActivity extends BaseActivity {
     }
 
 	/**
+     * Create a Yes or No Dialog
+     * @return
+     */
+    private Dialog showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title_delete);
+        builder.setMessage(R.string.dialog_content_delete);
+        builder.setPositiveButton(R.string.dialog_yes_delete, this);
+        builder.setNegativeButton(R.string.dialog_no_delete, this);
+        return builder.create();
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if(which == Dialog.BUTTON_POSITIVE){
+            presenter.deleteAccountAction();
+        }else{
+            dialog.dismiss();
+        }
+    }
+
+	/**
      * when presenter delete finish, show result
      * @param ok
      */
@@ -175,4 +201,5 @@ public class AccountDetailActivity extends BaseActivity {
             Toast.makeText(AccountDetailActivity.this, "Error", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

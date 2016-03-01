@@ -36,6 +36,11 @@
     <string name="choose_tag_dialog_title">Tag</string>
     <string name="choose_tag_dialog_new_tag">NEW TAG</string>
 
+    <string name="dialog_title_delete">Warning</string>
+    <string name="dialog_content_delete">Do you want to delete this account?</string>
+    <string name="dialog_yes_delete">Delete</string>
+    <string name="dialog_no_delete">Cancel</string>
+
     <!-- Welcome -->
     <string name="first_pwd">Password required</string>
     <string name="sec_pwd">Password repeat</string>
@@ -55,5 +60,10 @@
 
     <!-- TagDetail -->
     <string name="delete_tag_ok">Delete tag succeed</string>
+
+    <string name="dialog_title_del_tag">Warning</string>
+    <string name="dialog_content_del_tag">Do you want to delete this Tag?(Will not delete any account)</string>
+    <string name="dialog_yes_del_tag">Delete</string>
+    <string name="dialog_no_del_tag">Cancel</string>
 
 </resources>

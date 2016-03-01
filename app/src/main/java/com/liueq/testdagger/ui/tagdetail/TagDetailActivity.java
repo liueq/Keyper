@@ -1,12 +1,15 @@
 package com.liueq.testdagger.ui.tagdetail;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -28,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * Show all account of this tag
  */
-public class TagDetailActivity extends BaseActivity {
+public class TagDetailActivity extends BaseActivity implements DialogInterface.OnClickListener{
 
 	@Bind(R.id.toolbar)
 	Toolbar toolbar;
@@ -90,9 +93,32 @@ public class TagDetailActivity extends BaseActivity {
 		if(id == android.R.id.home){
 			onBackPressed();
 		}else if(id == R.id.action_delete){
-			mPresenter.deleteTagAction();
+			//Show Dialog
+			showDialog().show();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Create a Yes or No Dialog
+	 * @return
+	 */
+	private Dialog showDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.dialog_title_del_tag);
+		builder.setMessage(R.string.dialog_content_del_tag);
+		builder.setPositiveButton(R.string.dialog_yes_del_tag, this);
+		builder.setNegativeButton(R.string.dialog_no_del_tag, this);
+		return builder.create();
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		if(which == Dialog.BUTTON_POSITIVE){
+			mPresenter.deleteTagAction();
+		}else{
+			dialog.dismiss();
+		}
 	}
 
 	@Override

@@ -11,6 +11,8 @@ import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.liueq.testdagger.TestApplication;
+
 /**
  * Created by liueq on 28/10/2015.
  */
@@ -67,5 +69,13 @@ public class GoldenHammer {
 		return f.intValue();
 	}
 
+	/**
+	 * 在没有Context的情况下获取strings
+	 * @param id
+	 * @return
+	 */
+	public static String getString(int id){
+		return TestApplication.getApplication().getString(id);
+	}
 
 }
