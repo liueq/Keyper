@@ -174,4 +174,10 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	public void onRefresh() {
 		loadData();
 	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadData();
+	}
 }

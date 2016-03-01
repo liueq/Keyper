@@ -144,4 +144,5 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 	public void onRefresh() {
 		loadData();
 	}
+
 }
