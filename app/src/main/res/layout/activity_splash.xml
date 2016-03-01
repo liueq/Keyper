@@ -35,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/first_pwd"
                 android:focusableInTouchMode="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -46,7 +47,8 @@
                 android:id="@+id/pwd_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/sec_pwd"/>
+                android:hint="@string/sec_pwd"
+                android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
