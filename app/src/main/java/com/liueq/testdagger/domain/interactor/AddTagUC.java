@@ -37,13 +37,16 @@ public class AddTagUC extends UseCase{
 		List<Tag> has_list = account.tag_list;//这里不应该在db中查询，只要看当前account所包含的tag list即可
 		List<Tag> available_list = new ArrayList<Tag>();
 
-		for(Tag t : all_list){
-			if(!has_list.contains(t)){
-				available_list.add(t);
+		if(has_list == null || has_list.size() == 0){
+			return all_list;
+		}else{
+			for(Tag t : all_list){
+				if(!has_list.contains(t)){
+					available_list.add(t);
+				}
 			}
+			return available_list;
 		}
-
-		return available_list;
 	}
 
 	/**
