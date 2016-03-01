@@ -8,6 +8,7 @@ import net.sqlcipher.database.SQLiteOpenHelper;
 /**
  * Created by liueq on 1/2/2016.
  * SQLCipher Open Helper
+ * 是否需要再封装一层??
  */
 public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 

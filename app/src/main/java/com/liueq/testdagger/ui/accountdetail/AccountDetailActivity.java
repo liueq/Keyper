@@ -17,17 +17,13 @@ import android.widget.Toast;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
-import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.base.Presenter;
+import com.liueq.testdagger.data.model.Account;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class AccountDetailActivity extends BaseActivity {
 
@@ -87,7 +83,6 @@ public class AccountDetailActivity extends BaseActivity {
     }
 
     private void initData() {
-
     }
 
     @Override
@@ -148,9 +143,7 @@ public class AccountDetailActivity extends BaseActivity {
             }
 
         }else if (id == R.id.action_delete) {
-            deleteOb().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(deleteSub());
+            presenter.deleteAccountAction();
             return true;
         }
 
@@ -170,36 +163,16 @@ public class AccountDetailActivity extends BaseActivity {
         return drawable;
     }
 
-    private Observable<Boolean> deleteOb(){
-        return Observable.create(new Observable.OnSubscribe<Boolean>() {
-            @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
-                subscriber.onNext(presenter.deleteAccount());
-            }
-        });
-    }
-
-    private Subscriber<Boolean> deleteSub(){
-        return new Subscriber<Boolean>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Boolean aBoolean) {
-                if (aBoolean) {
-                    Toast.makeText(AccountDetailActivity.this, "DELETED", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(AccountDetailActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
+	/**
+     * when presenter delete finish, show result
+     * @param ok
+     */
+    public void deleteToast(boolean ok){
+        if (ok) {
+            Toast.makeText(AccountDetailActivity.this, "DELETED", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(AccountDetailActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        }
     }
 }

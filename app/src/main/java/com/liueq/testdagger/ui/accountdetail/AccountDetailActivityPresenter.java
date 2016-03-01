@@ -65,7 +65,43 @@ public class AccountDetailActivityPresenter extends Presenter {
         mId = account.id;
     }
 
-    /******************** AccountDetailFragment Operation ********************/
+    /******************** AccountDetailActivity Action ********************/
+    public void deleteAccountAction(){
+        deleteOb().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(deleteSub());
+    }
+
+    /******************** AccountDetailActivity RxJava ********************/
+    private Observable<Boolean> deleteOb(){
+        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                subscriber.onNext(deleteAccount());
+            }
+        });
+    }
+
+    private Subscriber<Boolean> deleteSub(){
+        return new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                activity.deleteToast(aBoolean);
+            }
+        };
+    }
+
+    /******************** AccountDetailFragment Action ********************/
 
     public void loadDataFromDB(AccountDetailFragment accountDetailFragment){
         getDetailOb(mId)
@@ -86,6 +122,8 @@ public class AccountDetailActivityPresenter extends Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(removeTagSub());
     }
+
+    /******************** AccountDetailFragment RxJava ********************/
 
     private Observable<Account> getDetailOb(final String id){
         return Observable.create(new Observable.OnSubscribe<Account>() {
@@ -177,7 +215,7 @@ public class AccountDetailActivityPresenter extends Presenter {
     }
 
 
-    /******************** ChooseTagDialog Operation ********************/
+    /******************** ChooseTagDialog Action ********************/
 
     public void searchAvailableTag(String search){
         searchAvailableTagOb(search)
@@ -212,6 +250,8 @@ public class AccountDetailActivityPresenter extends Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getAvailableTagSub());
     }
+
+    /******************** ChooseTagDialog RxJava ********************/
 
     private Observable<List<Tag>> searchAvailableTagOb(final String search){
         return Observable.create(new Observable.OnSubscribe<List<Tag>>() {

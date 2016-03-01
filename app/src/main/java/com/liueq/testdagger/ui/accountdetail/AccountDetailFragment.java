@@ -125,12 +125,17 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	}
 
 	public void updateUI(Account account){
+		//Toolbar
+		mActivity.getSupportActionBar().setTitle(account.site);
+
+		//Detail
         mEditTextSite.setText(account.site);
         mEditTextName.setText(account.username);
         mEditTextPwd.setText(account.password);
         mEditTextMail.setText(account.mail);
         mEditTextDesc.setText(account.description);
 
+		//Tag adapter
 		mHorizontalTagAdapter.replaceAll(account.tag_list);
 		mHorizontalTagAdapter.notifyDataSetChanged();
     }
@@ -197,7 +202,7 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	public void onItemClicked(View view, Object item, int position) {
 		int id = view.getId();
 		if(id == HorizontalTagAdapter.ViewHolder.ID_LinearLayout){
-			//TODO Open Tag detail
+			//TODO Open Tag detail, not sure is this action needed?
 		}else if(id == HorizontalTagAdapter.ViewHolder.ID_ImageViewDel){
 			//Delete tag
 			if(item instanceof Tag){
