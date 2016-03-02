@@ -4,11 +4,12 @@
       tools:context=".ui.accountdetail.AccountDetailActivity">
     <item android:id="@+id/action_star"
           android:title="@string/action_star"
-          android:orderInCategory="99"
+          android:orderInCategory="90"
           android:icon="@mipmap/ic_star_outline_black_24dp"
           app:showAsAction="always"/>
     <item android:id="@+id/action_delete"
-          android:title="@string/action_delete"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
+          android:title="@string/action_save"
+          android:orderInCategory="99"
+          android:icon="@mipmap/ic_save_white_24dp"
+          app:showAsAction="always"/>
 </menu>

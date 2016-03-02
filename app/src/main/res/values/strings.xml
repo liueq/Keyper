@@ -23,10 +23,12 @@
     <string name="mail">Mail</string>
     <string name="description">Description</string>
     <string name="save">SAVE</string>
+    <string name="delete">DELETE</string>
 
     <string name="action_star">Star</string>
     <string name="action_unstar">Unstar</string>
     <string name="action_delete">Delete</string>
+    <string name="action_save">Save</string>
     <string name="search_hint">Search</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="status_saved">SAVED</string>

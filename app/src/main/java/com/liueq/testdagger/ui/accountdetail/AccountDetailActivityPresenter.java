@@ -111,6 +111,8 @@ public class AccountDetailActivityPresenter extends Presenter {
     }
 
     public void saveDataToDB(Account account){
+        ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).syncData();
+
         saveDetailOb(account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

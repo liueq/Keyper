@@ -28,7 +28,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AccountDetailActivity extends BaseActivity implements DialogInterface.OnClickListener{
+public class AccountDetailActivity extends BaseActivity{
 
     public final static String TAG = "AccountDA";
 
@@ -146,8 +146,8 @@ public class AccountDetailActivity extends BaseActivity implements DialogInterfa
             }
 
         }else if (id == R.id.action_delete) {
-            //Show dialog
-            showDialog().show();
+            //Save
+            presenter.saveDataToDB(presenter.getCurrentAccount());
             return true;
         }
 
@@ -165,28 +165,6 @@ public class AccountDetailActivity extends BaseActivity implements DialogInterfa
         }
 
         return drawable;
-    }
-
-	/**
-     * Create a Yes or No Dialog
-     * @return
-     */
-    private Dialog showDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.dialog_title_delete);
-        builder.setMessage(R.string.dialog_content_delete);
-        builder.setPositiveButton(R.string.dialog_yes_delete, this);
-        builder.setNegativeButton(R.string.dialog_no_delete, this);
-        return builder.create();
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        if(which == Dialog.BUTTON_POSITIVE){
-            presenter.deleteAccountAction();
-        }else{
-            dialog.dismiss();
-        }
     }
 
 	/**

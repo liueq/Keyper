@@ -1,12 +1,15 @@
 package com.liueq.testdagger.ui.accountdetail;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,7 +36,7 @@ import butterknife.OnClick;
  * Created by liueq on 18/2/2016.
  * 详情页面的Fragment
  */
-public class AccountDetailFragment extends Fragment implements HorizontalTagAdapter.OnItemClickListener {
+public class AccountDetailFragment extends Fragment implements HorizontalTagAdapter.OnItemClickListener, DialogInterface.OnClickListener {
 
 	public final static String TAG = "Detail";
 
@@ -140,11 +143,11 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		mHorizontalTagAdapter.notifyDataSetChanged();
     }
 
-	@OnClick({R.id.tv_commit, R.id.iv_add})
+	@OnClick({R.id.tv_delete, R.id.iv_add})
     public void onClick(View view){
 		int id = view.getId();
-		if(id == R.id.tv_commit) {
-			saveData();
+		if(id == R.id.tv_delete) {
+			showDialog().show();
 		}else if(id == R.id.iv_add){
 			//Before show tag, need save change to memory
 			syncData();
@@ -155,6 +158,28 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 			transaction.commit();
 		}
     }
+
+	/**
+	 * Create a Yes or No Dialog
+	 * @return
+	 */
+	private Dialog showDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+		builder.setTitle(R.string.dialog_title_delete);
+		builder.setMessage(R.string.dialog_content_delete);
+		builder.setPositiveButton(R.string.dialog_yes_delete, this);
+		builder.setNegativeButton(R.string.dialog_no_delete, this);
+		return builder.create();
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		if(which == Dialog.BUTTON_POSITIVE){
+			mPresenter.deleteAccountAction();
+		}else{
+			dialog.dismiss();
+		}
+	}
 
 	/**
 	 * Save UI change to mCurrentAccount
