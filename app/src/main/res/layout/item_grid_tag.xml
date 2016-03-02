@@ -6,7 +6,7 @@
           android:layout_gravity="center"
           android:padding="5dp"
           android:gravity="center"
-          android:background="@color/white"
+          android:background="@drawable/list_item_bg"
           android:elevation="@dimen/cardview_default_elevation"
           android:textSize="@dimen/body_1_regular"
           android:textColor="@color/body_1"

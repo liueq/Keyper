@@ -1,7 +1,5 @@
 package com.liueq.testdagger.ui.main;
 
-import android.support.v4.app.*;
-
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
@@ -17,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

@@ -145,6 +145,12 @@ public class NonAlignGridView extends ViewGroup implements View.OnClickListener{
 	 */
 	public void replaceAll(List<Tag> list){
 		int list_size = list.size();
+
+		//First, remove TextView from parent
+		for(TextView tv : mTextViewList){
+			this.removeView(tv);
+		}
+
 		if(mTextViewList.size() < list_size){
 			int surplus = list_size - mTextViewList.size();
 			for(int i = 0; i < surplus; i++){
@@ -155,10 +161,6 @@ public class NonAlignGridView extends ViewGroup implements View.OnClickListener{
 			for(int i = 0; i < surplus; i++){
 				mTextViewList.remove(0);
 			}
-		}
-
-		for(TextView tv : mTextViewList){
-			this.removeView(tv);
 		}
 
 		for(int i = 0; i < list_size; i++){
