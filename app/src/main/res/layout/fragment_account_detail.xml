@@ -1,9 +1,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context=".ui.accountdetail.AccountDetailActivity">
 
@@ -42,9 +42,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@drawable/shape_round_rect"
                     android:padding="6dp"
                     android:src="@mipmap/ic_add_white_18dp"
-                    android:background="@drawable/shape_round_rect"
                     />
 
                 <android.support.v7.widget.RecyclerView
@@ -54,7 +54,6 @@
                     android:layout_marginLeft="6dp"/>
 
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -184,11 +183,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:minHeight="100dp"
-                android:gravity="left|top"
-                android:textSize="16sp"
                 android:background="@drawable/edit_bg"
+                android:gravity="left|top"
+                android:minHeight="100dp"
                 android:padding="6dp"
+                android:textSize="16sp"
                 tools:text="My Google account."/>
 
             <TextView
@@ -200,8 +199,8 @@
                 android:background="@drawable/commit_btn_bg"
                 android:gravity="center"
                 android:text="@string/save"
-                android:textSize="@dimen/button_medium"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/button_medium"
                 />
 
         </LinearLayout>

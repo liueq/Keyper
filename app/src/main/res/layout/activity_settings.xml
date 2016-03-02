@@ -1,9 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,9 +20,9 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:padding="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:padding="15dp"
         >
 
         <TextView
@@ -29,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/change_pwd"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <TextView
@@ -46,9 +47,9 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:padding="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:padding="15dp"
         >
 
         <TextView
@@ -56,8 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/import_data"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <TextView
@@ -73,9 +74,9 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:padding="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:padding="15dp"
         >
 
         <TextView
@@ -83,8 +84,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/export_data"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <TextView
@@ -100,10 +101,10 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:visibility="gone"
         >
 
@@ -112,21 +113,22 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv_aes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/change_aes"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/tv_show_aes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            tools:hint="1234567890123456"/>
+            <TextView
+                android:id="@+id/tv_aes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_aes"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_show_aes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                tools:hint="1234567890123456"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -143,33 +145,34 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:visibility="gone"
         >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerVertical="true">
-        <TextView
-            android:id="@+id/tv_path"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/change_path"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_show_path"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            tools:hint="External, Inner"/>
+            <TextView
+                android:id="@+id/tv_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_path"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_show_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                tools:hint="External, Inner"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -186,9 +189,9 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:padding="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:padding="15dp"
         android:visibility="gone"
         >
 
@@ -197,15 +200,15 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/encrypt_password"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
         <Switch
             android:id="@+id/switch_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <TextView
@@ -221,9 +224,9 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:padding="15dp"
         android:background="@drawable/setting_item_bg"
         android:clickable="true"
+        android:padding="15dp"
         android:visibility="gone"
         >
 
@@ -232,15 +235,15 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/encrypt_description"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
         <Switch
             android:id="@+id/switch_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <TextView
