@@ -23,7 +23,7 @@ import dagger.Provides;
 
 /**
  * Created by liueq on 29/7/15.
- * 设置
+ * Settings Module
  */
 @Module
 public class SettingsActivityModule {
@@ -42,29 +42,24 @@ public class SettingsActivityModule {
 
     @Provides
     @ActivityScope
-    SettingsActivityPresenter provideSettingsActivityPresenter(List<Account> accountList, FileReader fileReader){
-
+    SettingsActivityPresenter provideSettingsActivityPresenter(FileReader fileReader){
 
         SharedPreferenceRepoImpl impl = new SharedPreferenceRepoImpl(settingsActivity);
 
+        //UseCase
         GetSpUC getSpUC = new GetSpUC(impl);
         SetSpUC setSpUC = new SetSpUC(impl);
+        CheckPasswordUC checkPasswordUC = new CheckPasswordUC(impl);
 
+        //Repository
         AccountRepo ar = new AccountRepoImpl(fileReader, getSpUC);
         StarRepo sr = new StarRepoDBImpl(settingsActivity);
         TagRepo tr = new TagRepoDBImpl(settingsActivity);
 
-        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC, sr, tr);
-        GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr, getSpUC);
-        CheckPasswordUC checkPasswordUC = new CheckPasswordUC(impl);
-
         return new SettingsActivityPresenter(settingsActivity,
-                accountList,
                 setSpUC,
                 getSpUC,
-                checkPasswordUC,
-                saveAccountListUC,
-                getAccountListUC
+                checkPasswordUC
         );
     }
 }

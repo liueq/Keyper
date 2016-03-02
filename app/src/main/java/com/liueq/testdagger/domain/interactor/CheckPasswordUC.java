@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 /**
  * Created by liueq on 30/7/15.
+ * Check password UseCase
  */
 public class CheckPasswordUC extends UseCase {
 

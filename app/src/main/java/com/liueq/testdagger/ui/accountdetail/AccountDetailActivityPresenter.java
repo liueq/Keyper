@@ -29,7 +29,6 @@ public class AccountDetailActivityPresenter extends Presenter {
     public final static String TAG = "AccountDAPresenter";
 
     private AccountDetailActivity activity;
-    List<Account> mAccountList;
     public String mId;
     private Account mCurrentAccount;
 
@@ -40,15 +39,12 @@ public class AccountDetailActivityPresenter extends Presenter {
     AddTagUC addTagUC;
 
     public AccountDetailActivityPresenter(AccountDetailActivity activity,
-                                          List<Account> accountList,
                                           SaveAccountListUC saveAccountListUC,
                                           GetAccountListUC getAccountListUC,
                                           DeleteAccountUC deleteAccountUC,
                                           GetAccountDetailUC getAccountDetailUC,
                                           AddTagUC addTagUC){
         this.activity = activity;
-        this.mAccountList = accountList;
-
         this.saveAccountListUC = saveAccountListUC;
         this.getAccountListUC = getAccountListUC;
         this.deleteAccountUC = deleteAccountUC;

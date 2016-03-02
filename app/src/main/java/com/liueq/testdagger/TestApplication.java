@@ -29,7 +29,7 @@ public class TestApplication extends Application{
 
         //Dagger2 init.
         appComponent = DaggerAppComponent.builder()
-                            .appModule(new AppModule(this, new ArrayList<Account>())) //TODO 此处的Account list 是否还需要？？
+                            .appModule(new AppModule(this))
                             .build();//注意这里的list，之后在listPresenter和detailPresenter中都注入了此对象，必须保持同步
 
         //Sqlcipher init.

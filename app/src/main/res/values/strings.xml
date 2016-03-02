@@ -46,16 +46,18 @@
     <!-- Welcome -->
     <string name="first_pwd">Password required</string>
     <string name="sec_pwd">Password repeat</string>
-    <string name="submit">SUBMIT</string>
+    <string name="submit">LOGIN</string>
 
     <!-- Settings-->
     <string name="change_pwd">Change password</string>
     <string name="change_aes">Change AES password</string>
+    <string name="change_db">Change Database password</string>
     <string name="change_path">Choose file save path</string>
     <string name="encrypt_password">Encrypt password</string>
     <string name="encrypt_description">Encrypt description</string>
     <string name="import_data">Import</string>
     <string name="export_data">Export</string>
+    <string name="hint_new_db_password">New Database password</string>
 
     <string name="external_path">External Storage</string>
     <string name="internal_path">Internal Storage</string>

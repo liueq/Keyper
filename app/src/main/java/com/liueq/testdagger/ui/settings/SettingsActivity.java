@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liueq.testdagger.Constants;
@@ -35,23 +36,10 @@ public class SettingsActivity extends BaseActivity {
     RelativeLayout mRelativeImport;
     @Bind(R.id.rl_export)
     RelativeLayout mRelativeExport;
-
-//    @Bind(R.id.rl_change_aes)
-//    RelativeLayout mRelativeAES;
-//    @Bind(R.id.rl_change_path)
-//    RelativeLayout mRelativePath;
-//    @Bind(R.id.rl_encrypt_pwd)
-//    RelativeLayout mRelativeEncPwd;
-//    @Bind(R.id.rl_encrypt_desc)
-//    RelativeLayout mRelativeEncDesc;
-//    @Bind(R.id.switch_pwd)
-//    Switch mSwitchPwd;
-//    @Bind(R.id.switch_desc)
-//    Switch mSwitchDesc;
-//    @Bind(R.id.tv_show_aes)
-//    TextView mTextViewAES;
-//    @Bind(R.id.tv_show_path)
-//    TextView mTextViewPath;
+    @Bind(R.id.rl_change_db)
+    RelativeLayout mRelativeDb;
+    @Bind(R.id.tv_db)
+    TextView mTextViewDb;
 
     @Inject
     SettingsActivityPresenter presenter;
@@ -64,7 +52,6 @@ public class SettingsActivity extends BaseActivity {
 
         initView();
         initData();
-
     }
 
     private void initView(){
@@ -75,26 +62,9 @@ public class SettingsActivity extends BaseActivity {
         if(Build.VERSION.SDK_INT > 21){
             mToolbar.setElevation(8);
         }
-
-//        mSwitchPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                presenter.encryptPwd(isChecked);
-//                presenter.saveDataToDB();
-//            }
-//        });
-
-//        mSwitchDesc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                presenter.encryptDesc(isChecked);
-//                presenter.saveDataToDB();
-//            }
-//        });
     }
 
     private void initData(){
-        presenter.initialSwitch();
         presenter.retrieveUIData();
 
     }
@@ -111,15 +81,8 @@ public class SettingsActivity extends BaseActivity {
         return presenter;
     }
 
-//    public void checkSwitchPwd(boolean check){
-//        mSwitchPwd.setChecked(check);
-//    }
 
-//    public void checkSwitchDesc(boolean check){
-//        mSwitchDesc.setChecked(check);
-//    }
-
-    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_change_aes, R.id.rl_change_path, R.id.rl_encrypt_pwd, R.id.rl_encrypt_desc})
+    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_change_db, R.id.rl_change_path, R.id.rl_encrypt_pwd, R.id.rl_encrypt_desc})
     public void click(View v){
         int id = v.getId();
         switch (id){
@@ -134,18 +97,9 @@ public class SettingsActivity extends BaseActivity {
                 //TODO Export DB
                 BackUpTool.exportDB(this);
                 break;
-//            case R.id.rl_change_aes:
-//                createChangeAESDialog();
-//                break;
-//            case R.id.rl_change_path:
-//                createChooseSavePathDialog();
-//                break;
-//            case R.id.rl_encrypt_pwd:
-//                mSwitchPwd.setChecked(!mSwitchPwd.isChecked());
-//                break;
-//            case R.id.rl_encrypt_desc:
-//                mSwitchDesc.setChecked(!mSwitchDesc.isChecked());
-//                break;
+            case R.id.rl_change_db:
+                createChangeDBDialog();
+                break;
         }
     }
 
@@ -181,24 +135,23 @@ public class SettingsActivity extends BaseActivity {
         builder.create().show();
     }
 
-    private void createChangeAESDialog(){
+    private void createChangeDBDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.change_aes);
+        builder.setTitle(R.string.change_db);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.dialog_change_aes, null);
-        final EditText new_aes = (EditText) view.findViewById(R.id.et_new_aes);
+        View view = inflater.inflate(R.layout.dialog_change_db, null);
+        final EditText new_db = (EditText) view.findViewById(R.id.et_new_db);
 
         builder.setView(view);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String new_aes_str = new_aes.getText().toString();
+                String new_aes_str = new_db.getText().toString();
                 if(presenter.saveAes(new_aes_str)) {
-                    Toast.makeText(SettingsActivity.this, "AES password saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, "DB password saved", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(SettingsActivity.this, "AES password can not null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, "DB password can not null", Toast.LENGTH_SHORT).show();
                 }
-                presenter.saveData();
                 presenter.retrieveUIData();
             }
         });
@@ -259,7 +212,6 @@ public class SettingsActivity extends BaseActivity {
                     Toast.makeText(SettingsActivity.this, "Must choose one path", Toast.LENGTH_SHORT).show();
                 }
                 presenter.retrieveUIData();
-                presenter.saveData();
             }
         });
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -270,14 +222,6 @@ public class SettingsActivity extends BaseActivity {
         });
         builder.create().show();
     }
-
-//    public void setShowAES(String aes_pwd){
-//        mTextViewAES.setText(aes_pwd);
-//    }
-
-//    public void setShowPath(String file_path){
-//        mTextViewPath.setText(file_path);
-//    }
 
 
     @Override

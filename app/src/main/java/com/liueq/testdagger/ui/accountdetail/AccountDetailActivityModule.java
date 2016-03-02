@@ -44,7 +44,7 @@ public class AccountDetailActivityModule {
 
     @Provides
     @ActivityScope
-    AccountDetailActivityPresenter provideAccountDetailActivityPresenter(FileReader fileReader, List<Account> accountList){
+    AccountDetailActivityPresenter provideAccountDetailActivityPresenter(FileReader fileReader){
 
         SharedPreferenceRepo spr = new SharedPreferenceRepoImpl(accountDetailActivity);
         GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepoImpl) spr);
@@ -59,7 +59,7 @@ public class AccountDetailActivityModule {
         GetAccountDetailUC getAccountDetailUC = new GetAccountDetailUC(ar, sr, tr);
         AddTagUC addTagUC = new AddTagUC(tr, sr);
 
-        return new AccountDetailActivityPresenter(accountDetailActivity, accountList,
+        return new AccountDetailActivityPresenter(accountDetailActivity,
                 saveAccountListUC,
                 getAccountListUC,
                 deleteAccountUC,

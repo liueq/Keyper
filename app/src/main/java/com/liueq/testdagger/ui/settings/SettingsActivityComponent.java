@@ -6,6 +6,7 @@ import dagger.Subcomponent;
 
 /**
  * Created by liueq on 29/7/15.
+ * Settings Component
  */
 @ActivityScope
 @Subcomponent(

@@ -12,11 +12,11 @@
         android:layout_marginTop="15dp">
 
         <EditText
-            android:id="@+id/et_new_aes"
+            android:id="@+id/et_new_db"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:maxLength="16"
-            android:hint="New AES password"/>
+            android:hint="@string/hint_new_db_password"/>
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

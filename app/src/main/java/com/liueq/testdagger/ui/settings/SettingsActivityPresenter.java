@@ -15,55 +15,24 @@ import java.util.List;
 
 /**
  * Created by liueq on 29/7/15.
+ * Settings Presenter
  */
 public class SettingsActivityPresenter extends Presenter {
 
     public final static String TAG = "settingsP";
 
     private SettingsActivity mSettingsActivity;
-    public List<Account> mList;
     private SetSpUC mSetSpUC;
     private GetSpUC mGetSpUC;
     private CheckPasswordUC checkPasswordUC;
-    private SaveAccountListUC mSaveAccountListUC;
-    private GetAccountListUC mGetAccountListUC;
 
     public HashMap<String, Boolean> mFilePathState;
 
-    public SettingsActivityPresenter(SettingsActivity settingsActivity, List<Account> list, SetSpUC setSpUC, GetSpUC getSpUC, CheckPasswordUC checkPasswordUC, SaveAccountListUC saveAccountListUC, GetAccountListUC getAccountListUC){
+    public SettingsActivityPresenter(SettingsActivity settingsActivity, SetSpUC setSpUC, GetSpUC getSpUC, CheckPasswordUC checkPasswordUC){
         this.mSettingsActivity = settingsActivity;
-        this.mList = list;
         this.mSetSpUC = setSpUC;
         this.mGetSpUC = getSpUC;
         this.checkPasswordUC = checkPasswordUC;
-        this.mSaveAccountListUC = saveAccountListUC;
-        this.mGetAccountListUC = getAccountListUC;
-    }
-
-    public void initialSwitch(){
-        //从UseCase层获取设定
-        HashMap<String, String> status = mGetSpUC.getEncStatus();
-        String pwd_enc_status = status.get(Constants.SP_IS_PWD_ENC);
-        String desc_enc_status = status.get(Constants.SP_IS_DESC_ENC);
-
-        //第一次启动的时候初始化，默认是加密
-        if(pwd_enc_status == null && desc_enc_status == null){
-//            mSettingsActivity.checkSwitchPwd(true);
-//            mSettingsActivity.checkSwitchDesc(true);
-            return ;
-        }
-
-        if(pwd_enc_status.equals(Constants.YES)){
-//            mSettingsActivity.checkSwitchPwd(true);
-        }else{
-//            mSettingsActivity.checkSwitchPwd(false);
-        }
-
-        if(desc_enc_status.equals(Constants.YES)){
-//            mSettingsActivity.checkSwitchDesc(true);
-        }else{
-//            mSettingsActivity.checkSwitchDesc(false);
-        }
     }
 
     public void retrieveUIData() {
@@ -112,12 +81,4 @@ public class SettingsActivityPresenter extends Presenter {
         return mSetSpUC.saveFilePathState(state);
     }
 
-    public void saveData(){
-        mSaveAccountListUC.execute(mList, null);
-    }
-
-    public void loadData(){
-        mList.clear();
-        mList.addAll(mGetAccountListUC.execute());
-    }
 }

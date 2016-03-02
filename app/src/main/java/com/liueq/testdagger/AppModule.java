@@ -19,11 +19,9 @@ import dagger.Provides;
 @Module
 public class AppModule {
     private Application application;
-    private List<Account> accountList;
 
-    public AppModule(Application application, List<Account> accountList){
+    public AppModule(Application application){
         this.application = application;
-        this.accountList = accountList;
     }
 
     @Provides
@@ -36,12 +34,6 @@ public class AppModule {
     @Singleton
     public FileReader provideFileReader(){
         return FileReader.getInstance();
-    }
-
-    @Provides
-    @Singleton
-    public List<Account> provideAccountList(){
-        return accountList;
     }
 
     @Provides
