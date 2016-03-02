@@ -16,12 +16,12 @@
     <string name="toast_sync_db">Sync Database Completed</string>
 
     <!-- AccountDetail -->
-    <string name="tag">TAG:</string>
-    <string name="site">SITE:</string>
-    <string name="name">NAME:</string>
-    <string name="password">PASSWORD:</string>
-    <string name="mail">MAIL:</string>
-    <string name="description">DESCRIPTION:</string>
+    <string name="tag">Tag</string>
+    <string name="site">Site</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="mail">Mail</string>
+    <string name="description">Description</string>
     <string name="save">SAVE</string>
 
     <string name="action_star">Star</string>

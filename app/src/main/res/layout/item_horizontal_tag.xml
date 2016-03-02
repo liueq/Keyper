@@ -24,7 +24,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="6dp"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/secondary_text"
             android:textSize="14sp"
             tools:text="TAG"
             />
@@ -38,8 +38,10 @@
             android:paddingRight="10dp"
             android:scaleType="center"
             android:src="@mipmap/ic_clear_white_18dp"
+            android:tint="@color/colorPrimary"
             />
 
     </LinearLayout>
+
 
 </LinearLayout>
