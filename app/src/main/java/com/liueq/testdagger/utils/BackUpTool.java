@@ -10,6 +10,7 @@ import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
 
 import net.sqlcipher.Cursor;
+import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import java.io.File;
@@ -27,54 +28,75 @@ import java.util.List;
  */
 public class BackUpTool {
 
-//	public static boolean importDB(Context context){
-//		String file = Environment.getExternalStorageDirectory() + "/encrypted3.db";
-//		SQLiteDatabase database = SQLiteDatabase.openDatabase(file, "29Jan10:25", null, 0);
-//		List<Account> accounts = new ArrayList<>();
-//		if(database != null){
-//			Cursor cursor = database.query("password", DBTables.Password.ALL_COLUMN, null, null, null, null, null);
-//			while(cursor.moveToNext()){
-//				Account account = new Account();
-//				account.id = String.valueOf(cursor.getInt(0));
-//				account.site = cursor.getString(1);
-//				account.username = cursor.getString(2);
-//				account.password = cursor.getString(3);
-//				account.mail = cursor.getString(4);
-//				account.description = cursor.getString(5);
-//
-//				accounts.add(account);
-//			}
-//		}else{
-//			Log.e("liueq", "importDB: database is null");
-//		}
-//
-//		database.close();
-//
-//		AccountRepoDBImpl ARI = new AccountRepoDBImpl(context, null);
-//		for(Account a : accounts){
-//			ARI.insertAccount(a);
-//		}
-//
-//		return true;
-//	}
+	public static boolean importDBContent(Context context){
+		String file = Environment.getExternalStorageDirectory() + "/encrypted3.db";
+		SQLiteDatabase database = SQLiteDatabase.openDatabase(file, "29Jan10:25", null, 0);
+		List<Account> accounts = new ArrayList<>();
+		if(database != null){
+			Cursor cursor = database.query("password", DBTables.Password.ALL_COLUMN, null, null, null, null, null);
+			while(cursor.moveToNext()){
+				Account account = new Account();
+				account.id = String.valueOf(cursor.getInt(0));
+				account.site = cursor.getString(1);
+				account.username = cursor.getString(2);
+				account.password = cursor.getString(3);
+				account.mail = cursor.getString(4);
+				account.description = cursor.getString(5);
 
-	public static void importDB(Context context){
+				accounts.add(account);
+			}
+		}else{
+			Log.e("liueq", "importDB: database is null");
+		}
+
+		database.close();
+
+		AccountRepoDBImpl ARI = new AccountRepoDBImpl(context, null);
+		for(Account a : accounts){
+			ARI.insertAccount(a);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if the import target can be opened
+	 * @param password
+	 * @param path
+	 * @return
+	 */
+	public static boolean canOpenDB(String password, String path){
+		SQLiteDatabase database = null;
+		try{
+			database = SQLiteDatabase.openDatabase(path, password, null, 0);
+		}catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+
+		if(database != null){
+			database.close();
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public static void importDB(Context context, String input){
 		SQLCipherOpenHelper helper = SQLCipherOpenHelper.getInstance(context);
 		String db_path = helper.getDatabase().getPath();
+		helper.closeDatabase();
 
-		String input = Environment.getExternalStorageDirectory() + "/encrypted.db";
-
+//		String input = Environment.getExternalStorageDirectory() + "/encrypted.db";
 		File input_f = new File(input);
 		File output_f = new File(db_path);
 		output_f.delete();
 		output_f = new File(db_path);
 
 		copyFile(input_f, output_f);
-
-		helper.closeDatabase();
 	}
 
-	public static void exportDB(Context context){
+	public static String exportDB(Context context){
 		SQLCipherOpenHelper helper = SQLCipherOpenHelper.getInstance(context);
 		String db_path = helper.getDatabase().getPath();
 
@@ -102,6 +124,8 @@ public class BackUpTool {
 				e.printStackTrace();
 			}
 		}
+
+		return output;
 	}
 
 	private static void copyFile(File a, File b){

@@ -1,6 +1,7 @@
 package com.liueq.testdagger.data.database;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.TestApplication;
@@ -31,7 +32,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 	public static SQLCipherOpenHelper getInstance(Context context){
 		if(mInstance == null){
 			mInstance = new SQLCipherOpenHelper(context);
-			mDatabase = mInstance.getWritableDatabase(DATABASE_PASSWORD);
+			mDatabase = mInstance.getWritableDatabase(TextUtils.isEmpty(getPassword()) ? DATABASE_PASSWORD : getPassword());
 		}
 
 		return mInstance;
@@ -86,7 +87,6 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 		getDatabase().beginTransaction();
 		{
 			getDatabase().rawExecSQL("pragma rekey=\"" + password + "\";");
-			DATABASE_PASSWORD = password;
 		}
 		return_flag = true;
 		getDatabase().setTransactionSuccessful();
@@ -97,8 +97,8 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 	/**
 	 * Get DB password
 	 */
-	public void getPassword(){
+	private static String getPassword(){
 		SharedPreferenceRepo sr = new SharedPreferenceRepoImpl(TestApplication.getApplication());
-		sr.getProterties(Constants.SP_DB_PWD);
+		return sr.getProterties(Constants.SP_DB_PWD);
 	}
 }

@@ -2,6 +2,7 @@ package com.liueq.testdagger.ui.settings;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,7 +28,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Settings
+ */
 public class SettingsActivity extends BaseActivity {
+
+    public final static int REQUEST_CODE = 1234;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -42,7 +49,7 @@ public class SettingsActivity extends BaseActivity {
     TextView mTextViewDb;
 
     @Inject
-    SettingsActivityPresenter presenter;
+    SettingsActivityPresenter mPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +72,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void initData(){
-        presenter.loadDataAction();
+        mPresenter.loadDataAction();
 
     }
 
@@ -82,7 +89,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected Presenter getPresenter() {
-        return presenter;
+        return mPresenter;
     }
 
 
@@ -98,11 +105,15 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.rl_import:
                 //Import DB
-                BackUpTool.importDB(this);
+                String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".db");
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*");
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.rl_export:
                 //Export DB
-                BackUpTool.exportDB(this);
+                mPresenter.exportDBAction();
                 break;
         }
     }
@@ -122,9 +133,9 @@ public class SettingsActivity extends BaseActivity {
                 String old_pwd_str = old_pwd.getText().toString();
                 String new_pwd_str = new_pwd.getText().toString();
                 //Check old password
-                if(presenter.checkPassAction(old_pwd_str)){
+                if(mPresenter.checkPassAction(old_pwd_str)){
                     //Save to SP
-                    if(presenter.savePassAction(new_pwd_str)) {
+                    if(mPresenter.savePassAction(new_pwd_str)) {
                         Toast.makeText(SettingsActivity.this, R.string.change_pwd_succeed, Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(SettingsActivity.this, R.string.change_pwd_not_null, Toast.LENGTH_SHORT).show();
@@ -156,8 +167,8 @@ public class SettingsActivity extends BaseActivity {
                 }else if(new_db_str.length() < 6) {
                     Toast.makeText(SettingsActivity.this, R.string.change_db_short, Toast.LENGTH_SHORT).show();
                 }else{
-                    presenter.saveDBPassAction(new_db_str);
-                    presenter.loadDataAction();
+                    mPresenter.saveDBPassAction(new_db_str);
+                    mPresenter.loadDataAction();
                 }
             }
         });
@@ -165,6 +176,47 @@ public class SettingsActivity extends BaseActivity {
         builder.create().show();
     }
 
+    private void createImportDBDialog(final String path){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.import_db_password);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_change_db, null);
+        final EditText new_db = (EditText) view.findViewById(R.id.et_new_db);
+
+        builder.setView(view);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String new_db_str = new_db.getText().toString();
+                if(TextUtils.isEmpty(new_db_str)) {
+                    Toast.makeText(SettingsActivity.this, R.string.change_db_not_null, Toast.LENGTH_SHORT).show();
+                }else{
+                    mPresenter.importDBAction(path, new_db_str);
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.create().show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE){
+            if(data != null){
+                data.getExtras();
+                String path = data.getDataString();
+                String prefix = "file://";
+                if(path.startsWith(prefix)){
+                    path = path.substring(prefix.length());
+                    createImportDBDialog(path);
+                }else{
+                    Toast.makeText(SettingsActivity.this, R.string.import_file_uri_error, Toast.LENGTH_SHORT).show();
+                }
+                
+            }
+        }
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
