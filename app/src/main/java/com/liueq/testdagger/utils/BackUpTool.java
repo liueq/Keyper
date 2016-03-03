@@ -28,37 +28,6 @@ import java.util.List;
  */
 public class BackUpTool {
 
-	public static boolean importDBContent(Context context){
-		String file = Environment.getExternalStorageDirectory() + "/encrypted3.db";
-		SQLiteDatabase database = SQLiteDatabase.openDatabase(file, "29Jan10:25", null, 0);
-		List<Account> accounts = new ArrayList<>();
-		if(database != null){
-			Cursor cursor = database.query("password", DBTables.Password.ALL_COLUMN, null, null, null, null, null);
-			while(cursor.moveToNext()){
-				Account account = new Account();
-				account.id = String.valueOf(cursor.getInt(0));
-				account.site = cursor.getString(1);
-				account.username = cursor.getString(2);
-				account.password = cursor.getString(3);
-				account.mail = cursor.getString(4);
-				account.description = cursor.getString(5);
-
-				accounts.add(account);
-			}
-		}else{
-			Log.e("liueq", "importDB: database is null");
-		}
-
-		database.close();
-
-		AccountRepoDBImpl ARI = new AccountRepoDBImpl(context, null);
-		for(Account a : accounts){
-			ARI.insertAccount(a);
-		}
-
-		return true;
-	}
-
 	/**
 	 * Check if the import target can be opened
 	 * @param password
@@ -87,7 +56,6 @@ public class BackUpTool {
 		String db_path = helper.getDatabase().getPath();
 		helper.closeDatabase();
 
-//		String input = Environment.getExternalStorageDirectory() + "/encrypted.db";
 		File input_f = new File(input);
 		File output_f = new File(db_path);
 		output_f.delete();

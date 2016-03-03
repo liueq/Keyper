@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liueq.testdagger.R;
@@ -29,12 +31,14 @@ import rx.schedulers.Schedulers;
  * Created by liueq on 22/2/2016.
  * 首页的StarList
  */
-public class StarListFragment extends Fragment implements RecyclerStarListAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class StarListFragment extends Fragment implements RecyclerStarListAdapter.OnItemClickListener{
 
+	@Bind(R.id.iv_hint)
+	ImageView mImageViewHint;
+	@Bind(R.id.tv_hint)
+	TextView mTextViewHint;
 	@Bind(R.id.recycler)
 	RecyclerView mRecycler;
-	@Bind(R.id.refresh_layout)
-	SwipeRefreshLayout mRefreshLayout;
 
 	private RecyclerStarListAdapter mAdapter;
 
@@ -56,6 +60,13 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 
 		mActivity = (MainActivity) getActivity();
 		mPresenter = (MainActivityPresenter) mActivity.getPresenter();
+		mPresenter.attachFragment(StarListFragment.class, this);
+	}
+
+	@Override
+	public void onDetach() {
+		mPresenter.detachFragment(StarListFragment.class);
+		super.onDetach();
 	}
 
 	@Nullable
@@ -70,25 +81,30 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 	}
 
 	private void initView(){
-		mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
-		mRefreshLayout.setOnRefreshListener(this);
 
 		mRecycler.setHasFixedSize(true);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 		mAdapter = new RecyclerStarListAdapter(getActivity(), new ArrayList<Account>(), this);
 		mRecycler.setAdapter(mAdapter);
+
+		mTextViewHint.setText(R.string.tab_star_hint);
+		mImageViewHint.setImageResource(R.mipmap.ic_star_outline_white_48dp);
 	}
 
 	private void loadData(){
-		loadListOb().subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(loadListSub());
+		mPresenter.loadStarListAction();
 	}
 
-	private void updateUI(List<Account> list){
-		if(mRefreshLayout.isRefreshing()){
-			mRefreshLayout.setRefreshing(false);
-			Toast.makeText(mActivity, R.string.toast_sync_db, Toast.LENGTH_SHORT).show();
+	public void updateUI(List<Account> list){
+
+		if(list.size() > 0){
+			mTextViewHint.setVisibility(View.INVISIBLE);
+			mImageViewHint.setVisibility(View.INVISIBLE);
+			mRecycler.setVisibility(View.VISIBLE);
+		}else{
+			mTextViewHint.setVisibility(View.VISIBLE);
+			mImageViewHint.setVisibility(View.VISIBLE);
+			mRecycler.setVisibility(View.INVISIBLE);
 		}
 
 		mAdapter.clear();
@@ -102,35 +118,6 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		loadData();
 	}
 
-	private Observable<List<Account>> loadListOb(){
-		return Observable.create(new Observable.OnSubscribe<List<Account>>() {
-			@Override
-			public void call(Subscriber<? super List<Account>> subscriber) {
-				List<Account> list = mPresenter.loadStarList();
-				subscriber.onNext(list);
-			}
-		});
-	}
-
-	private Subscriber<List<Account>> loadListSub(){
-		return new Subscriber<List<Account>>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(List<Account> accounts) {
-				updateUI(accounts);
-			}
-		};
-	}
-
 	@Override
 	public void onItemClicked(View view, Object item, int position) {
 		int id = view.getId();
@@ -138,11 +125,6 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		if(id == RecyclerStarListAdapter.ViewHolder.ID_LinearLayout){
 			AccountDetailActivity.launchActivity(mActivity, account);
 		}
-	}
-
-	@Override
-	public void onRefresh() {
-		loadData();
 	}
 
 }

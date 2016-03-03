@@ -14,10 +14,10 @@ import android.view.MenuItem;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
-import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
 import com.liueq.testdagger.base.BaseActivity;
-import com.liueq.testdagger.ui.settings.SettingsActivity;
 import com.liueq.testdagger.base.Presenter;
+import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
+import com.liueq.testdagger.ui.settings.SettingsActivity;
 
 import javax.inject.Inject;
 

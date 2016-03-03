@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liueq.testdagger.R;
@@ -25,15 +27,17 @@ import butterknife.ButterKnife;
  * Created by liueq on 29/2/2016.
  * TAG tab fragment
  */
-public class TagListFragment extends Fragment implements OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class TagListFragment extends Fragment implements OnItemClickListener{
 
 	private MainActivity mActivity;
 	private MainActivityPresenter mPresenter;
 
+	@Bind(R.id.iv_hint)
+	ImageView mImageViewHint;
+	@Bind(R.id.tv_hint)
+	TextView mTextViewHint;
 	@Bind(R.id.recycler)
 	RecyclerView mRecycler;
-	@Bind(R.id.refresh_layout)
-	SwipeRefreshLayout mRefreshLayout;
 
 	RecyclerTagListAdapter mAdapter;
 
@@ -73,11 +77,12 @@ public class TagListFragment extends Fragment implements OnItemClickListener, Sw
 	}
 
 	private void initView(){
-		mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
-		mRefreshLayout.setOnRefreshListener(this);
 
 		mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
 		mRecycler.setAdapter(mAdapter = new RecyclerTagListAdapter(mActivity, this));
+
+		mTextViewHint.setText(R.string.tab_tag_hint);
+		mImageViewHint.setImageResource(R.mipmap.ic_local_offer_white_48dp);
 	}
 
 	private void loadData(){
@@ -85,9 +90,15 @@ public class TagListFragment extends Fragment implements OnItemClickListener, Sw
 	}
 
 	public void updateList(List<RecyclerTagListAdapter.TagItem> list){
-		if(mRefreshLayout.isRefreshing()){
-			mRefreshLayout.setRefreshing(false);
-			Toast.makeText(mActivity, R.string.toast_sync_db, Toast.LENGTH_SHORT).show();
+
+		if(list.size() > 0){
+			mTextViewHint.setVisibility(View.INVISIBLE);
+			mImageViewHint.setVisibility(View.INVISIBLE);
+			mRecycler.setVisibility(View.VISIBLE);
+		}else{
+			mTextViewHint.setVisibility(View.VISIBLE);
+			mImageViewHint.setVisibility(View.VISIBLE);
+			mRecycler.setVisibility(View.INVISIBLE);
 		}
 
 		mAdapter.replaceAll(list);
@@ -102,11 +113,6 @@ public class TagListFragment extends Fragment implements OnItemClickListener, Sw
 				TagDetailActivity.launchActivity(mActivity, t);
 			}
 		}
-	}
-
-	@Override
-	public void onRefresh() {
-		loadData();
 	}
 
 	@Override

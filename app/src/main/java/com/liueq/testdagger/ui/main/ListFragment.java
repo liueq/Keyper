@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liueq.testdagger.R;
@@ -25,12 +27,14 @@ import butterknife.ButterKnife;
  * Created by liueq on 17/2/2016.
  * 主界面，ALL tab
  */
-public class ListFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ListFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener{
 
+	@Bind(R.id.iv_hint)
+	ImageView mImageViewHint;
+	@Bind(R.id.tv_hint)
+	TextView mTextViewHint;
 	@Bind(R.id.recycler)
 	RecyclerView mRecycler;
-	@Bind(R.id.refresh_layout)
-	SwipeRefreshLayout mRefreshLayout;
 
 	private RecyclerListAdapter recyclerListAdapter;
 
@@ -71,8 +75,6 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	}
 
 	private void initView(){
-		mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
-		mRefreshLayout.setOnRefreshListener(this);
 
 		mRecycler.setHasFixedSize(true);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -140,6 +142,9 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 //                }
             }
         });
+
+		mTextViewHint.setText(R.string.tab_all_hint);
+		mImageViewHint.setImageResource(R.mipmap.ic_account_balance_wallet_white_48dp);
 	}
 
 	private void loadData(){
@@ -147,9 +152,14 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	}
 
 	public void updateUI(List<Account> list){
-		if(mRefreshLayout.isRefreshing()){
-			mRefreshLayout.setRefreshing(false);
-			Toast.makeText(mActivity, R.string.toast_sync_db, Toast.LENGTH_SHORT).show();
+		if(list.size() > 0){
+			mTextViewHint.setVisibility(View.INVISIBLE);
+			mImageViewHint.setVisibility(View.INVISIBLE);
+			mRecycler.setVisibility(View.VISIBLE);
+		}else{
+			mTextViewHint.setVisibility(View.VISIBLE);
+			mImageViewHint.setVisibility(View.VISIBLE);
+			mRecycler.setVisibility(View.INVISIBLE);
 		}
 
 		recyclerListAdapter.clear();
@@ -168,11 +178,6 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 			//Star
 			mPresneter.starAction(account);
 		}
-	}
-
-	@Override
-	public void onRefresh() {
-		loadData();
 	}
 
 	@Override

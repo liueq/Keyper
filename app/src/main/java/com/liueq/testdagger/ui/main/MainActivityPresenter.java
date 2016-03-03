@@ -49,15 +49,28 @@ public class MainActivityPresenter extends Presenter {
     }
 
 
-
-    /******************** RxJava ********************/
-
-    public void loadListAction(){
-        loadListOb().subscribeOn(Schedulers.io())
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(loadListSub());
+    /******************** Action ********************/
+	/**
+     * Load star list - StarListFragment
+     */
+    public void loadStarListAction(){
+        loadStarListOb().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(loadStarListSub());
     }
 
+	/**
+     * Load list - ListFragment
+     */
+    public void loadListAction(){
+        loadListOb().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(loadListSub());
+    }
+
+	/**
+     * Load tag list - TagListFragment
+     */
     public void loadTagListAction(){
         getAllTagOb().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -66,11 +79,19 @@ public class MainActivityPresenter extends Presenter {
 
     }
 
+	/**
+     * Do star
+     * @param account
+     */
     public void starAction(Account account){
         starObj(account).subscribeOn(Schedulers.io())
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(starSub());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(starSub());
     }
+
+    /******************** RxJava ********************/
+
+
 
     private Observable<List<Account>> loadListOb(){
         return Observable.create(new Observable.OnSubscribe<List<Account>>() {
@@ -128,6 +149,7 @@ public class MainActivityPresenter extends Presenter {
             public void onNext(Boolean aBoolean) {
                 if(aBoolean){
                     loadListAction();
+                    loadStarListAction();
                 }
             }
         };
@@ -196,6 +218,35 @@ public class MainActivityPresenter extends Presenter {
             @Override
             public void call(List<RecyclerTagListAdapter.TagItem> tagItems) {
                 ((TagListFragment) getFragment(TagListFragment.class)).updateList(tagItems);
+            }
+        };
+    }
+
+    private Observable<List<Account>> loadStarListOb(){
+        return Observable.create(new Observable.OnSubscribe<List<Account>>() {
+            @Override
+            public void call(Subscriber<? super List<Account>> subscriber) {
+                List<Account> list = loadStarList();
+                subscriber.onNext(list);
+            }
+        });
+    }
+
+    private Subscriber<List<Account>> loadStarListSub(){
+        return new Subscriber<List<Account>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<Account> accounts) {
+                ((StarListFragment) getFragment(StarListFragment.class)).updateUI(accounts);
             }
         };
     }
