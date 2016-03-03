@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * Created by liueq on 29/7/15.
+ * SharedPreference repository
  */
 public class SharedPreferenceRepoImpl implements SharedPreferenceRepo {
 

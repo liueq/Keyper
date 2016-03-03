@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import com.liueq.testdagger.data.database.DBTables.Password;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.domain.interactor.GetSpUC;
+import com.liueq.testdagger.domain.interactor.SharedPUC;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.SQLException;
@@ -26,12 +26,12 @@ import java.util.List;
 public class AccountRepoDBImpl implements AccountRepo {
 
 	public final static String TAG = "DBARI";
-	GetSpUC mGetSpUC;
+	SharedPUC mSharedPUC;
 
 	SQLCipherOpenHelper mDBHelper;
 
-	public AccountRepoDBImpl(Context context, GetSpUC getSpUC) {
-		mGetSpUC = getSpUC;
+	public AccountRepoDBImpl(Context context, SharedPUC sharedPUC) {
+		mSharedPUC = sharedPUC;
 		mDBHelper = SQLCipherOpenHelper.getInstance(context);
 	}
 

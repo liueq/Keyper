@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 /**
  * Created by liueq on 30/7/15.
- * Check password UseCase
+ * Check password UseCase(No use)
  */
 public class CheckPasswordUC extends UseCase {
 
@@ -21,14 +21,4 @@ public class CheckPasswordUC extends UseCase {
         this.impl = impl;
     }
 
-    public boolean execute(String check_need_password){
-        String saved_pwd = impl.getProterties(Constants.SP_PWD);
-        String check_need_password_md5 = Encrypter.encryptByMD5(check_need_password);
-
-        if(check_need_password_md5.equals(saved_pwd)){
-            return true;
-        }else{
-            return false;
-        }
-    }
 }

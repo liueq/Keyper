@@ -1,13 +1,10 @@
 package com.liueq.testdagger.domain.interactor;
 
-import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepo;
 import com.liueq.testdagger.data.repository.StarRepo;
-import com.liueq.testdagger.utils.Encrypter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,15 +19,15 @@ public class GetStarListUC extends UseCase {
 	AccountRepo mAR;
 	StarRepo mSR;
 
-	GetSpUC mGetSpUC;
+	SharedPUC mSharedPUC;
 
 	public final static String TAG = "GetALUS";
 
 	@Inject
-	public GetStarListUC(AccountRepo AR, StarRepo SR, GetSpUC getSpUC){
+	public GetStarListUC(AccountRepo AR, StarRepo SR, SharedPUC sharedPUC){
 		this.mAR = AR;
 		this.mSR = SR;
-		this.mGetSpUC = getSpUC;
+		this.mSharedPUC = sharedPUC;
 	}
 
 	public List<Account> executeDB(){

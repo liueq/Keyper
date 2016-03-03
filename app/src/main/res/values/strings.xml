@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">IPassword</string>
 
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+
     <!-- Main -->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -49,9 +53,15 @@
     <string name="submit">LOGIN</string>
 
     <!-- Settings-->
+    <string name="settings_title">Settings</string>
     <string name="change_pwd">Change password</string>
+    <string name="change_pwd_succeed">Password saved</string>
+    <string name="change_pwd_not_null">Password can not null</string>
+    <string name="change_pwd_wrong">Old password wrong</string>
     <string name="change_aes">Change AES password</string>
     <string name="change_db">Change Database password</string>
+    <string name="change_db_succeed">DB password saved</string>
+    <string name="change_db_not_null">DB password can not null</string>
     <string name="change_path">Choose file save path</string>
     <string name="encrypt_password">Encrypt password</string>
     <string name="encrypt_description">Encrypt description</string>

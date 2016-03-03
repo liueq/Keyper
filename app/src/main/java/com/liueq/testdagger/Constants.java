@@ -20,6 +20,8 @@ public class Constants {
 
     public final static String SP_AES = "sp_aes";
 
+    public final static String SP_DB_PWD = "sp_db_password";
+
     public final static String STORAGE_PATH = "sp_path";
 
     public final static String SP_IS_PWD_ENC = "is_pwd_enc";

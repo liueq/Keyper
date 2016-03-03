@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
@@ -38,7 +37,7 @@ public class SettingsActivity extends BaseActivity {
     RelativeLayout mRelativeExport;
     @Bind(R.id.rl_change_db)
     RelativeLayout mRelativeDb;
-    @Bind(R.id.tv_db)
+    @Bind(R.id.tv_show_db)
     TextView mTextViewDb;
 
     @Inject
@@ -56,7 +55,7 @@ public class SettingsActivity extends BaseActivity {
 
     private void initView(){
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setTitle(R.string.settings_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if(Build.VERSION.SDK_INT > 21){
@@ -65,8 +64,12 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void initData(){
-        presenter.retrieveUIData();
+        presenter.loadDataAction();
 
+    }
+
+    public void updateDBPassword(String password){
+        mTextViewDb.setText(password);
     }
 
     @Override
@@ -82,23 +85,23 @@ public class SettingsActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_change_db, R.id.rl_change_path, R.id.rl_encrypt_pwd, R.id.rl_encrypt_desc})
+    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_change_db})
     public void click(View v){
         int id = v.getId();
         switch (id){
             case R.id.rl_change_pwd:
                 createChangePasswordDialog();
                 break;
+            case R.id.rl_change_db:
+                createChangeDBDialog();
+                break;
             case R.id.rl_import:
-                //TODO Import DB
+                //Import DB
                 BackUpTool.importDB(this);
                 break;
             case R.id.rl_export:
-                //TODO Export DB
+                //Export DB
                 BackUpTool.exportDB(this);
-                break;
-            case R.id.rl_change_db:
-                createChangeDBDialog();
                 break;
         }
     }
@@ -112,26 +115,26 @@ public class SettingsActivity extends BaseActivity {
         final EditText new_pwd = (EditText) view.findViewById(R.id.et_new_pwd);
 
         builder.setView(view);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String old_pwd_str = old_pwd.getText().toString();
                 String new_pwd_str = new_pwd.getText().toString();
-                //Check old 是否和SP中相同
-                if(presenter.checkPassword(old_pwd_str)){
-                    //将新密码保存到SP
-                    if(presenter.savePassword(new_pwd_str)) {
-                        Toast.makeText(SettingsActivity.this, "Password saved", Toast.LENGTH_SHORT).show();
+                //Check old password
+                if(presenter.checkPassAction(old_pwd_str)){
+                    //Save to SP
+                    if(presenter.savePassAction(new_pwd_str)) {
+                        Toast.makeText(SettingsActivity.this, R.string.change_pwd_succeed, Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(SettingsActivity.this, "Password can not null", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SettingsActivity.this, R.string.change_pwd_not_null, Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(SettingsActivity.this, "Old password wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, R.string.change_pwd_wrong, Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-        builder.setNegativeButton("CANCEL", null);
+        builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
 
@@ -143,83 +146,19 @@ public class SettingsActivity extends BaseActivity {
         final EditText new_db = (EditText) view.findViewById(R.id.et_new_db);
 
         builder.setView(view);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String new_aes_str = new_db.getText().toString();
-                if(presenter.saveAes(new_aes_str)) {
-                    Toast.makeText(SettingsActivity.this, "DB password saved", Toast.LENGTH_SHORT).show();
+                if(presenter.saveDBPassAction(new_aes_str)) {
+                    Toast.makeText(SettingsActivity.this, R.string.change_db_succeed, Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(SettingsActivity.this, "DB password can not null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, R.string.change_db_not_null, Toast.LENGTH_SHORT).show();
                 }
-                presenter.retrieveUIData();
+                presenter.loadDataAction();
             }
         });
-        builder.setNegativeButton("CANCEL", null);
-        builder.create().show();
-    }
-
-    private void createChooseSavePathDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.change_path);
-        String [] paths = {"External Storage", "Internal Storage"};
-
-        boolean [] paths_state = new boolean[2];
-        if(presenter.mFilePathState != null){
-            if(presenter.mFilePathState.get(Constants.SP_IS_SAVE_EXTERNAL)){
-                paths_state[0] = true;
-            }else{
-                paths_state[0] = false;
-            }
-
-            if(presenter.mFilePathState.get(Constants.SP_IS_SAVE_INTERNAL)){
-                paths_state[1] = true;
-            }else{
-                paths_state[1] = false;
-            }
-        }else{
-            paths_state[0] = true;
-            paths_state[1] = false;
-        }
-
-        builder.setMultiChoiceItems(paths, paths_state, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                switch (which){
-                    case 0:
-                        if(isChecked)
-                            presenter.mFilePathState.put(Constants.SP_IS_SAVE_EXTERNAL, true);
-                        else
-                            presenter.mFilePathState.put(Constants.SP_IS_SAVE_EXTERNAL, false);
-                        break;
-                    case 1:
-                        if(isChecked)
-                            presenter.mFilePathState.put(Constants.SP_IS_SAVE_INTERNAL, true);
-                        else
-                            presenter.mFilePathState.put(Constants.SP_IS_SAVE_INTERNAL, false);
-                        break;
-                }
-            }
-        });
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //将状态保存到SP
-                if(presenter.savePath(presenter.mFilePathState)){
-                    Toast.makeText(SettingsActivity.this, "Save path changed", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(SettingsActivity.this, "Must choose one path", Toast.LENGTH_SHORT).show();
-                }
-                presenter.retrieveUIData();
-            }
-        });
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                presenter.retrieveUIData();
-            }
-        });
+        builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
 

@@ -1,7 +1,6 @@
 package com.liueq.testdagger.ui.accountdetail;
 
 import com.liueq.testdagger.base.ActivityScope;
-import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.repository.AccountRepo;
 import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
@@ -14,11 +13,9 @@ import com.liueq.testdagger.domain.interactor.AddTagUC;
 import com.liueq.testdagger.domain.interactor.DeleteAccountUC;
 import com.liueq.testdagger.domain.interactor.GetAccountDetailUC;
 import com.liueq.testdagger.domain.interactor.GetAccountListUC;
-import com.liueq.testdagger.domain.interactor.GetSpUC;
+import com.liueq.testdagger.domain.interactor.SharedPUC;
 import com.liueq.testdagger.domain.interactor.SaveAccountListUC;
 import com.liueq.testdagger.utils.FileReader;
-
-import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
@@ -47,14 +44,14 @@ public class AccountDetailActivityModule {
     AccountDetailActivityPresenter provideAccountDetailActivityPresenter(FileReader fileReader){
 
         SharedPreferenceRepo spr = new SharedPreferenceRepoImpl(accountDetailActivity);
-        GetSpUC getSpUC = new GetSpUC((SharedPreferenceRepoImpl) spr);
+        SharedPUC sharedPUC = new SharedPUC((SharedPreferenceRepoImpl) spr);
 
-        AccountRepo ar = new AccountRepoDBImpl(accountDetailActivity, getSpUC);
+        AccountRepo ar = new AccountRepoDBImpl(accountDetailActivity, sharedPUC);
         StarRepo sr = new StarRepoDBImpl(accountDetailActivity);
         TagRepo tr = new TagRepoDBImpl(accountDetailActivity);
 
-        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, getSpUC, sr, tr);
-        GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr,  getSpUC);
+        SaveAccountListUC saveAccountListUC = new SaveAccountListUC(ar, sharedPUC, sr, tr);
+        GetAccountListUC getAccountListUC = new GetAccountListUC(ar, sr, sharedPUC);
         DeleteAccountUC deleteAccountUC = new DeleteAccountUC(ar);
         GetAccountDetailUC getAccountDetailUC = new GetAccountDetailUC(ar, sr, tr);
         AddTagUC addTagUC = new AddTagUC(tr, sr);
