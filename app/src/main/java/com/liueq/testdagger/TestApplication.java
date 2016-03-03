@@ -25,7 +25,6 @@ public class TestApplication extends Application{
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        Constants.INTERNAL_STORAGE_PATH = getFilesDir().toString();
 
         //Dagger2 init.
         appComponent = DaggerAppComponent.builder()

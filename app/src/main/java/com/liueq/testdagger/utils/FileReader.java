@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 /**
  * Created by liueq on 14/7/15.
+ * FileReader (not use)
  */
 public class FileReader {
 

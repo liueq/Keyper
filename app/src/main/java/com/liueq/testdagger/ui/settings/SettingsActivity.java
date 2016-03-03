@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -149,13 +150,15 @@ public class SettingsActivity extends BaseActivity {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String new_aes_str = new_db.getText().toString();
-                if(presenter.saveDBPassAction(new_aes_str)) {
-                    Toast.makeText(SettingsActivity.this, R.string.change_db_succeed, Toast.LENGTH_SHORT).show();
-                }else{
+                String new_db_str = new_db.getText().toString();
+                if(TextUtils.isEmpty(new_db_str)) {
                     Toast.makeText(SettingsActivity.this, R.string.change_db_not_null, Toast.LENGTH_SHORT).show();
+                }else if(new_db_str.length() < 6) {
+                    Toast.makeText(SettingsActivity.this, R.string.change_db_short, Toast.LENGTH_SHORT).show();
+                }else{
+                    presenter.saveDBPassAction(new_db_str);
+                    presenter.loadDataAction();
                 }
-                presenter.loadDataAction();
             }
         });
         builder.setNegativeButton(R.string.cancel, null);

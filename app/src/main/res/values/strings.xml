@@ -61,7 +61,9 @@
     <string name="change_aes">Change AES password</string>
     <string name="change_db">Change Database password</string>
     <string name="change_db_succeed">DB password saved</string>
+    <string name="change_db_failed">Change DB password failed</string>
     <string name="change_db_not_null">DB password can not null</string>
+    <string name="change_db_short">DB password too short</string>
     <string name="change_path">Choose file save path</string>
     <string name="encrypt_password">Encrypt password</string>
     <string name="encrypt_description">Encrypt description</string>

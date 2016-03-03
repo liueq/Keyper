@@ -1,12 +1,20 @@
 package com.liueq.testdagger.ui.settings;
 
+import android.widget.Toast;
+
 import com.liueq.testdagger.Constants;
+import com.liueq.testdagger.R;
 import com.liueq.testdagger.base.Presenter;
-import com.liueq.testdagger.domain.interactor.CheckPasswordUC;
+import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.domain.interactor.SharedPUC;
-import com.liueq.testdagger.domain.interactor.SetSpUC;
 
 import java.util.HashMap;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by liueq on 29/7/15.
@@ -14,13 +22,13 @@ import java.util.HashMap;
  */
 public class SettingsActivityPresenter extends Presenter {
 
-    public final static String TAG = "settingsP";
+    public final static String TAG = "SettingsP";
 
-    private SettingsActivity mSettingsActivity;
+    private SettingsActivity mActivity;
     private SharedPUC mSharedPUC;
 
     public SettingsActivityPresenter(SettingsActivity settingsActivity, SharedPUC sharedPUC){
-        this.mSettingsActivity = settingsActivity;
+        this.mActivity = settingsActivity;
         this.mSharedPUC = sharedPUC;
     }
 
@@ -33,7 +41,7 @@ public class SettingsActivityPresenter extends Presenter {
         HashMap<String, String> db_pwd_map = mSharedPUC.getDBPassword();
         String db_password = db_pwd_map.get(Constants.SP_DB_PWD);
 
-        mSettingsActivity.updateDBPassword(db_password);
+        mActivity.updateDBPassword(db_password);
     }
 
 	/**
@@ -56,11 +64,39 @@ public class SettingsActivityPresenter extends Presenter {
 
 	/**
      * Save DB password
-     * @param aes_pwd
+     * @param db_pwd
      * @return
      */
-    public boolean saveDBPassAction(String aes_pwd){
-        return mSharedPUC.saveDBPassword(aes_pwd);
+    public void saveDBPassAction(String db_pwd){
+        if(mSharedPUC.saveDBPassword(db_pwd)){
+            saveDBPassOb(db_pwd)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(saveDBPassSub());
+        }
+    }
+
+    /******************** RxJava ********************/
+    private Observable<Boolean> saveDBPassOb(final String password){
+        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                subscriber.onNext(SQLCipherOpenHelper.getInstance(mActivity).setPassword(password));
+            }
+        });
+    }
+
+    private Action1<Boolean> saveDBPassSub(){
+        return new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                if(aBoolean){
+                    Toast.makeText(mActivity, R.string.change_db_succeed, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mActivity, R.string.change_db_failed, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
     }
 
 }

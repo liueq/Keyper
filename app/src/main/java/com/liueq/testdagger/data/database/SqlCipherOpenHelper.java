@@ -2,6 +2,12 @@ package com.liueq.testdagger.data.database;
 
 import android.content.Context;
 
+import com.liueq.testdagger.Constants;
+import com.liueq.testdagger.TestApplication;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
+import com.liueq.testdagger.domain.interactor.SharedPUC;
+
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
@@ -16,7 +22,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
 	public static final int DATABASE_VERSION = 2;
 
-	public static final String DATABASE_PASSWORD = "29Jan10:25";
+	public static String DATABASE_PASSWORD = "29Jan10:25";
 
 	private static SQLCipherOpenHelper mInstance;
 
@@ -69,5 +75,30 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 			mDatabase.close();
 			mInstance = null;
 		}
+	}
+
+	/**
+	 * Change DB password
+	 * @param password
+	 */
+	public boolean setPassword(String password){
+		boolean return_flag = false;
+		getDatabase().beginTransaction();
+		{
+			getDatabase().rawExecSQL("pragma rekey=\"" + password + "\";");
+			DATABASE_PASSWORD = password;
+		}
+		return_flag = true;
+		getDatabase().setTransactionSuccessful();
+		getDatabase().endTransaction();
+		return return_flag;
+	}
+
+	/**
+	 * Get DB password
+	 */
+	public void getPassword(){
+		SharedPreferenceRepo sr = new SharedPreferenceRepoImpl(TestApplication.getApplication());
+		sr.getProterties(Constants.SP_DB_PWD);
 	}
 }

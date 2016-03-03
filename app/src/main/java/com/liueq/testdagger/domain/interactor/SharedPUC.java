@@ -62,18 +62,6 @@ public class SharedPUC extends UseCase {
             return false;
         }
 
-        //补齐16位
-//        if(db_password.length() != 16){
-//            int length = db_password.length();
-//            int diff = 16 - length;
-//            StringBuffer sb = new StringBuffer();
-//            sb.append(db_password);
-//            for(int i = 0; i < diff; i++){
-//                sb.append("*");
-//            }
-//            db_password = sb.toString();
-//        }
-
         map.put(Constants.SP_DB_PWD, db_password);
         impl.saveProperties(map);
         return true;

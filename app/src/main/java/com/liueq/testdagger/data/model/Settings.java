@@ -7,6 +7,7 @@ import com.liueq.testdagger.Constants;
 
 /**
  * Created by liueq on 21/7/15.
+ * Settings mode (not use)
  */
 public class Settings {
 
