@@ -51,6 +51,9 @@
     <string name="dialog_no_delete">Cancel</string>
 
     <string name="cliped">Copy to clipboard</string>
+    <string name="detail_quit_title">Quit</string>
+    <string name="detail_quit_msg">NOT SAVE! Do you want to drop changes?</string>
+    <string name="positive_quit">QUIT</string>
 
     <!-- Welcome -->
     <string name="first_pwd">Password required</string>

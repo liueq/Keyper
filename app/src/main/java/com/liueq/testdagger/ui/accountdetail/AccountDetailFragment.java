@@ -125,6 +125,9 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		mRecyclerTag.setAdapter(mHorizontalTagAdapter = new HorizontalTagAdapter(mActivity, new ArrayList<Tag>(), this));
 
 		mEditTextSite.addTextChangedListener(new TextWatcher() {
+
+			private int skip_count = 1;
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -138,7 +141,6 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 			@Override
 			public void afterTextChanged(Editable s) {
 				String text = s.toString().trim().toLowerCase();
-				boolean is_all_letter = true;
 
 				if(TextUtils.isEmpty(text)){
 					mImageViewCopySite.setVisibility(View.GONE);
@@ -147,26 +149,28 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 					mImageViewCopySite.setVisibility(View.VISIBLE);
 				}
 
-//				for(Character c : text.toCharArray()){
-//					if(!Character.isLetter(c)){
-//						is_all_letter = false;
-//						break;
-//					}
-//				}
-
-				if(is_all_letter){
-					if(text.startsWith("http://") || text.startsWith("https://") || text.startsWith("www.")){
-						mImageViewJump.setVisibility(View.VISIBLE);
-					}else{
-						mImageViewJump.setVisibility(View.GONE);
-					}
+				if(text.startsWith("http://") || text.startsWith("https://") || text.startsWith("www.")){
+					mImageViewJump.setVisibility(View.VISIBLE);
 				}else{
 					mImageViewJump.setVisibility(View.GONE);
 				}
 
+				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
+					mPresenter.mIsChanged = true;
+				}else{
+					if(skip_count > 0){
+						//Skip load data change
+						skip_count--;
+					}else{
+						mPresenter.mIsChanged = true;
+					}
+				}
 			}
 		});
 		mEditTextName.addTextChangedListener(new TextWatcher() {
+
+			private int skip_count = 1;
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -187,9 +191,23 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 				}else{
 					mImageViewCopyName.setVisibility(View.VISIBLE);
 				}
+
+				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
+					mPresenter.mIsChanged = true;
+				}else{
+					if(skip_count > 0){
+						//Skip load data change
+						skip_count--;
+					}else{
+						mPresenter.mIsChanged = true;
+					}
+				}
 			}
 		});
 		mEditTextPwd.addTextChangedListener(new TextWatcher() {
+
+			private int skip_count = 1;
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -210,9 +228,23 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 				}else{
 					mImageViewCopyPassword.setVisibility(View.VISIBLE);
 				}
+
+				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
+					mPresenter.mIsChanged = true;
+				}else{
+					if(skip_count > 0){
+						//Skip load data change
+						skip_count--;
+					}else{
+						mPresenter.mIsChanged = true;
+					}
+				}
 			}
 		});
 		mEditTextMail.addTextChangedListener(new TextWatcher() {
+
+			private int skip_count = 1;
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -233,9 +265,23 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 				}else{
 					mImageViewCopyMail.setVisibility(View.VISIBLE);
 				}
+
+				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
+					mPresenter.mIsChanged = true;
+				}else{
+					if(skip_count > 0){
+						//Skip load data change
+						skip_count--;
+					}else{
+						mPresenter.mIsChanged = true;
+					}
+				}
 			}
 		});
 		mEditTextDesc.addTextChangedListener(new TextWatcher() {
+
+			private int skip_count = 1;
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -255,6 +301,17 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 					return;
 				}else{
 					mImageViewCopyDescription.setVisibility(View.VISIBLE);
+				}
+
+				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
+					mPresenter.mIsChanged = true;
+				}else{
+					if(skip_count > 0){
+						//Skip load data change
+						skip_count--;
+					}else{
+						mPresenter.mIsChanged = true;
+					}
 				}
 			}
 		});

@@ -36,6 +36,10 @@ public class AccountDetailActivityPresenter extends Presenter {
     private AccountDetailActivity activity;
     public String mId;
     private Account mCurrentAccount;
+    String mTypeScene;
+    public final static String SCENE_NEW = "scene_new";
+    public final static String SCENE_UPDATE = "scene_update";
+    boolean mIsChanged = false; //Flag to tell whether needs to toggle save dialog
 
     SaveAccountListUC saveAccountListUC;
     GetAccountListUC getAccountListUC;
@@ -62,8 +66,13 @@ public class AccountDetailActivityPresenter extends Presenter {
      * @param bundle
      */
     public void init(Bundle bundle){
-        Account account = (Account) bundle.getSerializable("account");
-        mId = account.id;
+        if(bundle == null){
+            mTypeScene = SCENE_NEW;
+        }else{
+            mTypeScene = SCENE_UPDATE;
+            Account account = (Account) bundle.getSerializable("account");
+            mId = account.id;
+        }
     }
 
     /******************** AccountDetailActivity Action ********************/
@@ -205,6 +214,8 @@ public class AccountDetailActivityPresenter extends Presenter {
             @Override
             public void onNext(Boolean aBoolean) {
                 ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).showResult(aBoolean);
+                mIsChanged = false;
+                mTypeScene = SCENE_UPDATE;
             }
         };
     }
@@ -224,6 +235,7 @@ public class AccountDetailActivityPresenter extends Presenter {
             @Override
             public void call(Tag tag) {
                 ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).updateUI(mCurrentAccount);
+                mIsChanged = true;
             }
         };
     }
@@ -359,6 +371,7 @@ public class AccountDetailActivityPresenter extends Presenter {
             public void call(Tag tag) {
                 ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).dismiss();
                 ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).updateUI(mCurrentAccount);
+                mIsChanged = true;
             }
         };
     }
@@ -383,7 +396,12 @@ public class AccountDetailActivityPresenter extends Presenter {
 
     /******************** UseCase Operation ********************/
 
-    public Account loadDataFromDB(String id){
+	/**
+     * Load data from db
+     * @param id
+     * @return
+     */
+    private Account loadDataFromDB(String id){
         mCurrentAccount = getAccountDetailUC.execute(id);
         return mCurrentAccount;
     }

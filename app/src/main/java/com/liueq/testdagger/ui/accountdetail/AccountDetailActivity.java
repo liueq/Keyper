@@ -67,9 +67,7 @@ public class AccountDetailActivity extends BaseActivity{
 
     private void receiveIntent() {
         Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null) {
-            presenter.init(bundle);
-        }
+        presenter.init(bundle);
     }
 
     private void initView() {
@@ -180,4 +178,32 @@ public class AccountDetailActivity extends BaseActivity{
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(presenter.mIsChanged){
+            //TODO Show save tips
+            showSaveDialog();
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+    private void showSaveDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.detail_quit_title);
+        builder.setMessage(R.string.detail_quit_msg);
+        builder.setPositiveButton(R.string.positive_quit, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
 }
