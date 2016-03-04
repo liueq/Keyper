@@ -1,9 +1,12 @@
 package com.liueq.testdagger.ui.launch;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -73,6 +76,23 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initData(){
+        if(getIntent() == null){
+            presenter.mMode = SplashActivityPresenter.MODE_LAUNCH;
+        }else{
+            Bundle bundle = getIntent().getExtras();
+            if(bundle != null){
+                //Lock mode
+                String mode = bundle.getString("mode");
+                if(!TextUtils.isEmpty(mode) && mode.equals(SplashActivityPresenter.MODE_LOCK)){
+                    presenter.mMode = SplashActivityPresenter.MODE_LOCK;
+                }else{
+                    presenter.mMode = SplashActivityPresenter.MODE_LAUNCH;
+                }
+            }else{
+                //Launch mode
+                presenter.mMode = SplashActivityPresenter.MODE_LAUNCH;
+            }
+        }
 
     }
 
@@ -93,6 +113,28 @@ public class SplashActivity extends BaseActivity {
         String password_2 = mEditTextPwd2.getText().toString();
 
         presenter.login(password_1, password_2);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(presenter.mMode.equals(SplashActivityPresenter.MODE_LAUNCH)){
+            super.onBackPressed();
+        }else if(presenter.mMode.equals(SplashActivityPresenter.MODE_LOCK)){
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }
+    }
+
+	/**
+	 * launch for lock
+     * @param activity
+     */
+    public static void launchActivity(Activity activity){
+        Intent intent = new Intent(activity, SplashActivity.class);
+        intent.putExtra("mode", SplashActivityPresenter.MODE_LOCK);
+        activity.startActivity(intent);
     }
 
 }

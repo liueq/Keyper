@@ -20,4 +20,8 @@ public class Constants {
 
     public final static String SP_DB_PWD = "sp_db_password";
 
+    public final static String SP_HIDE_TIME = "sp_hide_time";
+
+    public final static String SP_SHOW_TIME = "sp_show_time";
+
 }

@@ -19,6 +19,11 @@ public class SplashActivityPresenter extends Presenter {
 
     public boolean hasPassword = false;
 
+    public String mMode;
+
+    public final static String MODE_LAUNCH = "mode_launch";
+    public final static String MODE_LOCK = "mode_lock";
+
     private SplashActivity activity;
 
     public SplashActivityPresenter(SplashActivity activity){
@@ -34,9 +39,13 @@ public class SplashActivityPresenter extends Presenter {
 
         if(hasPassword){
             if(pwd_1_md5.equals(saved_pwd)){
-                Intent intent = new Intent(activity, MainActivity.class);
-                activity.startActivity(intent);
-                activity.finish();
+                if(mMode.equals(MODE_LAUNCH)){
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    activity.startActivity(intent);
+                    activity.finish();
+                }else if(mMode.equals(MODE_LOCK)){
+                    activity.finish();
+                }
             }else{
                 Toast.makeText(activity, "Wrong Password", Toast.LENGTH_SHORT).show();
             }

@@ -1,7 +1,10 @@
 package com.liueq.testdagger;
 
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -41,10 +44,9 @@ public class VisibleObserver {
 //			Log.d(Constants.DEFAULT_TAG, "onApplicationHide: ");
 
 			//RxJava do close delay
-			closeDBOb().subscribeOn(Schedulers.io())
-					.observeOn(AndroidSchedulers.mainThread())
-					.delaySubscription(500, TimeUnit.MILLISECONDS)
-					.subscribe();
+			closeDBAction();
+
+			recordHideTime();
 		}
 	}
 
@@ -60,12 +62,43 @@ public class VisibleObserver {
 //			Log.d(Constants.DEFAULT_TAG, "onApplicationShow: ");
 
 			//RxJava do open db.
-			openDBOb().subscribeOn(Schedulers.io())
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe();
+			openDBAction();
+
+			recordShowTime();
 		}
 
 	}
+
+	/******************** Action ********************/
+
+	private void closeDBAction(){
+		closeDBOb().subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.delaySubscription(500, TimeUnit.MILLISECONDS)
+				.subscribe();
+	}
+
+	private void openDBAction(){
+		openDBOb().subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe();
+	}
+
+	private void recordHideTime(){
+		SharedPreferenceRepo Shared = new SharedPreferenceRepoImpl(TestApplication.getApplication());
+		HashMap<String, String> time = new HashMap<String, String>();
+		time.put(Constants.SP_HIDE_TIME, String.valueOf(System.currentTimeMillis()));
+		Shared.saveProperties(time);
+	}
+
+	private void recordShowTime(){
+		SharedPreferenceRepo Shared = new SharedPreferenceRepoImpl(TestApplication.getApplication());
+		HashMap<String, String> time = new HashMap<String, String>();
+		time.put(Constants.SP_SHOW_TIME, String.valueOf(System.currentTimeMillis()));
+		Shared.saveProperties(time);
+	}
+
+	/******************** RxJava ********************/
 
 	private Observable<Void> closeDBOb(){
 		return Observable.create(new Observable.OnSubscribe<Void>() {
