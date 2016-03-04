@@ -62,6 +62,8 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	EditText mEditTextDesc;
 	@Bind(R.id.iv_add)
 	ImageView mImageViewAdd;
+	@Bind(R.id.tv_tag_hint)
+	TextView mTextViewTagHint;
 
 	@Bind(R.id.iv_jump)
 	ImageView mImageViewJump;
@@ -352,6 +354,13 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
         mEditTextDesc.setText(account.description);
 
 		//Tag adapter
+		if(account.tag_list == null || account.tag_list.size() == 0){
+			mTextViewTagHint.setVisibility(View.VISIBLE);
+			mRecyclerTag.setVisibility(View.INVISIBLE);
+		}else{
+			mTextViewTagHint.setVisibility(View.GONE);
+			mRecyclerTag.setVisibility(View.VISIBLE);
+		}
 		mHorizontalTagAdapter.replaceAll(account.tag_list);
 		mHorizontalTagAdapter.notifyDataSetChanged();
     }
