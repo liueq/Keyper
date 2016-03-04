@@ -7,6 +7,8 @@ import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.domain.interactor.SharedPUC;
 import com.liueq.testdagger.utils.BackUpTool;
 
@@ -99,6 +101,30 @@ public class SettingsActivityPresenter extends Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(importDBFun())
                 .subscribe(importDBSub());
+    }
+
+    public int getAutoLockPeriod(){
+        SharedPreferenceRepo shared = new SharedPreferenceRepoImpl(mActivity);
+        String period = shared.getProterties(Constants.SP_AUTO_LOCK_PERIOD);
+        if(TextUtils.isEmpty(period)){
+           period = "0";
+        }
+
+        int period_int = 0;
+        try{
+            period_int = Integer.valueOf(period);
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+
+        return period_int;
+    }
+
+    public void setAutoLockPeriod(int period){
+        SharedPreferenceRepo shared = new SharedPreferenceRepoImpl(mActivity);
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put(Constants.SP_AUTO_LOCK_PERIOD, String.valueOf(period));
+        shared.saveProperties(map);
     }
 
     /******************** RxJava ********************/

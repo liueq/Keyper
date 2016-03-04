@@ -77,6 +77,7 @@ public class SplashActivity extends BaseActivity {
 
     private void initData(){
         if(getIntent() == null){
+            clearAutoLockTime();//When launch app, clear autolock time
             presenter.mMode = SplashActivityPresenter.MODE_LAUNCH;
         }else{
             Bundle bundle = getIntent().getExtras();

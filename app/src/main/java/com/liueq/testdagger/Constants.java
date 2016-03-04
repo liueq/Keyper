@@ -24,4 +24,6 @@ public class Constants {
 
     public final static String SP_SHOW_TIME = "sp_show_time";
 
+    public final static String SP_AUTO_LOCK_PERIOD = "sp_auto_lock_period";
+
 }

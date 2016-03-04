@@ -76,6 +76,9 @@
     <string name="change_path">Choose file save path</string>
     <string name="encrypt_password">Encrypt password</string>
     <string name="encrypt_description">Encrypt description</string>
+    <string name="set_time_out">Set auto lock time</string>
+    <string name="set_time_out_desc">When app go to background, it will lock after a period</string>
+    <string name="set_time_dialog_title">AutoLock Time</string>
     <string name="import_data">Import</string>
     <string name="import_db_password">Import db password</string>
     <string name="import_db_error">Import db password wrong</string>

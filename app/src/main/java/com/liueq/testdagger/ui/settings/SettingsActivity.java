@@ -20,6 +20,7 @@ import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
 import com.liueq.testdagger.utils.BackUpTool;
 
 import javax.inject.Inject;
@@ -47,6 +48,8 @@ public class SettingsActivity extends BaseActivity {
     RelativeLayout mRelativeDb;
     @Bind(R.id.tv_show_db)
     TextView mTextViewDb;
+    @Bind(R.id.rl_set_timeout)
+    RelativeLayout mRelativeLayoutTimeout;
 
     @Inject
     SettingsActivityPresenter mPresenter;
@@ -92,7 +95,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_change_db})
+    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_change_db, R.id.rl_set_timeout})
     public void click(View v){
         int id = v.getId();
         switch (id){
@@ -101,6 +104,9 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.rl_change_db:
                 createChangeDBDialog();
+                break;
+            case R.id.rl_set_timeout:
+                createChooseTimeDialog();
                 break;
             case R.id.rl_import:
                 //Import DB
@@ -172,6 +178,37 @@ public class SettingsActivity extends BaseActivity {
             }
         });
         builder.setNegativeButton(R.string.cancel, null);
+        builder.create().show();
+    }
+
+    private void createChooseTimeDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.set_time_dialog_title);
+        String [] period = {"1 min", "5 min", "15 min", "1 hour", "No auto lock"};
+        builder.setSingleChoiceItems(period, mPresenter.getAutoLockPeriod(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        mPresenter.setAutoLockPeriod(60);
+                        break;
+                    case 1:
+                        mPresenter.setAutoLockPeriod(5 * 60);
+                        break;
+                    case 2:
+                        mPresenter.setAutoLockPeriod(15 * 60);
+                        break;
+                    case 3:
+                        mPresenter.setAutoLockPeriod(60 * 60);
+                        break;
+                    case 4:
+                        mPresenter.setAutoLockPeriod(3600 * 24);
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+
         builder.create().show();
     }
 
