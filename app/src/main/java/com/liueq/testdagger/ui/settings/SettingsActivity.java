@@ -185,7 +185,8 @@ public class SettingsActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.set_time_dialog_title);
         String [] period = {"1 min", "5 min", "15 min", "1 hour", "No auto lock"};
-        builder.setSingleChoiceItems(period, mPresenter.getAutoLockPeriod(), new DialogInterface.OnClickListener() {
+
+        builder.setSingleChoiceItems(period, mPresenter.mMapPeriodToPos.get(mPresenter.getAutoLockPeriod()), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){

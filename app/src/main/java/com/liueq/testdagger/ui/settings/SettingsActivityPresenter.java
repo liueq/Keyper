@@ -31,10 +31,17 @@ public class SettingsActivityPresenter extends Presenter {
 
     private SettingsActivity mActivity;
     private SharedPUC mSharedPUC;
+    public HashMap<Integer, Integer> mMapPeriodToPos = new HashMap<Integer, Integer>();
 
     public SettingsActivityPresenter(SettingsActivity settingsActivity, SharedPUC sharedPUC){
         this.mActivity = settingsActivity;
         this.mSharedPUC = sharedPUC;
+
+        mMapPeriodToPos.put(0, 0);
+        mMapPeriodToPos.put(5 * 60, 1);
+        mMapPeriodToPos.put(15 * 60, 2);
+        mMapPeriodToPos.put(60 * 60, 3);
+        mMapPeriodToPos.put(3600 * 24, 4);
     }
 
     /******************** Action ********************/
