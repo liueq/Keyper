@@ -35,11 +35,8 @@ public class AccountDetailActivityPresenter extends Presenter {
 
     private AccountDetailActivity activity;
     public String mId;
+    private Account mLastSaveAccount;
     private Account mCurrentAccount;
-    String mTypeScene;
-    public final static String SCENE_NEW = "scene_new";
-    public final static String SCENE_UPDATE = "scene_update";
-    boolean mIsChanged = false; //Flag to tell whether needs to toggle save dialog
 
     SaveAccountListUC saveAccountListUC;
     GetAccountListUC getAccountListUC;
@@ -66,10 +63,7 @@ public class AccountDetailActivityPresenter extends Presenter {
      * @param bundle
      */
     public void init(Bundle bundle){
-        if(bundle == null){
-            mTypeScene = SCENE_NEW;
-        }else{
-            mTypeScene = SCENE_UPDATE;
+        if(bundle != null){
             Account account = (Account) bundle.getSerializable("account");
             mId = account.id;
         }
@@ -80,6 +74,15 @@ public class AccountDetailActivityPresenter extends Presenter {
         deleteOb().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(deleteSub());
+    }
+
+	/**
+     * Before left, check saved
+     * @return
+     */
+    public boolean checkChangeSavedAction(){
+        ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).syncData();
+        return mLastSaveAccount.equalAllFields(mCurrentAccount);
     }
 
     /******************** AccountDetailActivity RxJava ********************/
@@ -214,8 +217,11 @@ public class AccountDetailActivityPresenter extends Presenter {
             @Override
             public void onNext(Boolean aBoolean) {
                 ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).showResult(aBoolean);
-                mIsChanged = false;
-                mTypeScene = SCENE_UPDATE;
+                try {
+                    mLastSaveAccount = mCurrentAccount.clone();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
             }
         };
     }
@@ -235,7 +241,6 @@ public class AccountDetailActivityPresenter extends Presenter {
             @Override
             public void call(Tag tag) {
                 ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).updateUI(mCurrentAccount);
-                mIsChanged = true;
             }
         };
     }
@@ -371,7 +376,6 @@ public class AccountDetailActivityPresenter extends Presenter {
             public void call(Tag tag) {
                 ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).dismiss();
                 ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).updateUI(mCurrentAccount);
-                mIsChanged = true;
             }
         };
     }
@@ -402,7 +406,16 @@ public class AccountDetailActivityPresenter extends Presenter {
      * @return
      */
     private Account loadDataFromDB(String id){
-        mCurrentAccount = getAccountDetailUC.execute(id);
+        if(mCurrentAccount == null){
+            mCurrentAccount = getAccountDetailUC.execute(id);
+            try {
+                mLastSaveAccount = mCurrentAccount.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }else{
+            mCurrentAccount = getAccountDetailUC.execute(id);
+        }
         return mCurrentAccount;
     }
 

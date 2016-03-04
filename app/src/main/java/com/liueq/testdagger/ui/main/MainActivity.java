@@ -105,8 +105,7 @@ public class MainActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    @Override
-    public Presenter getPresenter() {
+    public Presenter getmPresenter() {
         return presenter;
     }
 }

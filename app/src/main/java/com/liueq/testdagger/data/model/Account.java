@@ -1,5 +1,7 @@
 package com.liueq.testdagger.data.model;
 
+import android.text.TextUtils;
+
 import net.sqlcipher.Cursor;
 
 import java.io.Serializable;
@@ -70,6 +72,67 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
         a.mail = this.mail;
         a.description = this.description;
         a.is_stared = this.is_stared;
+
+        a.tag_list = new ArrayList<Tag>();
+        for(Tag t : this.tag_list){
+            a.tag_list.add(t);
+        }
         return a;
+    }
+
+	/**
+     * Compare all fields
+     * @param another
+     * @return
+     */
+    public boolean equalAllFields(Account another){
+        if(!stringEqual(this.id, another.id)){
+            return false;
+        }
+
+        if(!stringEqual(this.site, another.site)){
+            return false;
+        }
+
+        if(!stringEqual(this.username, another.username)){
+            return false;
+        }
+        if(!stringEqual(this.password, another.password)){
+            return false;
+        }
+        if(!stringEqual(this.mail, another.mail)){
+            return false;
+        }
+        if(!stringEqual(this.description, another.description)){
+            return false;
+        }
+
+        if(this.tag_list == null && another.tag_list == null){
+            //OK
+        }else if(this.tag_list != null && another.tag_list != null){
+            if(this.tag_list.size() != another.tag_list.size()){
+                return false;
+            }else{
+                if(!this.tag_list.containsAll(another.tag_list)){
+                    return false;
+                }
+            }
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean stringEqual(String a, String b){
+        if(TextUtils.isEmpty(a) && TextUtils.isEmpty(b)){
+            return true;
+        }else if(!TextUtils.isEmpty(a) && !TextUtils.isEmpty(b)){
+            if(a.equals(b)){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

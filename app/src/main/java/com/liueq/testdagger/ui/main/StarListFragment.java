@@ -3,7 +3,6 @@ package com.liueq.testdagger.ui.main;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
@@ -22,10 +20,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by liueq on 22/2/2016.
@@ -59,7 +53,7 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		super.onCreate(savedInstanceState);
 
 		mActivity = (MainActivity) getActivity();
-		mPresenter = (MainActivityPresenter) mActivity.getPresenter();
+		mPresenter = (MainActivityPresenter) mActivity.getmPresenter();
 		mPresenter.attachFragment(StarListFragment.class, this);
 	}
 

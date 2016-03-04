@@ -21,7 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void setupActivityComponent();
 
-    protected abstract Presenter getPresenter();
+    protected abstract Presenter getmPresenter();
 
     @Override
     protected void onResume() {

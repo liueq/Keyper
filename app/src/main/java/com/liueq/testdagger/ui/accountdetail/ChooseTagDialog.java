@@ -25,10 +25,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by liueq on 26/2/2016.
@@ -62,7 +58,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 		super.onCreate(savedInstanceState);
 
 		mActivity = (AccountDetailActivity) getActivity();
-		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
+		mPresenter = (AccountDetailActivityPresenter) mActivity.getmPresenter();
 		mPresenter.attachFragment(ChooseTagDialog.class, this);
 	}
 

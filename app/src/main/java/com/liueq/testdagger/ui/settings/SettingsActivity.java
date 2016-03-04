@@ -87,8 +87,7 @@ public class SettingsActivity extends BaseActivity {
                 .inject(this);
     }
 
-    @Override
-    protected Presenter getPresenter() {
+    protected Presenter getmPresenter() {
         return mPresenter;
     }
 

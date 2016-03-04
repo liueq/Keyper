@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,7 +37,6 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
 
 /**
  * Created by liueq on 18/2/2016.
@@ -103,7 +101,7 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		super.onCreate(savedInstanceState);
 
 		mActivity = (AccountDetailActivity) getActivity();
-		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
+		mPresenter = (AccountDetailActivityPresenter) mActivity.getmPresenter();
 		mPresenter.attachFragment(this.getClass(), this);
 	}
 
@@ -127,8 +125,6 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		mRecyclerTag.setAdapter(mHorizontalTagAdapter = new HorizontalTagAdapter(mActivity, new ArrayList<Tag>(), this));
 
 		mEditTextSite.addTextChangedListener(new TextWatcher() {
-
-			private int skip_count = 1;
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,21 +153,9 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 					mImageViewJump.setVisibility(View.GONE);
 				}
 
-				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
-					mPresenter.mIsChanged = true;
-				}else{
-					if(skip_count > 0){
-						//Skip load data change
-						skip_count--;
-					}else{
-						mPresenter.mIsChanged = true;
-					}
-				}
 			}
 		});
 		mEditTextName.addTextChangedListener(new TextWatcher() {
-
-			private int skip_count = 1;
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -194,21 +178,10 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 					mImageViewCopyName.setVisibility(View.VISIBLE);
 				}
 
-				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
-					mPresenter.mIsChanged = true;
-				}else{
-					if(skip_count > 0){
-						//Skip load data change
-						skip_count--;
-					}else{
-						mPresenter.mIsChanged = true;
-					}
-				}
 			}
+
 		});
 		mEditTextPwd.addTextChangedListener(new TextWatcher() {
-
-			private int skip_count = 1;
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -231,21 +204,9 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 					mImageViewCopyPassword.setVisibility(View.VISIBLE);
 				}
 
-				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
-					mPresenter.mIsChanged = true;
-				}else{
-					if(skip_count > 0){
-						//Skip load data change
-						skip_count--;
-					}else{
-						mPresenter.mIsChanged = true;
-					}
-				}
 			}
 		});
 		mEditTextMail.addTextChangedListener(new TextWatcher() {
-
-			private int skip_count = 1;
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -268,21 +229,9 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 					mImageViewCopyMail.setVisibility(View.VISIBLE);
 				}
 
-				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
-					mPresenter.mIsChanged = true;
-				}else{
-					if(skip_count > 0){
-						//Skip load data change
-						skip_count--;
-					}else{
-						mPresenter.mIsChanged = true;
-					}
-				}
 			}
 		});
 		mEditTextDesc.addTextChangedListener(new TextWatcher() {
-
-			private int skip_count = 1;
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -305,16 +254,6 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 					mImageViewCopyDescription.setVisibility(View.VISIBLE);
 				}
 
-				if(mPresenter.mTypeScene.equals(mPresenter.SCENE_NEW)){
-					mPresenter.mIsChanged = true;
-				}else{
-					if(skip_count > 0){
-						//Skip load data change
-						skip_count--;
-					}else{
-						mPresenter.mIsChanged = true;
-					}
-				}
 			}
 		});
 	}
@@ -445,7 +384,7 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	public Account syncData(){
 		Account account = mPresenter.getCurrentAccount();
 		if (account == null) {
-			account = new Account();
+			return null;
 		}
 
 		account.site = mEditTextSite.getText().toString();
@@ -458,7 +397,7 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	}
 
 	/**
-	 * Call presenter save to db
+	 * Call mPresenter save to db
 	 */
 	public void saveData(){
 		Account account = syncData();

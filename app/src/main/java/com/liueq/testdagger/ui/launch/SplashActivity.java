@@ -83,8 +83,7 @@ public class SplashActivity extends BaseActivity {
                 .inject(this);
     }
 
-    @Override
-    protected Presenter getPresenter() {
+    protected Presenter getmPresenter() {
         return presenter;
     }
 

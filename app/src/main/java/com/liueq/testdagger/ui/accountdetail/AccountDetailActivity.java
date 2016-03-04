@@ -1,7 +1,6 @@
 package com.liueq.testdagger.ui.accountdetail;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -38,7 +37,7 @@ public class AccountDetailActivity extends BaseActivity{
     FrameLayout mContainer;
 
     @Inject
-    AccountDetailActivityPresenter presenter;
+    AccountDetailActivityPresenter mPresenter;
 
 	/**
      * Launch this activity
@@ -67,7 +66,7 @@ public class AccountDetailActivity extends BaseActivity{
 
     private void receiveIntent() {
         Bundle bundle = this.getIntent().getExtras();
-        presenter.init(bundle);
+        mPresenter.init(bundle);
     }
 
     private void initView() {
@@ -93,9 +92,8 @@ public class AccountDetailActivity extends BaseActivity{
                 .inject(this);
     }
 
-    @Override
-    public Presenter getPresenter() {
-        return presenter;
+    public Presenter getmPresenter() {
+        return mPresenter;
     }
 
     @Override
@@ -109,7 +107,7 @@ public class AccountDetailActivity extends BaseActivity{
         getMenuInflater().inflate(R.menu.menu_account_detail, menu);
         //init
         MenuItem item = menu.findItem(R.id.action_star);
-        Account account = presenter.getCurrentAccount();
+        Account account = mPresenter.getCurrentAccount();
         if(account == null){
             return true;
         }
@@ -123,7 +121,7 @@ public class AccountDetailActivity extends BaseActivity{
         int id = item.getItemId();
 
         if(id == R.id.action_star){
-            Account account = presenter.getCurrentAccount();
+            Account account = mPresenter.getCurrentAccount();
             if(account == null){
                 return true;
             }
@@ -145,7 +143,7 @@ public class AccountDetailActivity extends BaseActivity{
 
         }else if (id == R.id.action_delete) {
             //Save
-            presenter.saveDataToDB(presenter.getCurrentAccount());
+            mPresenter.saveDataToDB(mPresenter.getCurrentAccount());
             return true;
         }
 
@@ -166,7 +164,7 @@ public class AccountDetailActivity extends BaseActivity{
     }
 
 	/**
-     * when presenter delete finish, show result
+     * when mPresenter delete finish, show result
      * @param ok
      */
     public void deleteToast(boolean ok){
@@ -180,8 +178,8 @@ public class AccountDetailActivity extends BaseActivity{
 
     @Override
     public void onBackPressed() {
-        if(presenter.mIsChanged){
-            //TODO Show save tips
+        if(!mPresenter.checkChangeSavedAction()){
+            //Show save tips
             showSaveDialog();
         }else{
             super.onBackPressed();

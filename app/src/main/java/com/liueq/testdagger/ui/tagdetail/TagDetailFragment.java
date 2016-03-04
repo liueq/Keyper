@@ -3,13 +3,11 @@ package com.liueq.testdagger.ui.tagdetail;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.data.model.Account;
@@ -49,7 +47,7 @@ public class TagDetailFragment extends Fragment implements RecyclerListAdapter.O
 		super.onCreate(savedInstanceState);
 
 		mActivity = (TagDetailActivity) getActivity();
-		mPresneter = (TagDetailActivityPresenter) mActivity.getPresenter();
+		mPresneter = (TagDetailActivityPresenter) mActivity.getmPresenter();
 		mPresneter.attachFragment(TagDetailFragment.class, this);
 	}
 
