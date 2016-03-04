@@ -26,12 +26,10 @@ import butterknife.ButterKnife;
  * Created by liueq on 29/2/2016.
  * Fragment of tag detail
  */
-public class TagDetailFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class TagDetailFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener{
 
 	@Bind(R.id.recycler)
 	RecyclerView mRecycler;
-	@Bind(R.id.refresh_layout)
-	SwipeRefreshLayout mRefreshLayout;
 
 	private RecyclerListAdapter recyclerListAdapter;
 
@@ -73,8 +71,6 @@ public class TagDetailFragment extends Fragment implements RecyclerListAdapter.O
 	}
 
 	private void initView(){
-		mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
-		mRefreshLayout.setOnRefreshListener(this);
 
 		mRecycler.setHasFixedSize(true);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -87,11 +83,6 @@ public class TagDetailFragment extends Fragment implements RecyclerListAdapter.O
 	}
 
 	public void updateUI(List<Account> list){
-		if(mRefreshLayout.isRefreshing()){
-			mRefreshLayout.setRefreshing(false);
-			Toast.makeText(mActivity, R.string.toast_sync_db, Toast.LENGTH_SHORT).show();
-		}
-
 		recyclerListAdapter.clear();
         recyclerListAdapter.addAll(list);
         recyclerListAdapter.notifyDataSetChanged();
@@ -108,11 +99,6 @@ public class TagDetailFragment extends Fragment implements RecyclerListAdapter.O
 			//Star
 			mPresneter.starAction(account);
 		}
-	}
-
-	@Override
-	public void onRefresh() {
-		loadData();
 	}
 
 	@Override

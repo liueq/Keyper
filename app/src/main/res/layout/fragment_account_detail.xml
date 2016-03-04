@@ -21,10 +21,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="6dp"
-                android:paddingBottom="3dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="3dp"
+                android:paddingTop="6dp">
 
                 <TextView
                     android:id="@+id/tv_tag"
@@ -32,10 +32,10 @@
                     android:layout_height="wrap_content"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center|left"
                     android:text="@string/tag"
-                    android:textSize="@dimen/title_medium"
-                    android:fontFamily="sans-serif-light"/>
+                    android:textSize="@dimen/title_medium"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -46,15 +46,15 @@
                         android:id="@+id/recycler_tag"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:layout_weight="1"/>
 
                     <View
                         android:layout_width="0.5dp"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
-                        android:layout_gravity="center"
                         android:background="@color/divider"/>
 
                     <ImageView
@@ -79,32 +79,58 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp">
 
                 <TextView
                     android:id="@+id/tv_site"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|left"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="@string/site"
-                    android:textSize="@dimen/title_medium"
-                    android:fontFamily="sans-serif-light"/>
+                    android:textSize="@dimen/title_medium"/>
 
-                <EditText
-                    android:id="@+id/et_site"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:singleLine="true"
-                    android:textSize="16sp"
-                    android:background="@null"
-                    tools:text="www.google.com"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <EditText
+                        android:id="@+id/et_site"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:textSize="16sp"
+                        tools:text="www.google.com"/>
+
+
+                    <ImageView
+                        android:id="@+id/iv_jump"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="4dp"
+                        android:src="@mipmap/ic_open_in_new_black_24dp"
+                        android:tint="@color/colorPrimary"
+                        />
+
+                    <ImageView
+                        android:id="@+id/iv_copy_site"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:tint="@color/colorPrimary"
+                        android:src="@mipmap/ic_content_copy_black_24dp"/>
+
+                </LinearLayout>
             </LinearLayout>
-
 
             <View
                 android:layout_width="match_parent"
@@ -114,29 +140,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp">
 
                 <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|left"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="@string/name"
-                    android:textSize="@dimen/title_medium"
-                    android:fontFamily="sans-serif-light"/>
+                    android:textSize="@dimen/title_medium"/>
 
-                <EditText
-                    android:id="@+id/et_name"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:singleLine="true"
-                    android:textSize="16sp"
-                    android:background="@null"
-                    tools:text="liueq"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:textSize="16sp"
+                        tools:text="liueq"/>
+
+                    <ImageView
+                        android:id="@+id/iv_copy_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:tint="@color/colorPrimary"
+                        android:src="@mipmap/ic_content_copy_black_24dp"/>
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -149,29 +192,45 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp">
 
                 <TextView
                     android:id="@+id/tv_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|left"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="@string/password"
-                    android:textSize="@dimen/title_medium"
-                    android:fontFamily="sans-serif-light"/>
+                    android:textSize="@dimen/title_medium"/>
 
-                <EditText
-                    android:id="@+id/et_password"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:singleLine="true"
-                    android:textSize="16sp"
-                    android:background="@null"
-                    tools:text="******"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:textSize="16sp"
+                        tools:text="******"/>
+
+                    <ImageView
+                        android:id="@+id/iv_copy_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:tint="@color/colorPrimary"
+                        android:src="@mipmap/ic_content_copy_black_24dp"/>
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -184,29 +243,45 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp">
 
                 <TextView
                     android:id="@+id/tv_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|left"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="@string/mail"
-                    android:textSize="@dimen/title_medium"
-                    android:fontFamily="sans-serif-light"/>
+                    android:textSize="@dimen/title_medium"/>
 
-                <EditText
-                    android:id="@+id/et_mail"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:singleLine="true"
-                    android:textSize="16sp"
-                    android:background="@null"
-                    tools:text="xxx@gmail.com"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_mail"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:textSize="16sp"
+                        tools:text="xxx@gmail.com"/>
+
+                    <ImageView
+                        android:id="@+id/iv_copy_mail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:tint="@color/colorPrimary"
+                        android:src="@mipmap/ic_content_copy_black_24dp"/>
+                </LinearLayout>
+
             </LinearLayout>
 
             <View
@@ -219,22 +294,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:text="@string/description"
-                android:textSize="@dimen/title_medium"
-                android:fontFamily="sans-serif-light"/>
+                android:textSize="@dimen/title_medium"/>
 
-            <EditText
-                android:id="@+id/et_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/edit_bg"
-                android:gravity="left|top"
-                android:minHeight="100dp"
-                android:padding="6dp"
-                android:textSize="16sp"
-                tools:text="My Google account."/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/edit_bg"
+                    android:gravity="left|top"
+                    android:minHeight="100dp"
+                    android:padding="6dp"
+                    android:textSize="16sp"
+                    tools:text="My Google account."/>
+
+                <ImageView
+                    android:id="@+id/iv_copy_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/et_desc"
+                    android:layout_marginTop="6dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorPrimary"
+                    android:src="@mipmap/ic_content_copy_black_24dp"/>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_delete"
@@ -246,8 +337,8 @@
                 android:gravity="center"
                 android:text="@string/delete"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
                 android:textSize="@dimen/button_medium"
+                android:textStyle="bold"
                 />
 
         </LinearLayout>

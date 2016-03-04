@@ -50,6 +50,8 @@
     <string name="dialog_yes_delete">Delete</string>
     <string name="dialog_no_delete">Cancel</string>
 
+    <string name="cliped">Copy to clipboard</string>
+
     <!-- Welcome -->
     <string name="first_pwd">Password required</string>
     <string name="sec_pwd">Password repeat</string>

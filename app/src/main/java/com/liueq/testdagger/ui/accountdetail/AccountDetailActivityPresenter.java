@@ -1,8 +1,13 @@
 package com.liueq.testdagger.ui.accountdetail;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.liueq.testdagger.R;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
@@ -119,6 +124,17 @@ public class AccountDetailActivityPresenter extends Presenter {
         removeTagOb(tag).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(removeTagSub());
+    }
+
+	/**
+     * Copy to Clipboard
+     * @param text
+     */
+    public void clipAction(String text){
+        ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("copy", text);
+        clipboardManager.setPrimaryClip(clipData);
+        Toast.makeText(activity, R.string.cliped, Toast.LENGTH_SHORT).show();
     }
 
     /******************** AccountDetailFragment RxJava ********************/

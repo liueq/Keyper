@@ -1,8 +1,11 @@
 package com.liueq.testdagger.ui.accountdetail;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -12,10 +15,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,12 +38,13 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by liueq on 18/2/2016.
  * 详情页面的Fragment
  */
-public class AccountDetailFragment extends Fragment implements HorizontalTagAdapter.OnItemClickListener, DialogInterface.OnClickListener {
+public class AccountDetailFragment extends Fragment implements HorizontalTagAdapter.OnItemClickListener, DialogInterface.OnClickListener{
 
 	public final static String TAG = "Detail";
 
@@ -54,6 +62,19 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	EditText mEditTextDesc;
 	@Bind(R.id.iv_add)
 	ImageView mImageViewAdd;
+
+	@Bind(R.id.iv_jump)
+	ImageView mImageViewJump;
+	@Bind(R.id.iv_copy_site)
+	ImageView mImageViewCopySite;
+	@Bind(R.id.iv_copy_name)
+	ImageView mImageViewCopyName;
+	@Bind(R.id.iv_copy_password)
+	ImageView mImageViewCopyPassword;
+	@Bind(R.id.iv_copy_mail)
+	ImageView mImageViewCopyMail;
+	@Bind(R.id.iv_copy_description)
+	ImageView mImageViewCopyDescription;
 
 	@Bind(R.id.linear)
 	LinearLayout mLinearLayout;
@@ -102,6 +123,141 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		mRecyclerTag.setHasFixedSize(true);
 		mRecyclerTag.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
 		mRecyclerTag.setAdapter(mHorizontalTagAdapter = new HorizontalTagAdapter(mActivity, new ArrayList<Tag>(), this));
+
+		mEditTextSite.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				String text = s.toString().trim().toLowerCase();
+				boolean is_all_letter = true;
+
+				if(TextUtils.isEmpty(text)){
+					mImageViewCopySite.setVisibility(View.GONE);
+					return;
+				}else{
+					mImageViewCopySite.setVisibility(View.VISIBLE);
+				}
+
+//				for(Character c : text.toCharArray()){
+//					if(!Character.isLetter(c)){
+//						is_all_letter = false;
+//						break;
+//					}
+//				}
+
+				if(is_all_letter){
+					if(text.startsWith("http://") || text.startsWith("https://") || text.startsWith("www.")){
+						mImageViewJump.setVisibility(View.VISIBLE);
+					}else{
+						mImageViewJump.setVisibility(View.GONE);
+					}
+				}else{
+					mImageViewJump.setVisibility(View.GONE);
+				}
+
+			}
+		});
+		mEditTextName.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				String text = s.toString().trim();
+
+				if(TextUtils.isEmpty(text)){
+					mImageViewCopyName.setVisibility(View.GONE);
+					return;
+				}else{
+					mImageViewCopyName.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+		mEditTextPwd.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				String text = s.toString().trim();
+
+				if(TextUtils.isEmpty(text)){
+					mImageViewCopyPassword.setVisibility(View.GONE);
+					return;
+				}else{
+					mImageViewCopyPassword.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+		mEditTextMail.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				String text = s.toString().trim();
+
+				if(TextUtils.isEmpty(text)){
+					mImageViewCopyMail.setVisibility(View.GONE);
+					return;
+				}else{
+					mImageViewCopyMail.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+		mEditTextDesc.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				String text = s.toString().trim();
+
+				if(TextUtils.isEmpty(text)){
+					mImageViewCopyDescription.setVisibility(View.GONE);
+					return;
+				}else{
+					mImageViewCopyDescription.setVisibility(View.VISIBLE);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -143,7 +299,7 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		mHorizontalTagAdapter.notifyDataSetChanged();
     }
 
-	@OnClick({R.id.tv_delete, R.id.iv_add})
+	@OnClick({R.id.tv_delete, R.id.iv_add, R.id.iv_jump, R.id.iv_copy_site, R.id.iv_copy_name, R.id.iv_copy_password, R.id.iv_copy_mail, R.id.iv_copy_description})
     public void onClick(View view){
 		int id = view.getId();
 		if(id == R.id.tv_delete) {
@@ -156,8 +312,43 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 			FragmentTransaction transaction = manager.beginTransaction();
 			transaction.add(ChooseTagDialog.newInstance(), null);
 			transaction.commit();
+		} else if (id == R.id.iv_jump) {
+			//Open URL
+			String url = mEditTextSite.getText().toString().trim();
+			if(!url.startsWith("http://") || url.startsWith("https://")){
+				url = "http://" + url;
+			}
+			try{
+				Intent intent = new Intent();
+				intent.setAction(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse(url));
+				startActivity(intent);
+			}catch(ActivityNotFoundException e){
+				e.printStackTrace();
+				Log.e(TAG, "Error!! Jump activity no found" );
+			}
+
+		} else if (id == R.id.iv_copy_site){
+			//Copy
+			String text = mEditTextSite.getText().toString().trim();
+			mPresenter.clipAction(text);
+		} else if (id == R.id.iv_copy_name){
+			String text = mEditTextName.getText().toString().trim();
+			mPresenter.clipAction(text);
+
+		} else if (id == R.id.iv_copy_password){
+			String text = mEditTextPwd.getText().toString().trim();
+			mPresenter.clipAction(text);
+
+		} else if (id == R.id.iv_copy_mail){
+			String text = mEditTextMail.getText().toString().trim();
+			mPresenter.clipAction(text);
+
+		} else if (id == R.id.iv_copy_description){
+			String text = mEditTextDesc.getText().toString().trim();
+			mPresenter.clipAction(text);
 		}
-    }
+	}
 
 	/**
 	 * Create a Yes or No Dialog
