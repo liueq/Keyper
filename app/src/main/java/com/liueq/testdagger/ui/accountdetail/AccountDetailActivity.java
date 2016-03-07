@@ -92,7 +92,7 @@ public class AccountDetailActivity extends BaseActivity{
                 .inject(this);
     }
 
-    public Presenter getmPresenter() {
+    public Presenter getPresenter() {
         return mPresenter;
     }
 

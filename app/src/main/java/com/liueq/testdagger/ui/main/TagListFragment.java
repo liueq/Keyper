@@ -53,7 +53,7 @@ public class TagListFragment extends Fragment implements OnItemClickListener{
 		super.onCreate(savedInstanceState);
 
 		mActivity = (MainActivity) getActivity();
-		mPresenter = (MainActivityPresenter) mActivity.getmPresenter();
+		mPresenter = (MainActivityPresenter) mActivity.getPresenter();
 		mPresenter.attachFragment(TagListFragment.class, this);
 	}
 

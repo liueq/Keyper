@@ -90,7 +90,7 @@ public class SettingsActivity extends BaseActivity {
                 .inject(this);
     }
 
-    protected Presenter getmPresenter() {
+    protected Presenter getPresenter() {
         return mPresenter;
     }
 

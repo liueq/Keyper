@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/rl_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dialog_background">
+    android:background="@color/background"
+    tools:context="com.liueq.testdagger.ui.advancesearch.AdvanceSearchActivity">
 
     <LinearLayout
         android:id="@+id/ll_container"
@@ -13,14 +14,21 @@
         android:orientation="vertical">
 
         <include layout="@layout/view_search_box"/>
-
+        
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_field"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:elevation="3dp"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
+        android:id="@+id/rl_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/ll_container"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_margin="6dp"/>
+
 </RelativeLayout>

@@ -17,8 +17,13 @@
     <string name="tab_star_hint">Star Your Account</string>
     <string name="tab_tag_hint">Create Your Tag</string>
 
-    <string name="hint_article_search">Search article</string>
+    <string name="hint_search">Search</string>
     <string name="search_box_shared">search_box_shared</string>
+    <string name="search_field_site">SITE</string>
+    <string name="search_field_name">NAME</string>
+    <string name="search_field_password">PASSWORD</string>
+    <string name="search_field_mail">mail</string>
+    <string name="search_field_description">DESCRIPTION</string>
 
     <string name="toast_sync_db">Sync Database Completed</string>
 

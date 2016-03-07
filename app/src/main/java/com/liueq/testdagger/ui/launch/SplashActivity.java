@@ -104,7 +104,7 @@ public class SplashActivity extends BaseActivity {
                 .inject(this);
     }
 
-    protected Presenter getmPresenter() {
+    protected Presenter getPresenter() {
         return presenter;
     }
 

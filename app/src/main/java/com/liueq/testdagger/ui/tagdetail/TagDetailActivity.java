@@ -126,7 +126,7 @@ public class TagDetailActivity extends BaseActivity implements DialogInterface.O
 		TestApplication.getApplication().getAppComponent().plus(new TagDetailModule(this)).inject(this);
 	}
 
-	protected Presenter getmPresenter() {
+	protected Presenter getPresenter() {
 		return mPresenter;
 	}
 

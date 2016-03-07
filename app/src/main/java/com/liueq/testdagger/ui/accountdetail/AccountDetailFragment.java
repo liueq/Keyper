@@ -101,7 +101,7 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		super.onCreate(savedInstanceState);
 
 		mActivity = (AccountDetailActivity) getActivity();
-		mPresenter = (AccountDetailActivityPresenter) mActivity.getmPresenter();
+		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
 		mPresenter.attachFragment(this.getClass(), this);
 	}
 

@@ -82,7 +82,7 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements Rec
 		is_exiting = false;
 
 		mActivity = (MainActivity) getActivity();
-		mPresneter = (MainActivityPresenter) mActivity.getmPresenter();
+		mPresneter = (MainActivityPresenter) mActivity.getPresenter();
 	}
 
 	@Nullable

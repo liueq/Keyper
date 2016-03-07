@@ -47,7 +47,7 @@ public class TagDetailFragment extends Fragment implements RecyclerListAdapter.O
 		super.onCreate(savedInstanceState);
 
 		mActivity = (TagDetailActivity) getActivity();
-		mPresneter = (TagDetailActivityPresenter) mActivity.getmPresenter();
+		mPresneter = (TagDetailActivityPresenter) mActivity.getPresenter();
 		mPresneter.attachFragment(TagDetailFragment.class, this);
 	}
 

@@ -53,7 +53,7 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		super.onCreate(savedInstanceState);
 
 		mActivity = (MainActivity) getActivity();
-		mPresenter = (MainActivityPresenter) mActivity.getmPresenter();
+		mPresenter = (MainActivityPresenter) mActivity.getPresenter();
 		mPresenter.attachFragment(StarListFragment.class, this);
 	}
 

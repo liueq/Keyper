@@ -58,7 +58,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 		super.onCreate(savedInstanceState);
 
 		mActivity = (AccountDetailActivity) getActivity();
-		mPresenter = (AccountDetailActivityPresenter) mActivity.getmPresenter();
+		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
 		mPresenter.attachFragment(ChooseTagDialog.class, this);
 	}
 

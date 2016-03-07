@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void setupActivityComponent();
 
-    protected abstract Presenter getmPresenter();
+    protected abstract Presenter getPresenter();
 
     @Override
     protected void onResume() {

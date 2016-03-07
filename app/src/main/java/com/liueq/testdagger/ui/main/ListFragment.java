@@ -51,7 +51,7 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 		super.onCreate(savedInstanceState);
 
 		mActivity = (MainActivity) getActivity();
-		mPresneter = (MainActivityPresenter) mActivity.getmPresenter();
+		mPresneter = (MainActivityPresenter) mActivity.getPresenter();
 		mPresneter.attachFragment(ListFragment.class, this);
 	}
 

@@ -1,6 +1,8 @@
 package com.liueq.testdagger;
 
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivityComponent;
+import com.liueq.testdagger.ui.advancesearch.AdvanceSearchComponent;
+import com.liueq.testdagger.ui.advancesearch.AdvanceSearchModule;
 import com.liueq.testdagger.ui.main.MainActivityComponent;
 import com.liueq.testdagger.ui.settings.SettingsActivityComponent;
 import com.liueq.testdagger.ui.launch.SplashActivityComponent;
@@ -39,4 +41,6 @@ public interface AppComponent {
     SettingsActivityComponent plus(SettingsActivityModule module);
 
     TagDetailComponent plus(TagDetailModule module);
+
+    AdvanceSearchComponent plus(AdvanceSearchModule module);
 }

@@ -31,8 +31,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.launch.SplashActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -44,8 +44,11 @@
             android:name=".ui.settings.SettingsActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.tagdetail.TagDetailActivity"
+        <activity
+            android:name=".ui.tagdetail.TagDetailActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.advancesearch.AdvanceSearchActivity">
         </activity>
     </application>
 
