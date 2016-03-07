@@ -37,7 +37,7 @@ public class SettingsActivityPresenter extends Presenter {
         this.mActivity = settingsActivity;
         this.mSharedPUC = sharedPUC;
 
-        mMapPeriodToPos.put(0, 0);
+        mMapPeriodToPos.put(60, 0);
         mMapPeriodToPos.put(5 * 60, 1);
         mMapPeriodToPos.put(15 * 60, 2);
         mMapPeriodToPos.put(60 * 60, 3);
