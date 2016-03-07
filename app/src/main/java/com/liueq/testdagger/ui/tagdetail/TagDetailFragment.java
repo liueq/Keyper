@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
+import com.liueq.testdagger.ui.common.OnItemClickListener;
 import com.liueq.testdagger.ui.main.RecyclerListAdapter;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by liueq on 29/2/2016.
  * Fragment of tag detail
  */
-public class TagDetailFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener{
+public class TagDetailFragment extends Fragment implements OnItemClickListener {
 
 	@Bind(R.id.recycler)
 	RecyclerView mRecycler;
@@ -87,7 +88,7 @@ public class TagDetailFragment extends Fragment implements RecyclerListAdapter.O
 	}
 
 	@Override
-	public void onItemClicked(View view, Object item, int position) {
+	public void onItemClick(View view, Object item, int position) {
 		int id = view.getId();
 		Account account = (Account) item;
 		if(id == RecyclerListAdapter.ViewHolder.ID_LienarLayout){

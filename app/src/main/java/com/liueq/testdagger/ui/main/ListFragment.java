@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.ui.common.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by liueq on 17/2/2016.
  * 主界面，ALL tab
  */
-public class ListFragment extends Fragment implements RecyclerListAdapter.OnItemClickListener{
+public class ListFragment extends Fragment implements OnItemClickListener {
 
 	@Bind(R.id.iv_hint)
 	ImageView mImageViewHint;
@@ -166,7 +167,7 @@ public class ListFragment extends Fragment implements RecyclerListAdapter.OnItem
 	}
 
 	@Override
-	public void onItemClicked(View view, Object item, int position) {
+	public void onItemClick(View view, Object item, int position) {
 		int id = view.getId();
 		Account account = (Account) item;
 		if(id == RecyclerListAdapter.ViewHolder.ID_LienarLayout){

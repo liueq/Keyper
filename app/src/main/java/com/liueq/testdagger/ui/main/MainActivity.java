@@ -17,6 +17,7 @@ import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
+import com.liueq.testdagger.ui.advancesearch.AdvanceSearchActivity;
 import com.liueq.testdagger.ui.settings.SettingsActivity;
 
 import javax.inject.Inject;
@@ -94,6 +95,8 @@ public class MainActivity extends BaseActivity {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.add(mSearchDialogFragment, SearchDialogFragment.TAG);
             fragmentTransaction.commit();
+        }else if(id == R.id.action_advance_search){
+            AdvanceSearchActivity.launchActivity(this);
         }
 
         return super.onOptionsItemSelected(item);

@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.ui.common.OnItemClickListener;
 import com.liueq.testdagger.utils.GoldenHammer;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ import rx.schedulers.Schedulers;
  * Created by liueq on 27/10/2015.
  * Search Dialog Fragment
  */
-public class SearchDialogFragment extends AppCompatDialogFragment implements RecyclerListAdapter.OnItemClickListener{
+public class SearchDialogFragment extends AppCompatDialogFragment implements OnItemClickListener {
 
 	public final static String TAG = "SearchDialogFragment";
 
@@ -344,7 +345,7 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements Rec
 	}
 
 	@Override
-	public void onItemClicked(View view, Object item, int position) {
+	public void onItemClick(View view, Object item, int position) {
 		int id = view.getId();
 		Account account = (Account) item;
 		if(id == RecyclerListAdapter.ViewHolder.ID_LienarLayout){

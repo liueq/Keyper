@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.ui.common.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,11 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     private Context mContext;
     private List<Account> mList = new ArrayList<Account>();
     private OnItemClickListener mListener;
+
+    public RecyclerListAdapter(Context context, OnItemClickListener listener){
+        this.mContext = context;
+        this.mListener = listener;
+    }
 
     public RecyclerListAdapter(Context context, List<Account> list, OnItemClickListener listener){
         this.mContext = context;
@@ -55,7 +61,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemClicked(holder.mLinearLayout, account, position);
+                mListener.onItemClick(holder.mLinearLayout, account, position);
             }
         });
 
@@ -71,7 +77,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
                     starImage(holder);
                 }
 
-                mListener.onItemClicked(holder.mImageView, account, position);
+                mListener.onItemClick(holder.mImageView, account, position);
             }
         });
     }
@@ -110,17 +116,13 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         @Bind(R.id.iv_star)
         ImageView mImageView;
 
-        public static int ID_LienarLayout = R.id.ll_container;
-        public static int ID_TextView = R.id.tv_item;
-        public static int ID_ImageView = R.id.iv_star;
+        public static final int ID_LienarLayout = R.id.ll_container;
+        public static final int ID_TextView = R.id.tv_item;
+        public static final int ID_ImageView = R.id.iv_star;
 
         public ViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    public interface OnItemClickListener{
-        void onItemClicked(View view, Object item, int position);
     }
 }

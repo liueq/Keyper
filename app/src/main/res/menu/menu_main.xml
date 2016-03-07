@@ -7,6 +7,12 @@
         android:icon="@mipmap/ic_search_white_24dp"
         android:title="Search"
         app:showAsAction="always|collapseActionView"/>
+
+    <item
+        android:id="@+id/action_advance_search"
+        android:orderInCategory="90"
+        android:title="@string/action_advance_search"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
