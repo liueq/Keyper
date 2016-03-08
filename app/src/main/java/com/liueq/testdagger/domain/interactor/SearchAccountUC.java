@@ -29,4 +29,10 @@ public class SearchAccountUC extends UseCase {
         list = mSR.getStarStatusList(list);
         return list;
     }
+
+    public List<Account> searchByField(String key, String field){
+        List<Account> list = mAR.searchAccountByField(key, field);
+        list = mSR.getStarStatusList(list);
+        return list;
+    }
 }

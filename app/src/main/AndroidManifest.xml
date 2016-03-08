@@ -48,7 +48,9 @@
             android:name=".ui.tagdetail.TagDetailActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.advancesearch.AdvanceSearchActivity">
+        <activity
+            android:name=".ui.advancesearch.AdvanceSearchActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
         </activity>
     </application>
 

@@ -32,6 +32,8 @@ public interface AccountRepo {
 	 */
     List<Account> searchAccount(final String key);
 
+	List<Account> searchAccountByField(String key, String field);
+
 	/**
 	 * Save an Account list
 	 * @param list

@@ -1,6 +1,14 @@
 package com.liueq.testdagger.ui.advancesearch;
 
 import com.liueq.testdagger.base.ActivityScope;
+import com.liueq.testdagger.data.repository.AccountRepo;
+import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
+import com.liueq.testdagger.data.repository.StarRepo;
+import com.liueq.testdagger.data.repository.StarRepoDBImpl;
+import com.liueq.testdagger.domain.interactor.SearchAccountUC;
+import com.liueq.testdagger.domain.interactor.SharedPUC;
 
 import dagger.Module;
 import dagger.Provides;
@@ -27,7 +35,13 @@ public class AdvanceSearchModule {
 	@Provides
 	@ActivityScope
 	AdvanceSearchPresenter provideAdvanceSearchPresenter(){
+		SharedPreferenceRepo sharedRepo = new SharedPreferenceRepoImpl(mActivity);
+		SharedPUC sharedPUC = new SharedPUC((SharedPreferenceRepoImpl) sharedRepo);
 
-		return new AdvanceSearchPresenter(mActivity);
+		AccountRepo ar = new AccountRepoDBImpl(mActivity, sharedPUC);
+		StarRepo starRepo = new StarRepoDBImpl(mActivity);
+
+		SearchAccountUC searchAccountUC = new SearchAccountUC(ar, starRepo);
+		return new AdvanceSearchPresenter(mActivity, searchAccountUC);
 	}
 }

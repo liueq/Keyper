@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.liueq.testdagger.data.database.DBTables;
 import com.liueq.testdagger.data.database.DBTables.Password;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
@@ -16,6 +17,7 @@ import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -113,14 +115,24 @@ public class AccountRepoDBImpl implements AccountRepo {
 	}
 
 	@Override
-	public synchronized List<Account> searchAccount(@Nullable String key) {
+	public synchronized List<Account> searchAccount(@Nullable String key){
+		return searchAccountByField(key, null);
+	}
+
+	@Override
+	public synchronized List<Account> searchAccountByField(@Nullable String key, @Nullable String field) {
 		List<Account> list = new ArrayList<>();
 		Account account = null;
 		if(TextUtils.isEmpty(key)){
 			return new ArrayList<Account>();
 		}
 
-		String selection = "site LIKE ?";
+		if(TextUtils.isEmpty(field) || !Arrays.asList(Password.ALL_COLUMN).contains(field)){
+			//When field is null or field is invalid
+			field = "site";
+		}
+
+		String selection = field + " LIKE ?";
 		String []selection_args = {"%" + key + "%"};
 		String orderBy = Password.site;
 

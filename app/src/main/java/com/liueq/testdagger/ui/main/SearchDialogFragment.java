@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.ui.advancesearch.AdvanceSearchActivity;
 import com.liueq.testdagger.ui.common.OnItemClickListener;
 import com.liueq.testdagger.utils.GoldenHammer;
 
@@ -238,6 +239,17 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements OnI
 					updateUI(new ArrayList<Account>()); //Clear
 					mIvClear.setVisibility(View.GONE);
 				}
+			}
+		});
+
+		mEtSearch.setOnKeyListener(new View.OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				boolean isValidKey = event != null && keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN;
+				if(isValidKey){
+					AdvanceSearchActivity.launchActivity(mActivity, mEtSearch.getText().toString().trim());
+				}
+				return false;
 			}
 		});
 	}

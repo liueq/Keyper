@@ -107,6 +107,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         mList.addAll(list);
     }
 
+    public void replaceAll(List<Account> list){
+        mList.clear();
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         @Bind(R.id.ll_container)
