@@ -21,9 +21,9 @@
             android:layout_height="40dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:elevation="2dp"
+            android:elevation="3dp"
             android:layout_marginBottom="4dp"
-            android:background="@color/white"/>
+            android:background="@color/material_grey_100"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

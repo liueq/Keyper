@@ -45,7 +45,7 @@ public class RecyclerFieldAdapter extends RecyclerView.Adapter<RecyclerFieldAdap
 		final SearchField searchField = mList.get(position);
 		if(searchField.mSelected){
 			holder.mImageView.setVisibility(View.VISIBLE);
-			holder.mTextView.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+			holder.mTextView.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
 		}else{
 			holder.mImageView.setVisibility(View.INVISIBLE);
 			holder.mTextView.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
