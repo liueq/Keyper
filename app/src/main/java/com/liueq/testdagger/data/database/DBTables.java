@@ -25,14 +25,21 @@ public class DBTables {
 
 		public static final String description = "description";
 
+		public static final String create_time = "create_time";
+
+		public static final String update_time = "update_time";
+
 		public static String SQL_CREATE = "CREATE TABLE " + table_name + " ( " + id + " INTEGER NOT NULL PRIMARY KEY, " +
 				site + " TEXT NOT NULL, " +
 				username + " TEXT, " +
 				password + " TEXT, " +
 				email + " TEXT, " +
-				description + " TEXT)";
+				description + " TEXT, " +
+				create_time + " TEXT, " +
+				update_time + " TEXT " +
+				")";
 
-		public static String [] ALL_COLUMN = {id, site, username, password, email, description};
+		public static String [] ALL_COLUMN = {id, site, username, password, email, description, create_time, update_time};
 	}
 
 	/**

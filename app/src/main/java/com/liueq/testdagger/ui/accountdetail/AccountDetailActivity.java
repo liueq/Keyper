@@ -21,6 +21,7 @@ import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.utils.GoldenHammer;
 
 import javax.inject.Inject;
 
@@ -145,6 +146,21 @@ public class AccountDetailActivity extends BaseActivity{
             //Save
             mPresenter.saveDataToDB(mPresenter.getCurrentAccount());
             return true;
+        }else if (id == R.id.action_info){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            String create_time = getString(R.string.dialog_info_create, GoldenHammer.timeFormat(mPresenter.getCurrentAccount().create_time));
+            String update_time = getString(R.string.dialog_info_update, GoldenHammer.timeFormat(mPresenter.getCurrentAccount().update_time));
+
+            builder.setTitle(R.string.dialog_title_info);
+            builder.setMessage(create_time + "\n" + update_time);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.create().show();
         }
 
         return super.onOptionsItemSelected(item);

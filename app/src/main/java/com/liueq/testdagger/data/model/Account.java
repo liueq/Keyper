@@ -20,15 +20,14 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
     public String password;
     public String mail;
     public String description;
+    public String create_time;
+    public String update_time;
 
     public boolean is_stared;
 
     public List<Tag> tag_list = new ArrayList<Tag>();
 
-    public Account(){
-//        Random random = new Random();
-//        this.id = String.valueOf(System.currentTimeMillis() + random.nextInt(1000));
-    }
+    public Account(){}
 
     public Account(Cursor cursor){
         id = String.valueOf(cursor.getInt(0));
@@ -37,6 +36,8 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
         password = cursor.getString(3);
         mail = cursor.getString(4);
         description = cursor.getString(5);
+        create_time = cursor.getString(6);
+        update_time = cursor.getString(7);
     }
 
     @Override
@@ -48,7 +49,10 @@ public class Account implements Serializable, Comparable<Account>, Cloneable {
                 ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
                 ", description='" + description + '\'' +
+                ", create_time='" + create_time + '\'' +
+                ", update_time='" + update_time + '\'' +
                 ", is_stared=" + is_stared +
+                ", tag_list=" + tag_list +
                 '}';
     }
 

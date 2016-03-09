@@ -11,6 +11,7 @@ import com.liueq.testdagger.data.database.DBTables.Password;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.domain.interactor.SharedPUC;
+import com.liueq.testdagger.utils.GoldenHammer;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.SQLException;
@@ -50,19 +51,14 @@ public class AccountRepoDBImpl implements AccountRepo {
 			cursor = db.query(Password.table_name, Password.ALL_COLUMN, null, null, null, null, orderBy);
 			if (cursor != null){
 				while (cursor.moveToNext()){
-					account = new Account();
-					account.id = String.valueOf(cursor.getInt(0));
-					account.site = cursor.getString(1);
-					account.username = cursor.getString(2);
-					account.password = cursor.getString(3);
-					account.mail = cursor.getString(4);
-					account.description = cursor.getString(5);
-
+					account = new Account(cursor);
 					list.add(account);
 				}
 			}
 			db.setTransactionSuccessful();
 			db.endTransaction();
+		}catch (SQLException e){
+			e.printStackTrace();
 		}finally{
 			db = null;
 			if(cursor != null && !cursor.isClosed()){
@@ -93,13 +89,7 @@ public class AccountRepoDBImpl implements AccountRepo {
 			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, orderBy);
 			if (cursor != null) {
 				if (cursor.moveToNext()) {
-					account = new Account();
-					account.id = String.valueOf(cursor.getInt(0));
-					account.site = cursor.getString(1);
-					account.username = cursor.getString(2);
-					account.password = cursor.getString(3);
-					account.mail = cursor.getString(4);
-					account.description = cursor.getString(5);
+					account = new Account(cursor);
 				}
 			}
 
@@ -144,14 +134,7 @@ public class AccountRepoDBImpl implements AccountRepo {
 			cursor = db.query(Password.table_name, Password.ALL_COLUMN, selection, selection_args, null, null, orderBy);
 			if (cursor != null) {
 				while (cursor.moveToNext()) {
-					account = new Account();
-					account.id = String.valueOf(cursor.getInt(0));
-					account.site = cursor.getString(1);
-					account.username = cursor.getString(2);
-					account.password = cursor.getString(3);
-					account.mail = cursor.getString(4);
-					account.description = cursor.getString(5);
-
+					account = new Account(cursor);
 					list.add(account);
 				}
 			}
@@ -194,6 +177,8 @@ public class AccountRepoDBImpl implements AccountRepo {
 		values.put(Password.password, account.password);
 		values.put(Password.email, account.mail);
 		values.put(Password.description, account.description);
+		values.put(Password.create_time, GoldenHammer.getTimestamp());
+		values.put(Password.update_time, GoldenHammer.getTimestamp());
 
 		SQLiteDatabase db = null;
 		String id = null;
@@ -234,6 +219,9 @@ public class AccountRepoDBImpl implements AccountRepo {
 		values.put(Password.password, update_item.password);
 		values.put(Password.email, update_item.mail);
 		values.put(Password.description, update_item.description);
+		values.put(Password.create_time, update_item.create_time);
+		values.put(Password.update_time, GoldenHammer.getTimestamp());
+
 		String where = "id = ?";
 		String []where_args = {old_id};
 

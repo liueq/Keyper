@@ -13,6 +13,10 @@ import android.widget.EditText;
 
 import com.liueq.testdagger.TestApplication;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by liueq on 28/10/2015.
  */
@@ -76,6 +80,37 @@ public class GoldenHammer {
 	 */
 	public static String getString(int id){
 		return TestApplication.getApplication().getString(id);
+	}
+
+	/**
+	 * Get timestamp
+	 * @return
+	 */
+	public static String getTimestamp(){
+		long time = System.currentTimeMillis();
+		return String.valueOf(time);
+	}
+
+	/**
+	 * return format "yyyy-MM-dd HH-mm-SS"
+	 * @param time
+	 * @return
+	 */
+	public static String timeFormat(String time){
+		long time_ms;
+		try{
+			time_ms = Long.valueOf(time);
+		}catch (NumberFormatException e){
+			e.printStackTrace();
+			return "";
+		}
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(time_ms);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:SS");
+		sdf.setCalendar(cal);
+		return sdf.format(cal.getTime());
 	}
 
 }

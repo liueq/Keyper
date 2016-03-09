@@ -58,7 +58,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int old_ver, int new_ver) {
-		if(old_ver == 1 && new_ver == 2){
+		if(old_ver == 1 && new_ver == 2) {
 			sqLiteDatabase.execSQL(DBTables.Tag.SQL_CREATE);
 			sqLiteDatabase.execSQL(DBTables.TagAndPassword.SQL_CREATE);
 		}
