@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by liueq on 29/2/2016.
  * TAG tab fragment
  */
-public class TagListFragment extends Fragment implements OnItemClickListener{
+public class TagListFragment extends Fragment implements OnItemClickListener, MainPagerAdapter.BackToTop{
 
 	private MainActivity mActivity;
 	private MainActivityPresenter mPresenter;
@@ -117,6 +117,11 @@ public class TagListFragment extends Fragment implements OnItemClickListener{
 	public void onResume() {
 		super.onResume();
 		loadData();
+	}
+
+	@Override
+	public void backToTop() {
+		mRecycler.scrollToPosition(0);
 	}
 }
 

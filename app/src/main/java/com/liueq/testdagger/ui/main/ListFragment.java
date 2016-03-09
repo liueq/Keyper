@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by liueq on 17/2/2016.
  * 主界面，ALL tab
  */
-public class ListFragment extends Fragment implements OnItemClickListener {
+public class ListFragment extends Fragment implements OnItemClickListener, MainPagerAdapter.BackToTop {
 
 	@Bind(R.id.iv_hint)
 	ImageView mImageViewHint;
@@ -183,5 +183,10 @@ public class ListFragment extends Fragment implements OnItemClickListener {
 	public void onResume() {
 		super.onResume();
 		loadData();
+	}
+
+	@Override
+	public void backToTop() {
+		mRecycler.smoothScrollToPosition(0);
 	}
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
 import com.liueq.testdagger.data.model.Account;
+import com.liueq.testdagger.utils.BackUpTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by liueq on 22/2/2016.
  * 首页的StarList
  */
-public class StarListFragment extends Fragment implements RecyclerStarListAdapter.OnItemClickListener{
+public class StarListFragment extends Fragment implements RecyclerStarListAdapter.OnItemClickListener, MainPagerAdapter.BackToTop{
 
 	@Bind(R.id.iv_hint)
 	ImageView mImageViewHint;
@@ -121,4 +122,8 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		}
 	}
 
+	@Override
+	public void backToTop() {
+		mRecycler.scrollToPosition(0);
+	}
 }

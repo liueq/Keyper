@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
@@ -72,7 +73,26 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setTitle(R.string.app_name);
 
         mViewPager.setAdapter(mPagerAdapter = new MainPagerAdapter(this, getSupportFragmentManager()));
+        mViewPager.addOnPageChangeListener(mPagerAdapter);
+
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //Back to Top
+                mPagerAdapter.backToTop();
+            }
+        });
     }
 
     @Override

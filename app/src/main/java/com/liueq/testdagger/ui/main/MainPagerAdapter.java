@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.ui.main.ListFragment;
@@ -13,13 +14,20 @@ import com.liueq.testdagger.ui.main.StarListFragment;
  * Created by liueq on 17/2/2016.
  * 主界面的PagerAdapter
  */
-public class MainPagerAdapter extends FragmentPagerAdapter{
+public class MainPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener{
 
 	private final static int COUNT = 3;
 
 	private static String [] TITLE_ARRAY = {"全部", "标星", "标签"};
 
 	private Context mContext;
+
+	private int mCurrntPageNum = 0;
+
+	private ListFragment mListFragment = null;
+	private StarListFragment mStarListFragment = null;
+	private TagListFragment mTagListFragment = null;
+
 
 	public MainPagerAdapter(Context context, FragmentManager fm) {
 		super(fm);
@@ -34,11 +42,20 @@ public class MainPagerAdapter extends FragmentPagerAdapter{
 	public Fragment getItem(int position) {
 		switch (position){
 			case 0:
-				return ListFragment.newInstance();
+				if(mListFragment == null){
+					mListFragment = ListFragment.newInstance();
+				}
+				return mListFragment;
 			case 1:
-				return StarListFragment.newInstance();
+				if(mStarListFragment == null){
+					mStarListFragment = StarListFragment.newInstance();
+				}
+				return mStarListFragment;
 			case 2:
-				return TagListFragment.newInstance();
+				if(mTagListFragment == null){
+					mTagListFragment = TagListFragment.newInstance();
+				}
+				return mTagListFragment;
 		}
 
 		return null;
@@ -52,5 +69,35 @@ public class MainPagerAdapter extends FragmentPagerAdapter{
 	@Override
 	public CharSequence getPageTitle(int position) {
 		return TITLE_ARRAY[position];
+	}
+
+	public void backToTop(){
+		if(mCurrntPageNum == 0){
+			mListFragment.backToTop();
+		}else if(mCurrntPageNum == 1){
+			mStarListFragment.backToTop();
+		}else if(mCurrntPageNum == 2){
+			mTagListFragment.backToTop();
+		}
+	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		mCurrntPageNum = position;
+
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+
+	}
+
+	public interface BackToTop{
+		void backToTop();
 	}
 }
