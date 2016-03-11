@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.liueq.testdagger.Constants;
+import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.ui.main.MainActivity;
 import com.liueq.testdagger.utils.Encrypter;
 
 /**
  * Created by liueq on 16/7/15.
+ * Presenter of SplashActivity
  */
 public class SplashActivityPresenter extends Presenter {
 
@@ -39,6 +41,9 @@ public class SplashActivityPresenter extends Presenter {
 
         if(hasPassword){
             if(pwd_1_md5.equals(saved_pwd)){
+                //Save as DB password in memory
+                TestApplication.setDBPassword(pwd1);
+
                 if(mMode.equals(MODE_LAUNCH)){
                     Intent intent = new Intent(activity, MainActivity.class);
                     activity.startActivity(intent);
@@ -51,6 +56,9 @@ public class SplashActivityPresenter extends Presenter {
             }
         }else{
             if(pwd_1_md5.equals(pwd_2_md5)){
+                //Save as DB password
+                TestApplication.setDBPassword(pwd1);
+
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putString(Constants.SP_PWD, pwd_1_md5);
                 editor.commit();

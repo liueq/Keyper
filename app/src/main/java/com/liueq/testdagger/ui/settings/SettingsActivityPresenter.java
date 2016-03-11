@@ -50,10 +50,10 @@ public class SettingsActivityPresenter extends Presenter {
      */
     public void loadDataAction() {
         //Get Database password from SharedPreference
-        HashMap<String, String> db_pwd_map = mSharedPUC.getDBPassword();
-        String db_password = db_pwd_map.get(Constants.SP_DB_PWD);
+//        HashMap<String, String> db_pwd_map = mSharedPUC.getDBPassword();
+//        String db_password = db_pwd_map.get(Constants.SP_DB_PWD);
 
-        mActivity.updateDBPassword(db_password);
+//        mActivity.updateDBPassword(db_password);
     }
 
 	/**
@@ -70,8 +70,10 @@ public class SettingsActivityPresenter extends Presenter {
      * @param password
      * @return
      */
-    public boolean savePassAction(String password){
-        return mSharedPUC.savePassword(password);
+    public void savePassAction(String password){
+        if(mSharedPUC.savePassword(password)){
+            saveDBPassAction(password);
+        }
     }
 
 	/**
@@ -80,12 +82,10 @@ public class SettingsActivityPresenter extends Presenter {
      * @return
      */
     public void saveDBPassAction(String db_pwd){
-        if(mSharedPUC.saveDBPassword(db_pwd)){
-            saveDBPassOb(db_pwd)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(saveDBPassSub());
-        }
+        saveDBPassOb(db_pwd)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(saveDBPassSub());
     }
 
 	/**
@@ -114,10 +114,10 @@ public class SettingsActivityPresenter extends Presenter {
         SharedPreferenceRepo shared = new SharedPreferenceRepoImpl(mActivity);
         String period = shared.getProterties(Constants.SP_AUTO_LOCK_PERIOD);
         if(TextUtils.isEmpty(period)){
-           period = "0";
+           period = "60";
         }
 
-        int period_int = 0;
+        int period_int = 60;
         try{
             period_int = Integer.valueOf(period);
         }catch (NumberFormatException e){
@@ -149,9 +149,9 @@ public class SettingsActivityPresenter extends Presenter {
             @Override
             public void call(Boolean aBoolean) {
                 if(aBoolean){
-                    Toast.makeText(mActivity, R.string.change_db_succeed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, R.string.change_pwd_succeed, Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(mActivity, R.string.change_db_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, R.string.change_pwd_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -185,7 +185,7 @@ public class SettingsActivityPresenter extends Presenter {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 if(BackUpTool.canOpenDB(password, path)){
-                    BackUpTool.importDB(mActivity, path);
+                    BackUpTool.importDB(mActivity, path, password);
                     subscriber.onNext(password);
                 }else{
                     subscriber.onNext(null);
@@ -199,7 +199,6 @@ public class SettingsActivityPresenter extends Presenter {
             @Override
             public Boolean call(String s) {
                 if(!TextUtils.isEmpty(s)){
-                    mSharedPUC.saveDBPassword(s);
                     return true;
                 }else{
                     return false;

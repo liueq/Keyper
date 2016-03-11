@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +19,10 @@ import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
+import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
+
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -25,7 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends AppCompatActivity {
 
     public final static String TAG = "splash_A";
 
@@ -45,6 +50,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        setupActivityComponent();
         ButterKnife.bind(this);
 
         initData();
@@ -97,7 +103,6 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-    @Override
     protected void setupActivityComponent() {
         TestApplication.getApplication().getAppComponent()
                 .plus(new SplashActivityModule(this))
@@ -126,6 +131,14 @@ public class SplashActivity extends BaseActivity {
             startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(startMain);
         }
+    }
+
+    protected void clearAutoLockTime(){
+        SharedPreferenceRepo shared = new SharedPreferenceRepoImpl(this);
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put(Constants.SP_HIDE_TIME, "0");
+        map.put(Constants.SP_SHOW_TIME, "0");
+        shared.saveProperties(map);
     }
 
 	/**

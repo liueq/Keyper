@@ -23,7 +23,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
 	public static final int DATABASE_VERSION = 2;
 
-	public static String DATABASE_PASSWORD = "29Jan10:25";
+	public static String INITITAL_DATABASE_PASSWORD = "29Jan10:25";
 
 	private static SQLCipherOpenHelper mInstance;
 
@@ -32,7 +32,11 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 	public static SQLCipherOpenHelper getInstance(Context context){
 		if(mInstance == null){
 			mInstance = new SQLCipherOpenHelper(context);
-			mDatabase = mInstance.getWritableDatabase(TextUtils.isEmpty(getPassword()) ? DATABASE_PASSWORD : getPassword());
+			if(TextUtils.isEmpty(getPassword())){
+				mDatabase = mInstance.getWritableDatabase(INITITAL_DATABASE_PASSWORD);
+			}else{
+				mDatabase = mInstance.getWritableDatabase(getPassword());
+			}
 		}
 
 		return mInstance;
@@ -46,6 +50,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase sqLiteDatabase) {
 		sqLiteDatabase.beginTransaction();
 
+		sqLiteDatabase.rawExecSQL("PRAGMA key=\"" + getPassword() + "\";");
 		sqLiteDatabase.execSQL(DBTables.Password.SQL_CREATE);
 		sqLiteDatabase.execSQL(DBTables.Free.SQL_CREATE);
 		sqLiteDatabase.execSQL(DBTables.Star.SQL_CREATE);
@@ -66,7 +71,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 
 	public SQLiteDatabase getDatabase(){
 		if(mDatabase == null || !mDatabase.isOpen()) {
-			mDatabase = mInstance.getWritableDatabase(DATABASE_PASSWORD);
+			mDatabase = mInstance.getWritableDatabase(getPassword());
 		}
 		return mDatabase;
 	}
@@ -89,6 +94,7 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 			getDatabase().rawExecSQL("pragma rekey=\"" + password + "\";");
 		}
 		return_flag = true;
+		TestApplication.setDBPassword(password);
 		getDatabase().setTransactionSuccessful();
 		getDatabase().endTransaction();
 		return return_flag;
@@ -98,7 +104,6 @@ public class SQLCipherOpenHelper extends SQLiteOpenHelper{
 	 * Get DB password
 	 */
 	private static String getPassword(){
-		SharedPreferenceRepo sr = new SharedPreferenceRepoImpl(TestApplication.getApplication());
-		return sr.getProterties(Constants.SP_DB_PWD);
+		return TestApplication.getDBPassword();
 	}
 }

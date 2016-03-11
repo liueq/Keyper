@@ -44,10 +44,10 @@ public class SettingsActivity extends BaseActivity {
     RelativeLayout mRelativeImport;
     @Bind(R.id.rl_export)
     RelativeLayout mRelativeExport;
-    @Bind(R.id.rl_change_db)
-    RelativeLayout mRelativeDb;
-    @Bind(R.id.tv_show_db)
-    TextView mTextViewDb;
+//    @Bind(R.id.rl_change_db)
+//    RelativeLayout mRelativeDb;
+//    @Bind(R.id.tv_show_db)
+//    TextView mTextViewDb;
     @Bind(R.id.rl_set_timeout)
     RelativeLayout mRelativeLayoutTimeout;
 
@@ -79,9 +79,9 @@ public class SettingsActivity extends BaseActivity {
 
     }
 
-    public void updateDBPassword(String password){
-        mTextViewDb.setText(password);
-    }
+//    public void updateDBPassword(String password){
+//        mTextViewDb.setText(password);
+//    }
 
     @Override
     protected void setupActivityComponent() {
@@ -95,16 +95,16 @@ public class SettingsActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_change_db, R.id.rl_set_timeout})
+    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_set_timeout})
     public void click(View v){
         int id = v.getId();
         switch (id){
             case R.id.rl_change_pwd:
                 createChangePasswordDialog();
                 break;
-            case R.id.rl_change_db:
-                createChangeDBDialog();
-                break;
+//            case R.id.rl_change_db:
+//                createChangeDBDialog();
+//                break;
             case R.id.rl_set_timeout:
                 createChooseTimeDialog();
                 break;
@@ -140,11 +140,7 @@ public class SettingsActivity extends BaseActivity {
                 //Check old password
                 if(mPresenter.checkPassAction(old_pwd_str)){
                     //Save to SP
-                    if(mPresenter.savePassAction(new_pwd_str)) {
-                        Toast.makeText(SettingsActivity.this, R.string.change_pwd_succeed, Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(SettingsActivity.this, R.string.change_pwd_not_null, Toast.LENGTH_SHORT).show();
-                    }
+                    mPresenter.savePassAction(new_pwd_str);
                 }else{
                     Toast.makeText(SettingsActivity.this, R.string.change_pwd_wrong, Toast.LENGTH_SHORT).show();
                 }

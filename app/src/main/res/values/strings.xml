@@ -75,6 +75,7 @@
     <string name="settings_title">Settings</string>
     <string name="change_pwd">Change login password</string>
     <string name="change_pwd_succeed">Password saved</string>
+    <string name="change_pwd_failed">Change password faield</string>
     <string name="change_pwd_not_null">Password can not null</string>
     <string name="change_pwd_wrong">Old password wrong</string>
     <string name="change_aes">Change AES password</string>

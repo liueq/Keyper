@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.data.database.DBTables;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.model.Account;
@@ -51,17 +52,31 @@ public class BackUpTool {
 		}
 	}
 
-	public static void importDB(Context context, String input){
+	public static void importDB(Context context, String input, String import_password){
+		//Close current db
 		SQLCipherOpenHelper helper = SQLCipherOpenHelper.getInstance(context);
 		String db_path = helper.getDatabase().getPath();
 		helper.closeDatabase();
 
+		//Copy file
 		File input_f = new File(input);
 		File output_f = new File(db_path);
 		output_f.delete();
 		output_f = new File(db_path);
 
 		copyFile(input_f, output_f);
+
+		//Change password
+		SQLiteDatabase database = null;
+		try{
+			database = SQLiteDatabase.openDatabase(db_path, import_password, null, 0);
+			database.rawExecSQL("pragma rekey=\"" + TestApplication.getDBPassword() + "\";");
+			if(database != null){
+				database.close();
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	public static String exportDB(Context context){

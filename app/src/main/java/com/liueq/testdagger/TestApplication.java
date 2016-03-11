@@ -21,6 +21,8 @@ public class TestApplication extends Application{
 
     private static TestApplication mInstance;
 
+    private static String mDBPassword;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -43,4 +45,12 @@ public class TestApplication extends Application{
         return appComponent;
     }
 
+
+    public static String getDBPassword(){
+        return mDBPassword;
+    }
+
+    public static void setDBPassword(String password){
+        mDBPassword = password;
+    }
 }
