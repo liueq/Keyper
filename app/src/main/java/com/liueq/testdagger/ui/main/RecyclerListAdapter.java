@@ -29,15 +29,16 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     private Context mContext;
     private List<Account> mList = new ArrayList<Account>();
     private OnItemClickListener mListener;
+    private boolean mShowStar = true;
+
+    public RecyclerListAdapter(Context context, OnItemClickListener listener, boolean showStar){
+        this.mContext = context;
+        this.mListener = listener;
+        this.mShowStar = showStar;
+    }
 
     public RecyclerListAdapter(Context context, OnItemClickListener listener){
         this.mContext = context;
-        this.mListener = listener;
-    }
-
-    public RecyclerListAdapter(Context context, List<Account> list, OnItemClickListener listener){
-        this.mContext = context;
-        this.mList.addAll(list);
         this.mListener = listener;
     }
 
@@ -56,6 +57,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             starImage(holder);
         }else {
             unStarImage(holder);
+        }
+
+        if(mShowStar){
+            holder.mImageView.setVisibility(View.VISIBLE);
+        }else{
+            holder.mImageView.setVisibility(View.GONE);
         }
 
         holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {

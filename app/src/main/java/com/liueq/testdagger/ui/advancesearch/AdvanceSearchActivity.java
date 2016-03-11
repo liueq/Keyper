@@ -110,7 +110,7 @@ public class AdvanceSearchActivity extends BaseActivity implements OnItemClickLi
 		mFieldAdapter.replaceAll(mPresenter.mSearchFields);
 
 		mRecyclerResult.setLayoutManager(new LinearLayoutManager(this));
-		mRecyclerResult.setAdapter(mListAdapter = new RecyclerListAdapter(this, this));
+		mRecyclerResult.setAdapter(mListAdapter = new RecyclerListAdapter(this, this, false));
 
 		mEtSearch.setText(mPresenter.mCurrentSearch);
 		mEtSearch.setOnKeyListener(new View.OnKeyListener() {

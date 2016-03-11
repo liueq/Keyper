@@ -100,7 +100,7 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements OnI
 	private void initView(){
 		mRecycler.setHasFixedSize(false);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-		recyclerListAdapter = new RecyclerListAdapter(getActivity(), new ArrayList<Account>(), this);
+		recyclerListAdapter = new RecyclerListAdapter(getActivity(), this, false);
 		mRecycler.setAdapter(recyclerListAdapter);
 
 		mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {

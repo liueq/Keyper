@@ -73,7 +73,7 @@ public class TagDetailFragment extends Fragment implements OnItemClickListener {
 
 		mRecycler.setHasFixedSize(true);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerListAdapter = new RecyclerListAdapter(getActivity(), new ArrayList<Account>(), this);
+        recyclerListAdapter = new RecyclerListAdapter(getActivity(), this);
 		mRecycler.setAdapter(recyclerListAdapter);
 	}
 

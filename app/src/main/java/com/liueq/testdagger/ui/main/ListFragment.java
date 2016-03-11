@@ -77,7 +77,7 @@ public class ListFragment extends Fragment implements OnItemClickListener, MainP
 
 		mRecycler.setHasFixedSize(true);
 		mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerListAdapter = new RecyclerListAdapter(getActivity(), new ArrayList<Account>(), this);
+        recyclerListAdapter = new RecyclerListAdapter(getActivity(), this);
 		mRecycler.setAdapter(recyclerListAdapter);
 
 		mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
