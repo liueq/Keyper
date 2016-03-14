@@ -2,6 +2,7 @@ package com.liueq.testdagger.ui.accountdetail;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -80,9 +81,15 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 	}
 
 	private void initView(){
-		Drawable drawable = getResources().getDrawable(R.mipmap.ic_add_white_18dp);
-		drawable.setTint(getResources().getColor(R.color.secondary_text));
-		mTextViewAdd.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null);
+		Drawable drawable = null;
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+			drawable = getResources().getDrawable(R.mipmap.ic_add_white_18dp);
+			drawable.setTint(getResources().getColor(R.color.secondary_text));
+			mTextViewAdd.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null);
+		}else{
+			drawable = getResources().getDrawable(R.mipmap.ic_add_grey600_18dp);
+			mTextViewAdd.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+		}
 
 		mEditTextTag.addTextChangedListener(new TextWatcher() {
 			@Override

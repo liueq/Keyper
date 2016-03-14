@@ -1,10 +1,12 @@
 package com.liueq.testdagger.ui.main;
 
 import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -215,7 +217,11 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements OnI
 		mRlRoot.post(new Runnable() {
 			@Override
 			public void run() {
-				searchBoxInAnim();
+				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+					searchBoxInAnim();
+				}else{
+					searchBoxInNoAnim();
+				}
 			}
 		});
 
@@ -265,7 +271,11 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements OnI
 					if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
 						return true;
 					} else if (keyEvent.getAction() == KeyEvent.ACTION_UP && !is_exiting) {
-						searchBoxOutAnim();
+						if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+							searchBoxOutAnim();
+						}else{
+							searchBoxOutNoAnim();
+						}
 						return true;
 					}
 				}
@@ -274,7 +284,13 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements OnI
 		});
 	}
 
+	private void searchBoxInNoAnim(){
+		mEtSearch.requestFocus();
+		GoldenHammer.showInputMethod(getActivity(), mEtSearch);
+	}
 
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	private void searchBoxInAnim(){
 		int cx = mSearchBox.getRight();
 		int cy = (mSearchBox.getTop() + mSearchBox.getBottom())/2;
@@ -309,6 +325,15 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements OnI
 		anim.start();
 	}
 
+	public void searchBoxOutNoAnim(){
+		GoldenHammer.hideInputMethod(getActivity(), mEtSearch);
+		mSearchBox.setVisibility(View.GONE);
+		FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+		fragmentTransaction.remove(SearchDialogFragment.this);
+		fragmentTransaction.commit();
+	}
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	public void searchBoxOutAnim(){
 		is_exiting = true;
 		int cx = mSearchBox.getRight();
@@ -350,7 +375,11 @@ public class SearchDialogFragment extends AppCompatDialogFragment implements OnI
 	public void onClick(View v){
 		int id = v.getId();
 		if((id == R.id.rl_root || id == R.id.iv_back) &&  !is_exiting) {
-			searchBoxOutAnim();
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+				searchBoxOutAnim();
+			}else{
+				searchBoxOutNoAnim();
+			}
 		}else if(id == R.id.iv_clear){
 			mEtSearch.setText("");
 		}

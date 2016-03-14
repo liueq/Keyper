@@ -2,6 +2,7 @@ package com.liueq.testdagger.ui.main;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,14 +91,24 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     }
 
     private void starImage(ViewHolder holder){
-        Drawable drawable = mContext.getDrawable(R.mipmap.ic_star_black_24dp);
-        drawable.setTint(mContext.getResources().getColor(R.color.yellow));
+        Drawable drawable = null;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            drawable = mContext.getDrawable(R.mipmap.ic_star_black_24dp);
+            drawable.setTint(mContext.getResources().getColor(R.color.yellow));
+        }else{
+        	drawable = mContext.getResources().getDrawable(R.mipmap.ic_star_white_24dp);
+        }
         holder.mImageView.setImageDrawable(drawable);
     }
 
     private void unStarImage(ViewHolder holder){
-        Drawable drawable = mContext.getDrawable(R.mipmap.ic_star_outline_black_24dp);
-        drawable.setTint(mContext.getResources().getColor(R.color.grey));
+        Drawable drawable = null;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            drawable = mContext.getDrawable(R.mipmap.ic_star_outline_black_24dp);
+            drawable.setTint(mContext.getResources().getColor(R.color.grey));
+        }else{
+        	drawable = mContext.getResources().getDrawable(R.mipmap.ic_star_outline_white_24dp);
+        }
         holder.mImageView.setImageDrawable(drawable);
     }
 

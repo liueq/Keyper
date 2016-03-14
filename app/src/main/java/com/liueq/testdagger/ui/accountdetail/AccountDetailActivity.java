@@ -169,11 +169,21 @@ public class AccountDetailActivity extends BaseActivity{
     private Drawable getStarIcon(boolean state){
         Drawable drawable = null;
         if(state){
-            drawable = getDrawable(R.mipmap.ic_star_black_24dp);
-            drawable.setTint(getResources().getColor(R.color.yellow));
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                drawable = getResources().getDrawable(R.mipmap.ic_star_black_24dp);
+                drawable.setTint(getResources().getColor(R.color.yellow));
+            }else{
+                //Compat
+                drawable = getResources().getDrawable(R.mipmap.ic_star_white_24dp);
+            }
         }else {
-            drawable = getDrawable(R.mipmap.ic_star_outline_black_24dp);
-            drawable.setTint(getResources().getColor(R.color.white));
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                drawable = getResources().getDrawable(R.mipmap.ic_star_outline_black_24dp);
+                drawable.setTint(getResources().getColor(R.color.white));
+            }else {
+                //Compat
+                drawable = getResources().getDrawable(R.mipmap.ic_star_outline_white_24dp);
+            }
         }
 
         return drawable;
