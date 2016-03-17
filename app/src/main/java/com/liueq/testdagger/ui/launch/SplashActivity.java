@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.Constants;
@@ -39,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
     @Bind(R.id.pwd_2)
     EditText mEditTextPwd2;
     @Bind(R.id.submit)
-    Button mButtonSubmit;
+    TextView mTextViewSubmit;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 

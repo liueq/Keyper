@@ -11,6 +11,19 @@
         android:layout_height="360dp"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:text="@string/tag"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/title_medium"
+            android:visibility="gone"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -18,7 +31,7 @@
             <EditText
                 android:id="@+id/et_tag"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:textSize="@dimen/body_1_regular"
                 android:maxLines="1"

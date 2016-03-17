@@ -143,7 +143,7 @@ public class ListFragment extends Fragment implements OnItemClickListener, MainP
         });
 
 		mTextViewHint.setText(R.string.tab_all_hint);
-		mImageViewHint.setImageResource(R.mipmap.ic_account_balance_wallet_white_48dp);
+		mImageViewHint.setImageResource(R.mipmap.ic_account_balance_wallet_grey600_48dp);
 	}
 
 	private void loadData(){

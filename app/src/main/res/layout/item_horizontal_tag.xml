@@ -37,8 +37,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="10dp"
             android:scaleType="center"
-            android:src="@mipmap/ic_clear_white_18dp"
-            android:tint="@color/colorPrimary"
+            android:src="@mipmap/ic_clear_grey600_18dp"
             />
 
     </LinearLayout>

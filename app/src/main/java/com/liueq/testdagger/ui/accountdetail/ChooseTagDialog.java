@@ -39,6 +39,8 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 	TextView mTextViewAdd;
 	@Bind(R.id.recycler_tag)
 	RecyclerView mRecyclerTag;
+	@Bind(R.id.tv_title)
+	TextView mTextViewTitle;
 
 	TagRecyclerAdapter mRecyclerAdapter;
 
@@ -69,7 +71,11 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 		View view = inflater.inflate(R.layout.dialog_choose_tag, container, false);
 		ButterKnife.bind(this, view);
 
-		getDialog().setTitle(R.string.choose_tag_dialog_title);
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+			getDialog().setTitle(R.string.tag);
+		}else{
+			mTextViewTitle.setVisibility(View.VISIBLE);
+		}
 		initView();
 		return view;
 	}

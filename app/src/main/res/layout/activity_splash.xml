@@ -54,14 +54,17 @@
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
-        <Button
+        <TextView
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/commit_btn_bg"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/submit"
             android:textColor="@color/white"
+            android:textSize="@dimen/button_medium"
             android:textStyle="bold"/>
     </LinearLayout>
 </LinearLayout>

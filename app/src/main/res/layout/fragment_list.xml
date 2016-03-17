@@ -18,7 +18,6 @@
             android:layout_above="@+id/tv_hint"
             android:layout_centerHorizontal="true"
             android:scaleType="center"
-            android:tint="@color/colorPrimary"
             android:visibility="invisible"/>
 
         <TextView
@@ -28,7 +27,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-light"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/secondary_text"
             android:textSize="@dimen/headline_regular"
             android:visibility="invisible"
             tools:text="Star Your Thing"

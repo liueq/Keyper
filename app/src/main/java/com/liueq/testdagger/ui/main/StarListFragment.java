@@ -83,7 +83,7 @@ public class StarListFragment extends Fragment implements RecyclerStarListAdapte
 		mRecycler.setAdapter(mAdapter);
 
 		mTextViewHint.setText(R.string.tab_star_hint);
-		mImageViewHint.setImageResource(R.mipmap.ic_star_outline_white_48dp);
+		mImageViewHint.setImageResource(R.mipmap.ic_star_outline_grey600_48dp);
 	}
 
 	private void loadData(){

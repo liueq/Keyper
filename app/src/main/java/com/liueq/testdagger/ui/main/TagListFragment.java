@@ -80,7 +80,7 @@ public class TagListFragment extends Fragment implements OnItemClickListener, Ma
 		mRecycler.setAdapter(mAdapter = new RecyclerTagListAdapter(mActivity, this));
 
 		mTextViewHint.setText(R.string.tab_tag_hint);
-		mImageViewHint.setImageResource(R.mipmap.ic_local_offer_white_48dp);
+		mImageViewHint.setImageResource(R.mipmap.ic_local_offer_grey600_48dp);
 	}
 
 	private void loadData(){

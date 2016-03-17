@@ -60,7 +60,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textSize="16sp"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/secondary_text"
                             android:text="@string/tag_hint"
                             android:visibility="gone"
                             />
@@ -81,8 +81,7 @@
                         android:layout_gravity="center"
                         android:background="?selectableItemBackground"
                         android:padding="6dp"
-                        android:src="@mipmap/ic_add_white_18dp"
-                        android:tint="@color/colorPrimary"
+                        android:src="@mipmap/ic_add_grey600_18dp"
                         />
                 </LinearLayout>
 
@@ -134,8 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginRight="4dp"
-                        android:src="@mipmap/ic_open_in_new_black_24dp"
-                        android:tint="@color/colorPrimary"
+                        android:src="@mipmap/ic_open_in_new_grey600_18dp"
                         />
 
                     <ImageView
@@ -143,8 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_content_copy_black_24dp"
-                        android:tint="@color/colorPrimary"/>
+                        android:src="@mipmap/ic_content_copy_grey600_18dp"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -193,8 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_content_copy_black_24dp"
-                        android:tint="@color/colorPrimary"/>
+                        android:src="@mipmap/ic_content_copy_grey600_18dp"/>
                 </LinearLayout>
 
 
@@ -244,8 +240,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_content_copy_black_24dp"
-                        android:tint="@color/colorPrimary"/>
+                        android:src="@mipmap/ic_content_copy_grey600_18dp"/>
                 </LinearLayout>
 
 
@@ -295,8 +290,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_content_copy_black_24dp"
-                        android:tint="@color/colorPrimary"/>
+                        android:src="@mipmap/ic_content_copy_grey600_18dp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -340,8 +334,7 @@
                     android:layout_alignTop="@id/et_desc"
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
-                    android:src="@mipmap/ic_content_copy_black_24dp"
-                    android:tint="@color/colorPrimary"/>
+                    android:src="@mipmap/ic_content_copy_grey600_18dp" />
             </RelativeLayout>
 
             <TextView
