@@ -58,8 +58,8 @@
     <string name="dialog_yes_delete">Delete</string>
     <string name="dialog_no_delete">Cancel</string>
     <string name="dialog_title_info">Info</string>
-    <string name="dialog_info_create">Create Date: %1$s</string>
-    <string name="dialog_info_update">Update Date: %1$s</string>
+    <string name="dialog_info_create">Created: %1$s</string>
+    <string name="dialog_info_update">Modified: %1$s</string>
 
     <string name="cliped">Copy to clipboard</string>
     <string name="detail_quit_title">Quit</string>
@@ -70,6 +70,10 @@
     <string name="first_pwd">Password required</string>
     <string name="sec_pwd">Password repeat</string>
     <string name="submit">LOGIN</string>
+    <string name="welcome_tip_1">All your data is encrypted in local database.</string>
+    <string name="welcome_tip_2">Main password is the only way to access the database.</string>
+    <string name="welcome_tip_3">If you forget the main password, data is just lost.</string>
+    <string name="welcome_dialog_title">Reminder</string>
 
     <!-- Settings-->
     <string name="settings_title">Settings</string>
