@@ -127,10 +127,11 @@ public class SplashActivity extends AppCompatActivity {
             sb.append(getString(R.string.welcome_tip_3));
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(getString(R.string.welcome_dialog_title));
-            builder.setMessage(sb.toString());
-            builder.setPositiveButton(R.string.ok, null);
-            builder.create().show();
+            builder.setTitle(getString(R.string.welcome_dialog_title))
+                    .setMessage(sb.toString())
+                    .setPositiveButton(R.string.ok, null)
+                    .create()
+                    .show();
         }
         return super.onOptionsItemSelected(item);
     }

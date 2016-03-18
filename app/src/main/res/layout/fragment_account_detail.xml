@@ -134,6 +134,7 @@
                         android:layout_gravity="center"
                         android:layout_marginRight="4dp"
                         android:src="@mipmap/ic_open_in_new_grey600_18dp"
+                        android:visibility="gone"
                         />
 
                     <ImageView
@@ -141,7 +142,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_content_copy_grey600_18dp"/>
+                        android:src="@mipmap/ic_content_copy_grey600_18dp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -190,7 +192,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_content_copy_grey600_18dp"/>
+                        android:src="@mipmap/ic_content_copy_grey600_18dp"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
 
@@ -240,7 +243,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_content_copy_grey600_18dp"/>
+                        android:src="@mipmap/ic_content_copy_grey600_18dp"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
 
@@ -290,7 +294,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_content_copy_grey600_18dp"/>
+                        android:src="@mipmap/ic_content_copy_grey600_18dp"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -334,7 +339,8 @@
                     android:layout_alignTop="@id/et_desc"
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
-                    android:src="@mipmap/ic_content_copy_grey600_18dp" />
+                    android:src="@mipmap/ic_content_copy_grey600_18dp"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <TextView

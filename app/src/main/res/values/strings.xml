@@ -4,6 +4,7 @@
     <!-- Common -->
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
+    <string name="no_result">No result</string>
 
     <!-- Main -->
     <string name="hello_world">Hello world!</string>
@@ -18,9 +19,10 @@
     <string name="tab_star_hint">Star Your Account</string>
     <string name="tab_tag_hint">Create Your Tag</string>
 
+    <string name="hint_quick_search">Quick Search</string>
     <string name="hint_search">Search</string>
     <string name="search_box_shared">search_box_shared</string>
-    <string name="search_field_site">SITE</string>
+    <string name="search_field_site">ACCOUNT</string>
     <string name="search_field_name">NAME</string>
     <string name="search_field_password">PASSWORD</string>
     <string name="search_field_mail">mail</string>
@@ -31,7 +33,7 @@
     <!-- AccountDetail -->
     <string name="tag">Tag</string>
     <string name="tag_hint">NO TAG</string>
-    <string name="site">Site</string>
+    <string name="site">Account</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="mail">Mail</string>
@@ -47,7 +49,7 @@
     <string name="search_hint">Search</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="status_saved">SAVED</string>
-    <string name="warning_site_not_null">Site can not be NULL</string>
+    <string name="warning_site_not_null">Account can not be NULL</string>
 
     <string name="choose_tag_hint">Search or create tag</string>
     <string name="choose_tag_dialog_title">Tag</string>
@@ -102,7 +104,10 @@
     <string name="export_data">Export</string>
     <string name="export_path">Export to: %1$s</string>
     <string name="export_failed">Export failed</string>
+    <string name="export_dialog_msg">Database will be exported to /sdcard/encrypted_timestamp.db</string>
+    <string name="export_dialog_ok">EXPORT</string>
     <string name="hint_new_db_password">New Database password</string>
+    <string name="about_label">About</string>
 
     <string name="external_path">External Storage</string>
     <string name="internal_path">Internal Storage</string>

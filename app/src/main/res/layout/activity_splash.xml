@@ -47,7 +47,7 @@
             android:focusableInTouchMode="true"
             android:hint="@string/first_pwd"
             android:inputType="textPassword"
-            android:textSize="@dimen/body_1_regular"/>
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/pwd_2"
@@ -55,7 +55,7 @@
             android:layout_height="48dp"
             android:hint="@string/sec_pwd"
             android:inputType="textPassword"
-            android:textSize="@dimen/body_1_regular"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/submit"

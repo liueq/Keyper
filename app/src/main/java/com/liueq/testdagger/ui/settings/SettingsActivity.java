@@ -13,15 +13,12 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
-import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
-import com.liueq.testdagger.utils.BackUpTool;
 
 import javax.inject.Inject;
 
@@ -44,8 +41,8 @@ public class SettingsActivity extends BaseActivity {
     RelativeLayout mRelativeImport;
     @Bind(R.id.rl_export)
     RelativeLayout mRelativeExport;
-//    @Bind(R.id.rl_change_db)
-//    RelativeLayout mRelativeDb;
+    @Bind(R.id.rl_about)
+    RelativeLayout mRelativeAbout;
 //    @Bind(R.id.tv_show_db)
 //    TextView mTextViewDb;
     @Bind(R.id.rl_set_timeout)
@@ -95,7 +92,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_set_timeout})
+    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_set_timeout, R.id.rl_about})
     public void click(View v){
         int id = v.getId();
         switch (id){
@@ -117,8 +114,22 @@ public class SettingsActivity extends BaseActivity {
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.rl_export:
-                //Export DB
-                mPresenter.exportDBAction();
+                //Export DB: Show dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.export_data)
+                        .setMessage(R.string.export_dialog_msg)
+                        .setPositiveButton(R.string.export_dialog_ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPresenter.exportDBAction();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .create()
+                        .show();
+                break;
+            case R.id.rl_about:
+                Toast.makeText(SettingsActivity.this, "ABOUT", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

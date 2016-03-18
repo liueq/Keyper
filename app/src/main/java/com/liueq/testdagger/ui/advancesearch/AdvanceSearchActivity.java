@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
@@ -22,14 +23,10 @@ import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.ui.accountdetail.AccountDetailActivity;
-import com.liueq.testdagger.ui.accountdetail.AccountDetailFragment;
 import com.liueq.testdagger.ui.common.OnItemClickListener;
 import com.liueq.testdagger.ui.main.RecyclerListAdapter;
 import com.liueq.testdagger.utils.GoldenHammer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,6 +53,8 @@ public class AdvanceSearchActivity extends BaseActivity implements OnItemClickLi
 	RecyclerView mRecyclerResult;
 	@Bind(R.id.progress)
 	ProgressBar mProgressBar;
+	@Bind(R.id.tv_no_result)
+	TextView mTextViewNoResult;
 
 	@Inject
 	AdvanceSearchPresenter mPresenter;
@@ -205,5 +204,11 @@ public class AdvanceSearchActivity extends BaseActivity implements OnItemClickLi
 		mProgressBar.setVisibility(View.INVISIBLE);
 		mRecyclerResult.setVisibility(View.VISIBLE);
 		mListAdapter.replaceAll(list);
+
+		if(list == null || list.size() == 0){
+			mTextViewNoResult.setVisibility(View.VISIBLE);
+		}else{
+			mTextViewNoResult.setVisibility(View.GONE);
+		}
 	}
 }
