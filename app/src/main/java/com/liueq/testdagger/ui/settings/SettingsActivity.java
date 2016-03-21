@@ -294,7 +294,6 @@ public class SettingsActivity extends BaseActivity {
                 }else{
                     Toast.makeText(SettingsActivity.this, R.string.import_file_uri_error, Toast.LENGTH_SHORT).show();
                 }
-                
             }
         }
     }

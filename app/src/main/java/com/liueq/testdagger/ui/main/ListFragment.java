@@ -53,7 +53,10 @@ public class ListFragment extends Fragment implements OnItemClickListener, MainP
 
 		mActivity = (MainActivity) getActivity();
 		mPresneter = (MainActivityPresenter) mActivity.getPresenter();
-		mPresneter.attachFragment(ListFragment.class, this);
+		if(mPresneter != null){
+			//TODO This is a bug, sometimes mPresenter will be null. Maybe the Dagger inject the Presenter too slow??
+			mPresneter.attachFragment(ListFragment.class, this);
+		}
 	}
 
 	@Override
