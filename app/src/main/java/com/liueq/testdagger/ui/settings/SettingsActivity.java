@@ -1,10 +1,18 @@
 package com.liueq.testdagger.ui.settings;
 
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.provider.ContactsContract;
+import android.provider.DocumentsContract;
+import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.AlteredCharSequence;
@@ -20,6 +28,13 @@ import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -262,10 +277,20 @@ public class SettingsActivity extends BaseActivity {
             if(data != null){
                 data.getExtras();
                 String path = data.getDataString();
-                String prefix = "file://";
-                if(path.startsWith(prefix)){
-                    path = path.substring(prefix.length());
+                Uri uri = data.getData();
+                String prefix_file = "file://";
+                String prefix_content = "content://";
+                if(path.startsWith(prefix_file)){
+                    //When file
+                    path = path.substring(prefix_file.length());
                     createImportDBDialog(path);
+                }else if(path.startsWith(prefix_content)){
+                    //When content provider
+                    String selection[] = new String[]{"_data"};
+                    Cursor cursor = getContentResolver().query(uri, selection, null, null, null);
+                    if(cursor.moveToNext()){
+                        createImportDBDialog(cursor.getString(0));
+                    }
                 }else{
                     Toast.makeText(SettingsActivity.this, R.string.import_file_uri_error, Toast.LENGTH_SHORT).show();
                 }
