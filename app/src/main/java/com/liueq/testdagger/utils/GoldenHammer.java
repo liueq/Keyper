@@ -108,7 +108,29 @@ public class GoldenHammer {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(time_ms);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss a");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		sdf.setCalendar(cal);
+		return sdf.format(cal.getTime());
+	}
+
+	/**
+	 * return format "yyyyMMddHHmmss"
+	 * @param time
+	 * @return
+     */
+	public static String timeFormatB(String time){
+		long time_ms;
+		try{
+			time_ms = Long.valueOf(time);
+		}catch (NumberFormatException e){
+			e.printStackTrace();
+			return "";
+		}
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(time_ms);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		sdf.setCalendar(cal);
 		return sdf.format(cal.getTime());
 	}

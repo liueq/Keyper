@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Passkeeper</string>
+    <string name="app_name">Keyper</string>
 
     <!-- Common -->
     <string name="ok">OK</string>
@@ -10,7 +10,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_advance_search">Advance Search</string>
     <string name="action_settings">Settings</string>
-    <string name="main_activity_title">Passkeeper</string>
+    <string name="main_activity_title">Keyper</string>
 
     <string name="tab_all">ALL</string>
     <string name="tab_star">STAR</string>
@@ -105,7 +105,7 @@
     <string name="export_data">Export</string>
     <string name="export_path">Export to: %1$s</string>
     <string name="export_failed">Export failed</string>
-    <string name="export_dialog_msg">Database will be exported to /sdcard/encrypted_timestamp.db</string>
+    <string name="export_dialog_msg">Database will be exported to /sdcard/encrypted(timestamp).db</string>
     <string name="export_dialog_ok">EXPORT</string>
     <string name="hint_new_db_password">Import database password</string>
     <string name="about_label">About</string>

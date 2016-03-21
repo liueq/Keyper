@@ -84,7 +84,7 @@ public class BackUpTool {
 		String db_path = helper.getDatabase().getPath();
 
 		String timestamp = String.valueOf(System.currentTimeMillis());
-		String output = Environment.getExternalStorageDirectory() + "/encrypted" + timestamp + ".db";
+		String output = Environment.getExternalStorageDirectory() + "/encrypted" + GoldenHammer.timeFormatB(timestamp) + ".db";
 		File file = new File(db_path);
 		File file_out = new File(output);
 		if(file.exists()){

@@ -96,7 +96,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             drawable = mContext.getDrawable(R.mipmap.ic_star_black_24dp);
             drawable.setTint(mContext.getResources().getColor(R.color.yellow));
         }else{
-        	drawable = mContext.getResources().getDrawable(R.mipmap.ic_star_white_24dp);
+        	drawable = mContext.getResources().getDrawable(R.mipmap.ic_star_grey600_24dp);
         }
         holder.mImageView.setImageDrawable(drawable);
     }
@@ -107,7 +107,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             drawable = mContext.getDrawable(R.mipmap.ic_star_outline_black_24dp);
             drawable.setTint(mContext.getResources().getColor(R.color.grey));
         }else{
-        	drawable = mContext.getResources().getDrawable(R.mipmap.ic_star_outline_white_24dp);
+        	drawable = mContext.getResources().getDrawable(R.mipmap.ic_star_outline_grey600_24dp);
         }
         holder.mImageView.setImageDrawable(drawable);
     }
