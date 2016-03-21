@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.AlteredCharSequence;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -241,6 +242,17 @@ public class SettingsActivity extends BaseActivity {
         });
         builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
+    }
+
+    private void createAboutDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.about_dialog_title);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
     }
 
     @Override
