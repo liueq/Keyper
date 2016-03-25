@@ -3,7 +3,7 @@
 
     <!-- Common -->
     <string name="ok">OK</string>
-    <string name="cancel">CANCEL</string>
+    <string name="cancel">Cancel</string>
     <string name="no_result">No result</string>
 
     <!-- Main -->
@@ -49,9 +49,9 @@
     <string name="search_hint">Search</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="status_saved">SAVED</string>
-    <string name="warning_site_not_null">Account can not be NULL</string>
+    <string name="warning_site_not_null">Account can not be null</string>
 
-    <string name="choose_tag_hint">Search or create tag</string>
+    <string name="choose_tag_hint">Select or create a tag</string>
     <string name="choose_tag_dialog_title">Tag</string>
     <string name="choose_tag_dialog_new_tag">NEW TAG</string>
 
@@ -65,16 +65,16 @@
 
     <string name="cliped">Copy to clipboard</string>
     <string name="detail_quit_title">Quit</string>
-    <string name="detail_quit_msg">NOT SAVE! Do you want to drop changes?</string>
-    <string name="positive_quit">QUIT</string>
+    <string name="detail_quit_msg">Not saved! Do you want to drop changes?</string>
+    <string name="positive_quit">Quit</string>
 
     <!-- Welcome -->
-    <string name="first_pwd">Password required</string>
+    <string name="first_pwd">Please input password</string>
     <string name="sec_pwd">Password repeat</string>
     <string name="submit">LOGIN</string>
     <string name="welcome_tip_1">All your data is encrypted in local database.</string>
     <string name="welcome_tip_2">Main password is the only way to access the database.</string>
-    <string name="welcome_tip_3">If you forget the main password, data is just lost.</string>
+    <string name="welcome_tip_3">You can export/import database to/from your other device.</string>
     <string name="welcome_dialog_title">Reminder</string>
     <string name="welcome_hint">Please input the main password</string>
 
@@ -82,32 +82,32 @@
     <string name="settings_title">Settings</string>
     <string name="change_pwd">Change login password</string>
     <string name="change_pwd_succeed">Password saved</string>
-    <string name="change_pwd_failed">Change password faield</string>
-    <string name="change_pwd_not_null">Password can not null</string>
+    <string name="change_pwd_failed">Change password failed</string>
+    <string name="change_pwd_not_null">Password can not be null</string>
     <string name="change_pwd_wrong">Old password wrong</string>
     <string name="change_aes">Change AES password</string>
     <string name="change_db">Change Database password</string>
-    <string name="change_db_succeed">DB password saved</string>
-    <string name="change_db_failed">Change DB password failed</string>
-    <string name="change_db_not_null">DB password can not null</string>
-    <string name="change_db_short">DB password too short</string>
+    <string name="change_db_succeed">Database password saved</string>
+    <string name="change_db_failed">Change database password failed</string>
+    <string name="change_db_not_null">Database password can not null</string>
+    <string name="change_db_short">Database password too short</string>
     <string name="change_path">Choose file save path</string>
     <string name="encrypt_password">Encrypt password</string>
     <string name="encrypt_description">Encrypt description</string>
     <string name="set_time_out">Set auto lock time</string>
-    <string name="set_time_out_desc">When app go to background, it will be locked after a period.</string>
-    <string name="set_time_dialog_title">AutoLock Time</string>
-    <string name="import_data">Import</string>
-    <string name="import_db_password">Import db password</string>
-    <string name="import_db_error">Import db password wrong</string>
+    <string name="set_time_out_desc">When app go to background, it will be locked after a period</string>
+    <string name="set_time_dialog_title">Auto lock time</string>
+    <string name="import_data">Import database</string>
+    <string name="import_db_password">Please input the password of importing database</string>
+    <string name="import_db_error">The password of importing database was wrong</string>
     <string name="import_file_uri_error">Can not resolve this file</string>
-    <string name="import_data_succeed">Import DB successful</string>
-    <string name="export_data">Export</string>
+    <string name="import_data_succeed">Import database successful</string>
+    <string name="export_data">Export database</string>
     <string name="export_path">Export to: %1$s</string>
     <string name="export_failed">Export failed</string>
     <string name="export_dialog_msg">Database will be exported to /sdcard/encrypted(timestamp).db</string>
-    <string name="export_dialog_ok">EXPORT</string>
-    <string name="hint_new_db_password">Import database password</string>
+    <string name="export_dialog_ok">Export</string>
+    <string name="hint_new_db_password">Please input the password of importing database</string>
     <string name="about_label">About</string>
     <string name="about_dialog_title">About</string>
 
@@ -118,7 +118,7 @@
     <string name="delete_tag_ok">Delete tag succeed</string>
 
     <string name="dialog_title_del_tag">Warning</string>
-    <string name="dialog_content_del_tag">Do you want to delete this Tag?(Will not delete any account).</string>
+    <string name="dialog_content_del_tag">Do you want to delete this tag? (Will not delete any account)</string>
     <string name="dialog_yes_del_tag">Delete</string>
     <string name="dialog_no_del_tag">Cancel</string>
 

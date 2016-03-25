@@ -82,7 +82,11 @@ public class AccountDetailActivityPresenter extends Presenter {
      */
     public boolean checkChangeSavedAction(){
         ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).syncData();
-        return mLastSaveAccount.equalAllFields(mCurrentAccount);
+        if(mLastSaveAccount != null){
+            return mLastSaveAccount.equalAllFields(mCurrentAccount);
+        }else{
+            return true;
+        }
     }
 
     /******************** AccountDetailActivity RxJava ********************/

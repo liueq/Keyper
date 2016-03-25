@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
  */
 public class AdvanceSearchPresenter extends Presenter{
 
-	public final static String [] SEARCH_FIELDS = {"SITE", "NAME", "PASSWORD", "MAIL", "DESCRIPTION"};
+	public final static String [] SEARCH_FIELDS = {"ACCOUNT", "NAME", "PASSWORD", "MAIL", "DESCRIPTION"};
 	public HashMap<String, String> mSearchFieldToColumn = new HashMap<String, String>();
 	List<RecyclerFieldAdapter.SearchField> mSearchFields = new ArrayList<RecyclerFieldAdapter.SearchField>();
 	String mCurrentSearch;
