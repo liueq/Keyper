@@ -32,36 +32,63 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif-light"
             android:gravity="center|left"
             android:text="@string/welcome_hint"
             android:textColor="@color/primary_text"
             android:textSize="16sp"
-            android:fontFamily="sans-serif-light"
             tools:text="Please Input the main password" />
 
-        <EditText
-            android:id="@+id/pwd_1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:hint="@string/first_pwd"
-            android:inputType="textPassword"
-            android:textSize="16sp"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/pwd_1"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="@string/first_pwd"
+                android:inputType="textPassword"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_hide_1"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_remove_red_eye_close_grey600_24dp"
+                android:scaleType="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <EditText
             android:id="@+id/pwd_2"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_weight="1"
             android:hint="@string/sec_pwd"
             android:inputType="textPassword"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
+            <ImageView
+                android:id="@+id/iv_hide_2"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_remove_red_eye_close_grey600_24dp"
+                android:scaleType="center"/>
+            </LinearLayout>
         <TextView
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/commit_btn_bg"
             android:gravity="center"

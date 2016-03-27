@@ -21,6 +21,10 @@ public class SplashActivityPresenter extends Presenter {
 
     public boolean hasPassword = false;
 
+    //Visibility of password
+    public boolean mPasswordStatus1 = false;
+    public boolean mPasswordStatus2 = false;
+
     public String mMode;
 
     public final static String MODE_LAUNCH = "mode_launch";
@@ -69,5 +73,23 @@ public class SplashActivityPresenter extends Presenter {
                 Toast.makeText(activity, "Password Mismatch", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    /**
+     * return the  visibility of password 1
+     * @return the status after click
+     */
+    public boolean checkPassword1Action(){
+        mPasswordStatus1 = !mPasswordStatus1;
+        return mPasswordStatus1;
+    }
+
+    /**
+     * Check visibility of password 2
+     * @return the status after click
+     */
+    public boolean checkPassword2Action(){
+        mPasswordStatus2 = !mPasswordStatus2;
+        return mPasswordStatus2;
     }
 }

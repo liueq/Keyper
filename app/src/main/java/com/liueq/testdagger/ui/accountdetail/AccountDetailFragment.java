@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -31,6 +32,7 @@ import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.data.model.Account;
 import com.liueq.testdagger.data.model.Tag;
+import com.liueq.testdagger.utils.GoldenHammer;
 
 import java.util.ArrayList;
 
@@ -62,6 +64,8 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	ImageView mImageViewAdd;
 	@Bind(R.id.tv_tag_hint)
 	TextView mTextViewTagHint;
+	@Bind(R.id.tv_delete)
+	TextView mTextViewDelete;
 
 	@Bind(R.id.iv_jump)
 	ImageView mImageViewJump;
@@ -256,6 +260,10 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 
 			}
 		});
+
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+			mTextViewDelete.setElevation(GoldenHammer.pixelToDp(2, getActivity()));
+		}
 	}
 
 	@Override

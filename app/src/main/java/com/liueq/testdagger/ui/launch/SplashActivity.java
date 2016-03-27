@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.StringBuilderPrinter;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
+import com.liueq.testdagger.utils.GoldenHammer;
 
 import java.util.HashMap;
 
@@ -48,6 +51,10 @@ public class SplashActivity extends AppCompatActivity {
     TextView mTextViewSubmit;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.iv_hide_1)
+    ImageView mImageViewHide1;
+    @Bind(R.id.iv_hide_2)
+    ImageView mImageViewHide2;
 
     @Inject
     SplashActivityPresenter presenter;
@@ -64,12 +71,12 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initView(){
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.app_name);
 
         if(Build.VERSION.SDK_INT >= 21){
-            mToolbar.setElevation(10f);
+            mToolbar.setElevation(GoldenHammer.pixelToDp(4, this));
+            mTextViewSubmit.setElevation(GoldenHammer.pixelToDp(2, this));
         }
 
         SharedPreferences sp = getSharedPreferences(Constants.SP_NAME, MODE_PRIVATE);
@@ -78,13 +85,16 @@ public class SplashActivity extends AppCompatActivity {
                 Log.d(TAG, "initData password is not null");
             }
             mEditTextPwd2.setVisibility(View.GONE);
+            mImageViewHide2.setVisibility(View.GONE);
             presenter.hasPassword = true;
 
             mEditTextPwd1.requestFocus();
         }else{
             mEditTextPwd2.setVisibility(View.VISIBLE);
+            mImageViewHide2.setVisibility(View.VISIBLE);
             presenter.hasPassword = false;
         }
+
     }
 
     private void initData(){
@@ -146,12 +156,39 @@ public class SplashActivity extends AppCompatActivity {
         return presenter;
     }
 
-    @OnClick(R.id.submit)
-    public void submit(){
-        String password_1 = mEditTextPwd1.getText().toString();
-        String password_2 = mEditTextPwd2.getText().toString();
+    @OnClick({R.id.submit, R.id.iv_hide_1, R.id.iv_hide_2})
+    public void onClick(View view){
+        int id = view.getId();
+        if(id == R.id.submit){
+            String password_1 = mEditTextPwd1.getText().toString();
+            String password_2 = mEditTextPwd2.getText().toString();
 
-        presenter.login(password_1, password_2);
+            presenter.login(password_1, password_2);
+        }else if(id == R.id.iv_hide_1){
+            if(presenter.checkPassword1Action()){
+                //Showing
+                mImageViewHide1.setImageResource(R.mipmap.ic_remove_red_eye_grey600_24dp);
+                mEditTextPwd1.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            }else{
+                //Hiding
+                mImageViewHide1.setImageResource(R.mipmap.ic_remove_red_eye_close_grey600_24dp);
+                mEditTextPwd1.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD); //TODO Can not solve the problem that allowing input chinese, when the password is visible.
+            }
+
+            mEditTextPwd1.setSelection(mEditTextPwd1.getText().length());
+        }else if(id == R.id.iv_hide_2){
+            if(presenter.checkPassword2Action()){
+                //Showing
+                mImageViewHide2.setImageResource(R.mipmap.ic_remove_red_eye_grey600_24dp);
+                mEditTextPwd2.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            }else{
+                //Hiding
+                mImageViewHide2.setImageResource(R.mipmap.ic_remove_red_eye_close_grey600_24dp);
+                mEditTextPwd2.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+
+            mEditTextPwd2.setSelection(mEditTextPwd2.getText().length());
+        }
     }
 
     @Override

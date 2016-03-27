@@ -70,7 +70,7 @@
 
     <!-- Welcome -->
     <string name="first_pwd">Please input password</string>
-    <string name="sec_pwd">Password repeat</string>
+    <string name="sec_pwd">Please repeat password</string>
     <string name="submit">LOGIN</string>
     <string name="welcome_tip_1">All your data is encrypted in local database.</string>
     <string name="welcome_tip_2">Main password is the only way to access the database.</string>
@@ -113,6 +113,8 @@
 
     <string name="external_path">External Storage</string>
     <string name="internal_path">Internal Storage</string>
+
+    <string name="version">Version: %1$s</string>
 
     <!-- TagDetail -->
     <string name="delete_tag_ok">Delete tag succeed</string>
