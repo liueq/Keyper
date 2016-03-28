@@ -38,6 +38,8 @@ public class AccountDetailActivityPresenter extends Presenter {
     private Account mLastSaveAccount;
     private Account mCurrentAccount;
 
+    private boolean mPasswordStatus = false;
+
     SaveAccountListUC saveAccountListUC;
     GetAccountListUC getAccountListUC;
     DeleteAccountUC deleteAccountUC;
@@ -87,6 +89,15 @@ public class AccountDetailActivityPresenter extends Presenter {
         }else{
             return true;
         }
+    }
+
+    /**
+     * Return the status after click
+     * @return
+     */
+    public boolean checkPasswordStatusAction(){
+        mPasswordStatus = !mPasswordStatus;
+        return mPasswordStatus;
     }
 
     /******************** AccountDetailActivity RxJava ********************/

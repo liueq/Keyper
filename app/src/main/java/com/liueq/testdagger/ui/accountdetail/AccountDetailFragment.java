@@ -17,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -79,6 +80,8 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	ImageView mImageViewCopyMail;
 	@Bind(R.id.iv_copy_description)
 	ImageView mImageViewCopyDescription;
+	@Bind(R.id.iv_hide)
+	ImageView mImageViewHide;
 
 	@Bind(R.id.linear)
 	LinearLayout mLinearLayout;
@@ -312,7 +315,7 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		mHorizontalTagAdapter.notifyDataSetChanged();
     }
 
-	@OnClick({R.id.tv_delete, R.id.iv_add, R.id.iv_jump, R.id.iv_copy_site, R.id.iv_copy_name, R.id.iv_copy_password, R.id.iv_copy_mail, R.id.iv_copy_description})
+	@OnClick({R.id.tv_delete, R.id.iv_add, R.id.iv_jump, R.id.iv_copy_site, R.id.iv_copy_name, R.id.iv_copy_password, R.id.iv_copy_mail, R.id.iv_copy_description, R.id.iv_hide})
     public void onClick(View view){
 		int id = view.getId();
 		if(id == R.id.tv_delete) {
@@ -360,6 +363,18 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		} else if (id == R.id.iv_copy_description){
 			String text = mEditTextDesc.getText().toString().trim();
 			mPresenter.clipAction(text);
+		} else if (id == R.id.iv_hide){
+			if(mPresenter.checkPasswordStatusAction()){
+				//Showing
+				mImageViewHide.setImageResource(R.mipmap.ic_remove_red_eye_grey600_24dp);
+				mEditTextPwd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+			}else{
+				//Hiding
+				mImageViewHide.setImageResource(R.mipmap.ic_remove_red_eye_close_grey600_24dp);
+				mEditTextPwd.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+			}
+
+			mEditTextPwd.setSelection(mEditTextPwd.getText().length());
 		}
 	}
 

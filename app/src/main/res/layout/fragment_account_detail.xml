@@ -236,6 +236,7 @@
                         android:background="@null"
                         android:singleLine="true"
                         android:textSize="16sp"
+                        android:inputType="textPassword"
                         tools:text="******"/>
 
                     <ImageView
@@ -245,6 +246,14 @@
                         android:layout_gravity="center"
                         android:src="@mipmap/ic_content_copy_grey600_18dp"
                         android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/iv_hide"
+                        android:layout_width="35dp"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/ic_remove_red_eye_close_grey600_24dp"
+                        android:scaleType="center"/>
+
                 </LinearLayout>
 
 
