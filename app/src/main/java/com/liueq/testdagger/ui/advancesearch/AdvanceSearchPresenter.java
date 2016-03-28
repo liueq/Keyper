@@ -1,5 +1,7 @@
 package com.liueq.testdagger.ui.advancesearch;
 
+import com.liueq.testdagger.R;
+import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.database.DBTables;
 import com.liueq.testdagger.data.model.Account;
@@ -21,7 +23,7 @@ import rx.schedulers.Schedulers;
  */
 public class AdvanceSearchPresenter extends Presenter{
 
-	public final static String [] SEARCH_FIELDS = {"ACCOUNT", "NAME", "PASSWORD", "MAIL", "DESCRIPTION"};
+	public static String [] SEARCH_FIELDS = TestApplication.getApplication().getResources().getStringArray(R.array.search_field);
 	public HashMap<String, String> mSearchFieldToColumn = new HashMap<String, String>();
 	List<RecyclerFieldAdapter.SearchField> mSearchFields = new ArrayList<RecyclerFieldAdapter.SearchField>();
 	String mCurrentSearch;
@@ -39,6 +41,8 @@ public class AdvanceSearchPresenter extends Presenter{
 	}
 
 	private void initFields(){
+		SEARCH_FIELDS = mActivity.getResources().getStringArray(R.array.search_field);
+
 		for(int i = 0; i < SEARCH_FIELDS.length; i++){
 			if(i == 0){
 				mSearchFields.add(new RecyclerFieldAdapter.SearchField(SEARCH_FIELDS[i], true));

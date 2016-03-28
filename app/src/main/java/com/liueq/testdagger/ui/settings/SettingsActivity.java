@@ -195,7 +195,7 @@ public class SettingsActivity extends BaseActivity {
     private void createChooseTimeDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.set_time_dialog_title);
-        String [] period = {"1 min", "5 min", "15 min", "1 hour", "No auto lock"};
+        String [] period = getResources().getStringArray(R.array.period);
 
         builder.setSingleChoiceItems(period, mPresenter.mMapPeriodToPos.get(mPresenter.getAutoLockPeriod()), new DialogInterface.OnClickListener() {
             @Override

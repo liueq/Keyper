@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="search_field">
+        <item>ACCOUNT</item>
+        <item>NAME</item>
+        <item>PASSWORD</item>
+        <item>MAIL</item>
+        <item>DESCRIPTION</item>
+    </string-array>
+
+    <string-array name="period">
+        <item>1 min</item>
+        <item>5 min</item>
+        <item>15 min</item>
+        <item>1 hour</item>
+        <item>No auto lock</item>
+    </string-array>
+</resources>

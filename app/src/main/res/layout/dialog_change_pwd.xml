@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="Old password required"/>
+            android:hint="@string/change_pwd_hint_old"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="New password required"/>
+            android:hint="@string/change_pwd_hint_new"/>
     </android.support.design.widget.TextInputLayout>
 
 

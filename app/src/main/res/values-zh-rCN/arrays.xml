@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="search_field">
+        <item>账户</item>
+        <item>用户名</item>
+        <item>密码</item>
+        <item>邮箱</item>
+        <item>更多描述</item>
+    </string-array>
+
+    <string-array name="period">
+        <item>1分钟</item>
+        <item>5分钟</item>
+        <item>15分钟</item>
+        <item>1小时</item>
+        <item>不自动上锁</item>
+    </string-array>
+</resources>

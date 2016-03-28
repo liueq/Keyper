@@ -80,13 +80,11 @@
 
     <!-- Settings-->
     <string name="settings_title">Settings</string>
-    <string name="change_pwd">Change main password</string>
+    <string name="change_pwd">Change login password</string>
     <string name="change_pwd_succeed">Password saved</string>
     <string name="change_pwd_failed">Change password failed</string>
     <string name="change_pwd_not_null">Password can not be null</string>
     <string name="change_pwd_wrong">Old password wrong</string>
-    <string name="change_pwd_hint_old">Please input current password</string>
-    <string name="change_pwd_hint_new">Please input new password</string>
     <string name="change_aes">Change AES password</string>
     <string name="change_db">Change Database password</string>
     <string name="change_db_succeed">Database password saved</string>

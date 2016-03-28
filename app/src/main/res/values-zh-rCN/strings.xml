@@ -1,0 +1,128 @@
+<resources>
+    <string name="app_name">Keyper</string>
+
+    <!-- Common -->
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="no_result">没有结果</string>
+
+    <!-- Main -->
+    <string name="hello_world">Hello world!</string>
+    <string name="action_advance_search">高级搜索</string>
+    <string name="action_settings">设置</string>
+    <string name="main_activity_title">Keyper</string>
+
+    <string name="tab_all">全部</string>
+    <string name="tab_star">标星</string>
+    <string name="tab_tag">标签</string>
+    <string name="tab_all_hint">全部账户</string>
+    <string name="tab_star_hint">标星账户</string>
+    <string name="tab_tag_hint">标签</string>
+
+    <string name="hint_quick_search">快速搜索</string>
+    <string name="hint_search">搜索</string>
+    <string name="search_box_shared">search_box_shared</string>
+    <string name="search_field_site">账户</string>
+    <string name="search_field_name">用户名</string>
+    <string name="search_field_password">密码</string>
+    <string name="search_field_mail">邮箱</string>
+    <string name="search_field_description">更多描述</string>
+
+    <string name="toast_sync_db">Sync Database Completed</string>
+
+    <!-- AccountDetail -->
+    <string name="tag">标签</string>
+    <string name="tag_hint">暂无标签</string>
+    <string name="site">账户</string>
+    <string name="name">用户名</string>
+    <string name="password">密码</string>
+    <string name="mail">邮箱</string>
+    <string name="description">更多描述</string>
+    <string name="save">保存</string>
+    <string name="delete">删除</string>
+
+    <string name="action_info">信息</string>
+    <string name="action_star">标星</string>
+    <string name="action_unstar">取消标星</string>
+    <string name="action_delete">删除</string>
+    <string name="action_save">保存</string>
+    <string name="search_hint">搜索</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="status_saved">已保存</string>
+    <string name="warning_site_not_null">账户不能为空</string>
+
+    <string name="choose_tag_hint">搜索或创建一个标签</string>
+    <string name="choose_tag_dialog_title">标签</string>
+    <string name="choose_tag_dialog_new_tag">创建标签</string>
+
+    <string name="dialog_title_delete">注意</string>
+    <string name="dialog_content_delete">确定要删除此账户？</string>
+    <string name="dialog_yes_delete">删除</string>
+    <string name="dialog_no_delete">取消</string>
+    <string name="dialog_title_info">信息</string>
+    <string name="dialog_info_create">创建时间: %1$s</string>
+    <string name="dialog_info_update">修改时间: %1$s</string>
+
+    <string name="cliped">已复制到剪切板</string>
+    <string name="detail_quit_title">确认离开</string>
+    <string name="detail_quit_msg">修改还未保存，是否要放弃所有修改？</string>
+    <string name="positive_quit">离开</string>
+
+    <!-- Welcome -->
+    <string name="first_pwd">请输入密码</string>
+    <string name="sec_pwd">请重复密码</string>
+    <string name="submit">登入</string>
+    <string name="welcome_tip_1">您的所有数据都是加密保存在本地数据库中。</string>
+    <string name="welcome_tip_2">主密码是唯一打开加密数据库的方式。</string>
+    <string name="welcome_tip_3">您可以在其它设备之间相互导入或导出数据库。</string>
+    <string name="welcome_dialog_title">提示</string>
+    <string name="welcome_hint">请输入主密码</string>
+
+    <!-- Settings-->
+    <string name="settings_title">设置</string>
+    <string name="change_pwd">修改主密码</string>
+    <string name="change_pwd_succeed">修改密码成功</string>
+    <string name="change_pwd_failed">修改密码失败</string>
+    <string name="change_pwd_not_null">密码不能为空</string>
+    <string name="change_pwd_wrong">输入的旧密码错误</string>
+    <string name="change_pwd_hint_old">请输入当前密码</string>
+    <string name="change_pwd_hint_new">请输入新密码</string>
+    <string name="change_db">修改数据库密码</string>
+    <string name="change_db_succeed">修改数据库密码成功</string>
+    <string name="change_db_failed">修改数据库密码失败</string>
+    <string name="change_db_not_null">数据库密码不能为空</string>
+    <string name="change_db_short">数据库密码太短</string>
+    <string name="change_path">选择文件保存路径</string>
+    <string name="encrypt_password">加密密码</string>
+    <string name="encrypt_description">加密更多</string>
+    <string name="set_time_out">设置自动上锁时间</string>
+    <string name="set_time_out_desc">当应用进到后台一段时间之后，会需要再次输入主密码才能进入</string>
+    <string name="set_time_dialog_title">自动上锁时间</string>
+    <string name="import_data">导入数据库</string>
+    <string name="import_db_password">请输入导入数据库的密码</string>
+    <string name="import_db_error">导入数据库的密码错误</string>
+    <string name="import_file_uri_error">无法解析此文件</string>
+    <string name="import_data_succeed">导入数据库成功</string>
+    <string name="export_data">导出数据库</string>
+    <string name="export_path">导出到: %1$s</string>
+    <string name="export_failed">导出失败</string>
+    <string name="export_dialog_msg">数据库文件将会被导出到: /sdcard/encrypted(timestamp).db</string>
+    <string name="export_dialog_ok">导出</string>
+    <string name="hint_new_db_password">请输入导入数据库的密码</string>
+    <string name="about_label">关于</string>
+    <string name="about_dialog_title">关于</string>
+
+    <string name="external_path">External Storage</string>
+    <string name="internal_path">Internal Storage</string>
+
+    <string name="version">版本: %1$s</string>
+
+    <!-- TagDetail -->
+    <string name="delete_tag_ok">删除标签成功</string>
+
+    <string name="dialog_title_del_tag">注意</string>
+    <string name="dialog_content_del_tag">确定要删除此标签？（相关账户不会被删除）</string>
+    <string name="dialog_yes_del_tag">删除</string>
+    <string name="dialog_no_del_tag">取消</string>
+
+</resources>
