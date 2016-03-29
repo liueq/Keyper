@@ -36,6 +36,7 @@ import com.liueq.testdagger.data.model.Tag;
 import com.liueq.testdagger.utils.GoldenHammer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -87,6 +88,8 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 	LinearLayout mLinearLayout;
 	@Bind(R.id.recycler_tag)
 	RecyclerView mRecyclerTag;
+
+	private List<EditText> mEditList = new ArrayList<EditText>();
 
 	AccountDetailActivity mActivity;
 	AccountDetailActivityPresenter mPresenter;
@@ -267,6 +270,20 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 			mTextViewDelete.setElevation(GoldenHammer.pixelToDp(2, getActivity()));
 		}
+
+		mEditList.add(mEditTextSite);
+		mEditList.add(mEditTextName);
+		mEditList.add(mEditTextPwd);
+		mEditList.add(mEditTextMail);
+		mEditList.add(mEditTextDesc);
+
+		if(mPresenter != null){
+			if(mPresenter.getMode().equals(AccountDetailActivityPresenter.MODE_READ)){
+				intoReadMode();
+			}else if(mPresenter.getMode().equals(AccountDetailActivityPresenter.MODE_WRITE)){
+				intoWriteMode();
+			}
+		}
 	}
 
 	@Override
@@ -439,6 +456,10 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
         }else{
             Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.warning_site_not_null, Snackbar.LENGTH_SHORT);
             snackbar.show();
+
+			//When save failed, stay in write mode
+			mPresenter.intoWriteMode();
+			intoWriteMode();
         }
 	}
 
@@ -451,7 +472,22 @@ public class AccountDetailFragment extends Fragment implements HorizontalTagAdap
 			//Delete tag
 			if(item instanceof Tag){
 				mPresenter.removeTagAction((Tag) item);
+				saveData();
 			}
 		}
 	}
+
+	public void intoReadMode(){
+		for(EditText et : mEditList){
+			final String text = et.getText().toString().trim();
+			et.setEnabled(false);
+		}
+	}
+
+	public void intoWriteMode(){
+		for(EditText et : mEditList){
+			et.setEnabled(true);
+		}
+	}
+
 }

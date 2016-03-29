@@ -46,6 +46,10 @@ public class AccountDetailActivityPresenter extends Presenter {
     GetAccountDetailUC getAccountDetailUC;
     AddTagUC addTagUC;
 
+    public final static String MODE_WRITE = "mode_write";
+    public final static String MODE_READ = "mode_read";
+    private String mMode = MODE_WRITE;
+
     public AccountDetailActivityPresenter(AccountDetailActivity activity,
                                           SaveAccountListUC saveAccountListUC,
                                           GetAccountListUC getAccountListUC,
@@ -353,6 +357,7 @@ public class AccountDetailActivityPresenter extends Presenter {
             public void onNext(Tag tag) {
                 ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).getDialog().dismiss();
                 ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).updateUI(mCurrentAccount);
+                ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).saveData();
             }
         };
     }
@@ -391,6 +396,7 @@ public class AccountDetailActivityPresenter extends Presenter {
             public void call(Tag tag) {
                 ((ChooseTagDialog) getFragment(ChooseTagDialog.class)).dismiss();
                 ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).updateUI(mCurrentAccount);
+                ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).saveData();
             }
         };
     }
@@ -475,6 +481,28 @@ public class AccountDetailActivityPresenter extends Presenter {
 
     public boolean deleteAccount(){
         return deleteAccountUC.executeDB(mCurrentAccount);
+    }
+
+    public String getMode(){
+        return mMode;
+    }
+
+    public void intoReadMode(){
+        mMode = MODE_READ;
+        if(getFragment(AccountDetailFragment.class) != null){
+            ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).intoReadMode();
+        }
+
+        activity.changeMenuItemRead();
+    }
+
+    public void intoWriteMode(){
+        mMode = MODE_WRITE;
+        if(getFragment(AccountDetailFragment.class) != null) {
+            ((AccountDetailFragment) getFragment(AccountDetailFragment.class)).intoWriteMode();
+        }
+
+        activity.changeMenuItemWrite();
     }
 
 }

@@ -2,7 +2,6 @@ package com.liueq.testdagger.ui.tagdetail;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -14,14 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.model.Tag;
-import com.liueq.testdagger.ui.main.ListFragment;
 
 import javax.inject.Inject;
 
@@ -92,7 +89,7 @@ public class TagDetailActivity extends BaseActivity implements DialogInterface.O
 		int id = item.getItemId();
 		if(id == android.R.id.home){
 			onBackPressed();
-		}else if(id == R.id.action_delete){
+		}else if(id == R.id.action_save){
 			//Show Dialog
 			showDialog().show();
 		}

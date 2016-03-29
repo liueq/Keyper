@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".ui.main.MainActivity">
     <item
-        android:id="@+id/action_delete"
+        android:id="@+id/action_save"
         android:icon="@mipmap/ic_delete_white_24dp"
         android:title="Delete"
         app:showAsAction="always|collapseActionView"/>

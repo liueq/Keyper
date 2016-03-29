@@ -40,6 +40,8 @@ public class AccountDetailActivity extends BaseActivity{
     @Inject
     AccountDetailActivityPresenter mPresenter;
 
+    MenuItem mMenuItemSave;
+
 	/**
      * Launch this activity
      * @param activity from activity
@@ -81,6 +83,14 @@ public class AccountDetailActivity extends BaseActivity{
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment, AccountDetailFragment.newInstance());
         transaction.commit();
+
+        if(TextUtils.isEmpty(mPresenter.mId)){
+            //Write mode
+            mPresenter.intoWriteMode();
+        }else{
+            //Read mode
+            mPresenter.intoReadMode();
+        }
     }
 
     private void initData() {
@@ -108,12 +118,18 @@ public class AccountDetailActivity extends BaseActivity{
         getMenuInflater().inflate(R.menu.menu_account_detail, menu);
         //init
         MenuItem item = menu.findItem(R.id.action_star);
+        mMenuItemSave = menu.findItem(R.id.action_save);
         Account account = mPresenter.getCurrentAccount();
         if(account == null){
             return true;
         }
 
         item.setIcon(getStarIcon(account.is_stared));
+        if(mPresenter.getMode().equals(AccountDetailActivityPresenter.MODE_READ)){
+            mMenuItemSave.setIcon(R.mipmap.ic_mode_edit_white_24dp);
+        }else if(mPresenter.getMode().equals(AccountDetailActivityPresenter.MODE_WRITE)){
+            mMenuItemSave.setIcon(R.mipmap.ic_save_white_24dp);
+        }
         return true;
     }
 
@@ -142,9 +158,18 @@ public class AccountDetailActivity extends BaseActivity{
                 }
             }
 
-        }else if (id == R.id.action_delete) {
+        }else if (id == R.id.action_save) {
             //Save
-            mPresenter.saveDataToDB(mPresenter.getCurrentAccount());
+            if(mPresenter.getMode().equals(AccountDetailActivityPresenter.MODE_READ)){
+                //Current is read mode, into write mode
+                mPresenter.intoWriteMode();
+                item.setIcon(R.mipmap.ic_save_white_24dp);
+            }else if(mPresenter.getMode().equals(AccountDetailActivityPresenter.MODE_WRITE)){
+                //Current is write mode, save data and into read mode
+                mPresenter.saveDataToDB(mPresenter.getCurrentAccount());
+                mPresenter.intoReadMode();
+                item.setIcon(R.mipmap.ic_mode_edit_white_24dp);
+            }
             return true;
         }else if (id == R.id.action_info){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -229,5 +254,17 @@ public class AccountDetailActivity extends BaseActivity{
             }
         });
         builder.create().show();
+    }
+
+    public void changeMenuItemRead(){
+        if(mMenuItemSave != null){
+            mMenuItemSave.setIcon(R.mipmap.ic_mode_edit_white_24dp);
+        }
+    }
+
+    public void changeMenuItemWrite(){
+        if(mMenuItemSave != null){
+            mMenuItemSave.setIcon(R.mipmap.ic_save_white_24dp);
+        }
     }
 }
