@@ -110,11 +110,7 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.rl_import:
                 //Import DB
-                String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".db");
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
-                startActivityForResult(intent, REQUEST_CODE);
+                createImportDBWarningDialog();
                 break;
             case R.id.rl_export:
                 //Export DB: Show dialog
@@ -224,6 +220,30 @@ public class SettingsActivity extends BaseActivity {
         builder.create().show();
     }
 
+
+    private void createImportDBWarningDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.import_db_warning_dialog_title)
+                .setMessage(R.string.import_db_warning_dialog_msg)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".db");
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        intent.setType("*/*");
+                        startActivityForResult(intent, REQUEST_CODE);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create()
+                .show();
+    }
+
+    /**
+     * Dialog of input importing db password
+     * @param path
+     */
     private void createImportDBDialog(final String path){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.import_db_password);

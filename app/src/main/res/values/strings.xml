@@ -104,6 +104,8 @@
     <string name="import_db_error">The password of importing database was wrong</string>
     <string name="import_file_uri_error">Can not resolve this file</string>
     <string name="import_data_succeed">Import database successful</string>
+    <string name="import_db_warning_dialog_title">Warning</string>
+    <string name="import_db_warning_dialog_msg">Current database will be replaced by the importing database, the data before importing will lost</string>
     <string name="export_data">Export database</string>
     <string name="export_path">Export to: %1$s</string>
     <string name="export_failed">Export failed</string>

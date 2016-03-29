@@ -1,6 +1,7 @@
 package com.liueq.testdagger.ui.advancesearch;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -91,7 +93,9 @@ public class AdvanceSearchActivity extends BaseActivity implements OnItemClickLi
 
 		getBundle();
 		initView();
-		doSearch();
+		if(!TextUtils.isEmpty(mPresenter.mCurrentSearch)){
+			doSearch();
+		}
 	}
 
 	private void getBundle(){
@@ -194,6 +198,7 @@ public class AdvanceSearchActivity extends BaseActivity implements OnItemClickLi
 	}
 
 	private void doSearch(){
+		mTextViewNoResult.setVisibility(View.GONE);
 		mRecyclerResult.setVisibility(View.INVISIBLE);
 		mProgressBar.setVisibility(View.VISIBLE);
 		mPresenter.searchAction();
@@ -210,5 +215,13 @@ public class AdvanceSearchActivity extends BaseActivity implements OnItemClickLi
 		}else{
 			mTextViewNoResult.setVisibility(View.GONE);
 		}
+	}
+
+	public void showProgressBar(){
+
+	}
+
+	public void hideProgressBar(){
+
 	}
 }

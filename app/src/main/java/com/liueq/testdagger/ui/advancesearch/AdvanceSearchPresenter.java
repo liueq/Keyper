@@ -10,6 +10,7 @@ import com.liueq.testdagger.domain.interactor.SearchAccountUC;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -60,8 +61,10 @@ public class AdvanceSearchPresenter extends Presenter{
 		searchAction(mCurrentSearch, mSearchFieldToColumn.get(mCurrentField));
 	}
 	public void searchAction(String key, String field){
+		System.out.println("liueq : before rxjava --> " + System.currentTimeMillis());
 		searchOb(key, field).subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
+				.delaySubscription(500, TimeUnit.MILLISECONDS)
 				.subscribe(searchSub());
 	}
 
@@ -70,7 +73,9 @@ public class AdvanceSearchPresenter extends Presenter{
 		return Observable.create(new Observable.OnSubscribe<List<Account>>() {
 			@Override
 			public void call(Subscriber<? super List<Account>> subscriber) {
+				System.out.println("liueq : before search --> " + System.currentTimeMillis());
 				subscriber.onNext(mSearchAccontUC.searchByField(key, field));
+				System.out.println("liueq : after search --> " + System.currentTimeMillis());
 			}
 		});
 	}
@@ -79,10 +84,11 @@ public class AdvanceSearchPresenter extends Presenter{
 		return new Action1<List<Account>>() {
 			@Override
 			public void call(List<Account> accounts) {
-				 mActivity.updateUI(accounts);
+				System.out.println("liueq : Action1 call --> " + System.currentTimeMillis());
+				System.out.println("liueq : thread --> " + Thread.currentThread().getName());
+				mActivity.updateUI(accounts);
 			}
 		};
 	}
-
 
 }

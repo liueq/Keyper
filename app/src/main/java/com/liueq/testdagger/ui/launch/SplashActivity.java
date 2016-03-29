@@ -11,21 +11,17 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.StringBuilderPrinter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.liueq.testdagger.BuildConfig;
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
-import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
@@ -221,4 +217,8 @@ public class SplashActivity extends AppCompatActivity {
         activity.startActivity(intent);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
 }
