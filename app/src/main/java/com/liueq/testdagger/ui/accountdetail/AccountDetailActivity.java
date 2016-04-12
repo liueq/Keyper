@@ -196,7 +196,7 @@ public class AccountDetailActivity extends BaseActivity{
         if(state){
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 drawable = getResources().getDrawable(R.mipmap.ic_star_black_24dp);
-                drawable.setTint(getResources().getColor(R.color.yellow));
+                drawable.setTint(getResources().getColor(R.color.colorAccent));
             }else{
                 //Compat
                 drawable = getResources().getDrawable(R.mipmap.ic_star_white_24dp);

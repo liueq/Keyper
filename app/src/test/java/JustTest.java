@@ -14,7 +14,15 @@ public class JustTest {
 
         int max = Integer.MAX_VALUE;
         max = Integer.MAX_VALUE + 1;
-        System.out.println("liueq : max is --> " + max);
+        System.out.println("<html>\n" +
+                "\t<head>\n" +
+                "\t\t<title>title</title>\n" +
+                "\t</head>\n" +
+                "\t<body>\n" +
+                "\t\t<p> Hello world</p>\n" +
+                "\t</body>\n" +
+                "</html>\n" + max);
+
 
         assert true;
     }

@@ -94,7 +94,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         Drawable drawable = null;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             drawable = mContext.getDrawable(R.mipmap.ic_star_black_24dp);
-            drawable.setTint(mContext.getResources().getColor(R.color.yellow));
+            drawable.setTint(mContext.getResources().getColor(R.color.colorAccent));
         }else{
         	drawable = mContext.getResources().getDrawable(R.mipmap.ic_star_grey600_24dp);
         }
