@@ -114,6 +114,7 @@
     <string name="hint_new_db_password">Please input the password of importing database</string>
     <string name="about_label">About</string>
     <string name="about_dialog_title">About</string>
+    <string name="permission_delay">Permission delay, can not import or export database</string>
 
     <string name="external_path">External Storage</string>
     <string name="internal_path">Internal Storage</string>
