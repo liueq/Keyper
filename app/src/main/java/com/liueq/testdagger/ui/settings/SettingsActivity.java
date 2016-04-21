@@ -38,7 +38,7 @@ import butterknife.OnClick;
  */
 public class SettingsActivity extends BaseActivity {
 
-    public final static int REQUEST_CODE = 1234;
+    public final static int REQUEST_CODE = 1934;
     public final static int REQUEST_STORAGE_PERMISSION = 3320;
 
     @Bind(R.id.toolbar)
@@ -343,10 +343,11 @@ public class SettingsActivity extends BaseActivity {
     @TargetApi(Build.VERSION_CODES.M)
     public boolean requestPermission(){
         String storage_permssion = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-        int has_permissino = checkSelfPermission(storage_permssion);
+        int has_permission = checkSelfPermission(storage_permssion);
+
         String[] permissions = new String[]{storage_permssion};
 
-        if(has_permissino != PackageManager.PERMISSION_GRANTED){
+        if(has_permission != PackageManager.PERMISSION_GRANTED){
             requestPermissions(permissions, REQUEST_STORAGE_PERMISSION);
             return  false;
         }else{
