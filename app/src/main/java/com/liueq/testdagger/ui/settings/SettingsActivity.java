@@ -17,8 +17,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.liueq.testdagger.BuildConfig;
@@ -51,8 +53,10 @@ public class SettingsActivity extends BaseActivity {
     RelativeLayout mRelativeExport;
     @Bind(R.id.rl_about)
     RelativeLayout mRelativeAbout;
-//    @Bind(R.id.tv_show_db)
-//    TextView mTextViewDb;
+    @Bind(R.id.rl_fingerprint)
+    RelativeLayout mRelativeFingerprint;
+    @Bind(R.id.switch_fingerprint)
+    Switch mSwitchFingerprint;
     @Bind(R.id.rl_set_timeout)
     RelativeLayout mRelativeLayoutTimeout;
 
@@ -77,16 +81,27 @@ public class SettingsActivity extends BaseActivity {
         if(Build.VERSION.SDK_INT > 21){
             mToolbar.setElevation(8);
         }
+
+        mSwitchFingerprint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mPresenter.setFingerprint(true);
+                    Toast.makeText(SettingsActivity.this, "Fingerprint on", Toast.LENGTH_SHORT).show();
+                }else{
+                    mPresenter.setFingerprint(false);
+                    Toast.makeText(SettingsActivity.this, "Fingerprint off", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mSwitchFingerprint.setChecked(mPresenter.isFingerprintEnable());
     }
 
     private void initData(){
         mPresenter.loadDataAction();
 
     }
-
-//    public void updateDBPassword(String password){
-//        mTextViewDb.setText(password);
-//    }
 
     @Override
     protected void setupActivityComponent() {
@@ -100,16 +115,13 @@ public class SettingsActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_set_timeout, R.id.rl_about})
+    @OnClick({R.id.rl_change_pwd, R.id.rl_import, R.id.rl_export, R.id.rl_set_timeout, R.id.rl_fingerprint, R.id.rl_about})
     public void click(View v){
         int id = v.getId();
         switch (id){
             case R.id.rl_change_pwd:
                 createChangePasswordDialog();
                 break;
-//            case R.id.rl_change_db:
-//                createChangeDBDialog();
-//                break;
             case R.id.rl_set_timeout:
                 createChooseTimeDialog();
                 break;
@@ -154,6 +166,9 @@ public class SettingsActivity extends BaseActivity {
                             .create()
                             .show();
                 }
+                break;
+            case R.id.rl_fingerprint:
+                mSwitchFingerprint.toggle();
                 break;
             case R.id.rl_about:
                 String version = BuildConfig.VERSION_NAME;

@@ -11,6 +11,7 @@ import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.domain.interactor.SharedPUC;
 import com.liueq.testdagger.utils.BackUpTool;
+import com.liueq.testdagger.utils.SharedPreferencesUtils;
 
 import java.util.HashMap;
 
@@ -132,6 +133,20 @@ public class SettingsActivityPresenter extends Presenter {
         HashMap<String, String> map = new HashMap<String, String>();
         map.put(Constants.SP_AUTO_LOCK_PERIOD, String.valueOf(period));
         shared.saveProperties(map);
+    }
+
+    public boolean isFingerprintEnable(){
+        String isEnable = SharedPreferencesUtils.get(Constants.SP_NAME, Constants.SP_FINGERPRINT);
+        if(TextUtils.isEmpty(isEnable)){
+            SharedPreferencesUtils.set(Constants.SP_NAME, Constants.SP_FINGERPRINT, "0");
+            return false;
+        }else {
+            return isEnable.equals("1");
+        }
+    }
+
+    public void setFingerprint(boolean enable){
+        SharedPreferencesUtils.set(Constants.SP_NAME, Constants.SP_FINGERPRINT, enable ? "1" : "0");
     }
 
     /******************** RxJava ********************/

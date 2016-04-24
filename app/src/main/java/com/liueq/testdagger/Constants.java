@@ -1,7 +1,5 @@
 package com.liueq.testdagger;
 
-import android.os.Environment;
-
 /**
  * Created by liueq on 14/7/15.
  * Constant Values
@@ -16,6 +14,7 @@ public class Constants {
 
     public final static String SP_NAME = "properties";
 
+    /*sp properties*/
     public final static String SP_PWD = "sp_password";
 
     public final static String SP_DB_PWD = "sp_db_password";
@@ -25,5 +24,7 @@ public class Constants {
     public final static String SP_SHOW_TIME = "sp_show_time";
 
     public final static String SP_AUTO_LOCK_PERIOD = "sp_auto_lock_period";
+
+    public final static String SP_FINGERPRINT = "sp_fingerprint";
 
 }
