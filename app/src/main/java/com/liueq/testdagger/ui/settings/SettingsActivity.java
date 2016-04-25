@@ -28,6 +28,7 @@ import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
+import com.liueq.testdagger.utils.FingerprintUtils;
 import com.liueq.testdagger.utils.PermissionUtils;
 
 import javax.inject.Inject;
@@ -83,25 +84,29 @@ public class SettingsActivity extends BaseActivity {
             mToolbar.setElevation(8);
         }
 
-        mSwitchFingerprint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    mPresenter.setFingerprint(true);
-                    Toast.makeText(SettingsActivity.this, "Fingerprint on", Toast.LENGTH_SHORT).show();
-                }else{
-                    mPresenter.setFingerprint(false);
-                    Toast.makeText(SettingsActivity.this, "Fingerprint off", Toast.LENGTH_SHORT).show();
+        String can_fingerprint = FingerprintUtils.canUseFingerprint();
+        if(TextUtils.isEmpty(can_fingerprint)){
+            mSwitchFingerprint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        mPresenter.setFingerprint(true);
+                        Toast.makeText(SettingsActivity.this, "Fingerprint on", Toast.LENGTH_SHORT).show();
+                    }else{
+                        mPresenter.setFingerprint(false);
+                        Toast.makeText(SettingsActivity.this, "Fingerprint off", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
 
-        mSwitchFingerprint.setChecked(mPresenter.isFingerprintEnable());
+            mSwitchFingerprint.setChecked(mPresenter.isFingerprintEnable());
+        }else{
+            mSwitchFingerprint.setEnabled(false);
+        }
     }
 
     private void initData(){
         mPresenter.loadDataAction();
-
     }
 
     @Override
@@ -149,7 +154,12 @@ public class SettingsActivity extends BaseActivity {
                 }
                 break;
             case R.id.rl_fingerprint:
-                mSwitchFingerprint.toggle();
+                String can_fingerprint = FingerprintUtils.canUseFingerprint();
+                if(TextUtils.isEmpty(can_fingerprint)){
+                    mSwitchFingerprint.toggle();
+                }else{
+                    Toast.makeText(SettingsActivity.this, can_fingerprint, Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.rl_about:
                 String version = BuildConfig.VERSION_NAME;

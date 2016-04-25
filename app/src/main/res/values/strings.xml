@@ -113,6 +113,9 @@
     <string name="export_dialog_ok">Export</string>
     <string name="hint_new_db_password">Please input the password of importing database</string>
     <string name="fingerprint">Using fingerprint to login</string>
+    <string name="fingerprint_no_sensor">No fingerprint sensor in this device</string>
+    <string name="fingerprint_no_enroll">No enrolled fingerprint in system</string>
+    <string name="fingerprint_version_too_low">Fingerprint is available in Marshmallow and higher</string>
     <string name="about_label">About</string>
     <string name="about_dialog_title">About</string>
     <string name="permission_delay">Permission delay, can not import or export database</string>
