@@ -28,6 +28,7 @@ import com.liueq.testdagger.R;
 import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.BaseActivity;
 import com.liueq.testdagger.base.Presenter;
+import com.liueq.testdagger.utils.PermissionUtils;
 
 import javax.inject.Inject;
 
@@ -127,32 +128,12 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.rl_import:
                 //Import DB
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(requestPermission()){
-                        createImportDBWarningDialog();
-                    }
-                }else{
+                if(!PermissionUtils.requestPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                     createImportDBWarningDialog();
                 }
                 break;
             case R.id.rl_export:
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(requestPermission()){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle(R.string.export_data)
-                                .setMessage(R.string.export_dialog_msg)
-                                .setPositiveButton(R.string.export_dialog_ok, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        mPresenter.exportDBAction();
-                                    }
-                                })
-                                .setNegativeButton(R.string.cancel, null)
-                                .create()
-                                .show();
-                    }
-                }else{
-                    //Export DB: Show dialog
+                if(!PermissionUtils.requestPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle(R.string.export_data)
                             .setMessage(R.string.export_dialog_msg)
@@ -355,31 +336,14 @@ public class SettingsActivity extends BaseActivity {
         return true;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    public boolean requestPermission(){
-        String storage_permssion = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-        int has_permission = checkSelfPermission(storage_permssion);
-
-        String[] permissions = new String[]{storage_permssion};
-
-        if(has_permission != PackageManager.PERMISSION_GRANTED){
-            requestPermissions(permissions, REQUEST_STORAGE_PERMISSION);
-            return  false;
-        }else{
-            return true;
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case REQUEST_STORAGE_PERMISSION:
-                if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(SettingsActivity.this, R.string.permission_delay, Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PermissionUtils.getRequestCode(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(SettingsActivity.this, R.string.permission_delay, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }
