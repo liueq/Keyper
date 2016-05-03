@@ -43,7 +43,6 @@ import butterknife.OnClick;
 public class SettingsActivity extends BaseActivity {
 
     public final static int REQUEST_CODE = 1934;
-    public final static int REQUEST_STORAGE_PERMISSION = 3320;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
