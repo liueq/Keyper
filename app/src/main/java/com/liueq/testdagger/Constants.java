@@ -27,4 +27,6 @@ public class Constants {
 
     public final static String SP_FINGERPRINT = "sp_fingerprint";
 
+    public final static String SP_FINGERPRINT_PASSWORD = "sp_fingerprint_pass";//To use fingerprint, must save DB password to local filesystem
+
 }

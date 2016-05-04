@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -138,8 +140,18 @@ public class SplashActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.ok, null)
                     .create()
                     .show();
+
+            return true;
+        }else if(item.getItemId() == R.id.action_fingerprint){
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.add(FingerprintDialog.newInstance(), null);
+            transaction.commit();
+
+            return true;
+        }else{
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     protected void setupActivityComponent() {

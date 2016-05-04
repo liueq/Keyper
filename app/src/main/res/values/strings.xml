@@ -77,6 +77,8 @@
     <string name="welcome_tip_3">You can export/import database to/from your other device.</string>
     <string name="welcome_dialog_title">Reminder</string>
     <string name="welcome_hint">Please input the main password</string>
+    <string name="welcome_menu_action_fp">Fingerprint</string>
+    <string name="welcome_dialog_fingerprint_title">Use fingerprint to login</string>
 
     <!-- Settings-->
     <string name="settings_title">Settings</string>

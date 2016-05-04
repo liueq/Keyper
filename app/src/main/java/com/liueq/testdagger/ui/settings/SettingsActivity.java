@@ -1,7 +1,6 @@
 package com.liueq.testdagger.ui.settings;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;

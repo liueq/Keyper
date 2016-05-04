@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.liueq.testdagger.Constants;
 import com.liueq.testdagger.R;
+import com.liueq.testdagger.TestApplication;
 import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.database.SQLCipherOpenHelper;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
@@ -147,6 +148,11 @@ public class SettingsActivityPresenter extends Presenter {
 
     public void setFingerprint(boolean enable){
         SharedPreferencesUtils.set(Constants.SP_NAME, Constants.SP_FINGERPRINT, enable ? "1" : "0");
+        if(enable){
+            SharedPreferencesUtils.set(Constants.SP_NAME, Constants.SP_FINGERPRINT_PASSWORD, TestApplication.getDBPassword());//To use fingerprint, must save password in local
+        }else{
+            SharedPreferencesUtils.set(Constants.SP_NAME, Constants.SP_FINGERPRINT_PASSWORD, "");
+        }
     }
 
     /******************** RxJava ********************/

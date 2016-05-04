@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_fingerprint"
+          android:icon="@mipmap/ic_fingerprint_white_24dp"
+          android:title="@string/welcome_menu_action_fp"
+          android:orderInCategory="80"
+          app:showAsAction="always" />
+
     <item android:id="@+id/action_info"
         android:icon="@mipmap/ic_info_outline_white_24dp"
         android:title="@string/action_info"
