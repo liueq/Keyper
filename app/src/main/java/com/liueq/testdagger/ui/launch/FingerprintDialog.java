@@ -63,8 +63,6 @@ public class FingerprintDialog extends DialogFragment {
 		} else {
 			getDialog().setTitle(R.string.welcome_dialog_fingerprint_title);
 		}
-
-		mPresenter.authenticateAction();
 	}
 
 	@Override
@@ -73,4 +71,15 @@ public class FingerprintDialog extends DialogFragment {
 		mPresenter.cancelAuthAction();
 	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		mPresenter.cancelAuthAction();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mPresenter.authenticateAction();
+	}
 }

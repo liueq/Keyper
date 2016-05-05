@@ -181,7 +181,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 
 		@Override
 		public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-			View view = LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_1, parent, false);
+			View view = LayoutInflater.from(mContext).inflate(R.layout.accountdetial_adapter_tag, parent, false);
 			ViewHolder viewHolder = new ViewHolder(view);
 
 			return viewHolder;
@@ -212,10 +212,10 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 
 		public class ViewHolder extends RecyclerView.ViewHolder{
 
-			@Bind(android.R.id.text1)
+			@Bind(R.id.tvName)
 			public TextView mTextView;
 
-			public final static int ID_TextView = android.R.id.text1;
+			public final static int ID_TextView = R.id.tvName;
 
 			public ViewHolder(View itemView) {
 				super(itemView);
