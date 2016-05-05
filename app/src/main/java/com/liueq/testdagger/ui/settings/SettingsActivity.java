@@ -89,10 +89,8 @@ public class SettingsActivity extends BaseActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked){
                         mPresenter.setFingerprint(true);
-                        Toast.makeText(SettingsActivity.this, "Fingerprint on", Toast.LENGTH_SHORT).show();
                     }else{
                         mPresenter.setFingerprint(false);
-                        Toast.makeText(SettingsActivity.this, "Fingerprint off", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

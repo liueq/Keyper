@@ -79,6 +79,7 @@
     <string name="welcome_hint">Please input the main password</string>
     <string name="welcome_menu_action_fp">Fingerprint</string>
     <string name="welcome_dialog_fingerprint_title">Use fingerprint to login</string>
+    <string name="welcome_dialog_fingerprint_mismatch">Fingerprint mismatch</string>
 
     <!-- Settings-->
     <string name="settings_title">Settings</string>

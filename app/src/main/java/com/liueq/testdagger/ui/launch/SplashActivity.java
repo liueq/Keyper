@@ -28,6 +28,7 @@ import com.liueq.testdagger.base.Presenter;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepo;
 import com.liueq.testdagger.data.repository.SharedPreferenceRepoImpl;
 import com.liueq.testdagger.utils.GoldenHammer;
+import com.liueq.testdagger.utils.SharedPreferencesUtils;
 
 import java.util.HashMap;
 
@@ -93,6 +94,9 @@ public class SplashActivity extends AppCompatActivity {
             presenter.hasPassword = false;
         }
 
+        if(isShowFingerButton()){
+            showFingerprintDialog();
+        }
     }
 
     private void initData(){
@@ -117,10 +121,24 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    private boolean isShowFingerButton(){
+        if(SharedPreferencesUtils.get(Constants.SP_NAME, Constants.SP_FINGERPRINT) != null){
+            return SharedPreferencesUtils.get(Constants.SP_NAME, Constants.SP_FINGERPRINT).equals("1");
+        }else{
+            return false;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_splash, menu);
-        return super.onCreateOptionsMenu(menu);
+        if(!isShowFingerButton()){
+            MenuItem item = menu.findItem(R.id.action_fingerprint);
+            item.setVisible(false);
+            return true;
+        }else{
+            return super.onCreateOptionsMenu(menu);
+        }
     }
 
     @Override
@@ -143,15 +161,18 @@ public class SplashActivity extends AppCompatActivity {
 
             return true;
         }else if(item.getItemId() == R.id.action_fingerprint){
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(FingerprintDialog.newInstance(), null);
-            transaction.commit();
-
+            showFingerprintDialog();
             return true;
         }else{
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showFingerprintDialog(){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(FingerprintDialog.newInstance(), null);
+        transaction.commit();
     }
 
     protected void setupActivityComponent() {
