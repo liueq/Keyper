@@ -27,8 +27,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingTop="10dp" >
 
             <EditText
                 android:id="@+id/et_tag"
@@ -36,6 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:hint="@string/choose_tag_hint"/>
 
             <TextView

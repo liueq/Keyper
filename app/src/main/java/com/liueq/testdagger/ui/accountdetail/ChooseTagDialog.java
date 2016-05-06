@@ -1,11 +1,14 @@
 package com.liueq.testdagger.ui.accountdetail;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -59,6 +62,7 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setStyle(AppCompatDialogFragment.STYLE_NO_TITLE, 0);
 
 		mActivity = (AccountDetailActivity) getActivity();
 		mPresenter = (AccountDetailActivityPresenter) mActivity.getPresenter();
@@ -71,11 +75,6 @@ public class ChooseTagDialog extends DialogFragment implements OnItemClickListen
 		View view = inflater.inflate(R.layout.dialog_choose_tag, container, false);
 		ButterKnife.bind(this, view);
 
-		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
-			getDialog().setTitle(R.string.tag);
-		}else{
-			mTextViewTitle.setVisibility(View.VISIBLE);
-		}
 		initView();
 		return view;
 	}
