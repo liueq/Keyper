@@ -1,8 +1,8 @@
 import android.content.Context;
 
-import com.liueq.testdagger.data.model.Account;
-import com.liueq.testdagger.data.repository.AccountRepo;
-import com.liueq.testdagger.data.repository.AccountRepoDBImpl;
+import com.liueq.keyper.data.model.Account;
+import com.liueq.keyper.data.repository.AccountRepo;
+import com.liueq.keyper.data.repository.AccountRepoDBImpl;
 
 import org.junit.Assert;
 import org.junit.Test;

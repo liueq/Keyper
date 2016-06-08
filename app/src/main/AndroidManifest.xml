@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.liueq.testdagger"
+<manifest package="com.liueq.keyper"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -7,20 +7,20 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
-        android:name=".TestApplication"
+        android:name="com.liueq.keyper.TestApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <instrumentation
             android:name="android.test.InstrumentationTestRunner"
-            android:targetPackage="com.liueq.testdagger">
+            android:targetPackage="com.liueq.keyper">
         </instrumentation>
 
         <uses-library android:name="android.test.runner"/>
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.liueq.keyper.ui.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
@@ -29,10 +29,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.accountdetail.AccountDetailActivity"
+            android:name="com.liueq.keyper.ui.accountdetail.AccountDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.launch.SplashActivity"
+            android:name="com.liueq.keyper.ui.launch.SplashActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible">
@@ -43,16 +43,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.settings.SettingsActivity"
+            android:name="com.liueq.keyper.ui.settings.SettingsActivity"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".ui.tagdetail.TagDetailActivity"
+            android:name="com.liueq.keyper.ui.tagdetail.TagDetailActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.advancesearch.AdvanceSearchActivity"
+            android:name="com.liueq.keyper.ui.advancesearch.AdvanceSearchActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>

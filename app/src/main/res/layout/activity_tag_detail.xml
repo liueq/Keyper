@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context="com.liueq.testdagger.ui.tagdetail.TagDetailActivity">
+    tools:context="com.liueq.keyper.ui.tagdetail.TagDetailActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

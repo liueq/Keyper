@@ -20,7 +20,7 @@
         tools:text="A"
         />
 
-    <com.liueq.testdagger.ui.main.NonAlignGridView
+    <com.liueq.keyper.ui.main.NonAlignGridView
         android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
