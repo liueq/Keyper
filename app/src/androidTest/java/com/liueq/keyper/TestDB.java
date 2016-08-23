@@ -12,9 +12,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-/**
- * Created by liueq on 16/2/2016.
- */
 public class TestDB extends ApplicationTestCase<Application> {
 
 	public TestDB(){

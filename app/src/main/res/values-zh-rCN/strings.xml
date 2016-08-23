@@ -7,7 +7,7 @@
     <string name="no_result">没有结果</string>
 
     <!-- Main -->
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">你好世界！</string>
     <string name="action_advance_search">高级搜索</string>
     <string name="action_settings">设置</string>
     <string name="main_activity_title">Keyper</string>
@@ -28,7 +28,7 @@
     <string name="search_field_mail">邮箱</string>
     <string name="search_field_description">更多描述</string>
 
-    <string name="toast_sync_db">Sync Database Completed</string>
+    <string name="toast_sync_db">数据同步完成</string>
 
     <!-- AccountDetail -->
     <string name="tag">标签</string>
@@ -114,8 +114,8 @@
     <string name="about_label">关于</string>
     <string name="about_dialog_title">关于</string>
 
-    <string name="external_path">External Storage</string>
-    <string name="internal_path">Internal Storage</string>
+    <string name="external_path">外部存储</string>
+    <string name="internal_path">内部存储</string>
 
     <string name="version">版本: %1$s</string>
 
@@ -126,5 +126,16 @@
     <string name="dialog_content_del_tag">确定要删除此标签？（相关账户不会被删除）</string>
     <string name="dialog_yes_del_tag">删除</string>
     <string name="dialog_no_del_tag">取消</string>
+    <string name="change_aes">更改AES密码</string>
+    <string name="fingerprint">使用指纹登入</string>
+    <string name="fingerprint_no_enroll">系统未录入指纹</string>
+    <string name="fingerprint_no_sensor">此设备无指纹识别探测器</string>
+    <string name="fingerprint_version_too_low">指纹识别仅Android6.0及以上可用</string>
+    <string name="permission_delay">未授权，无法导入或导出数据库</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="welcome_dialog_fingerprint_mismatch">指纹不匹配</string>
+    <string name="welcome_dialog_fingerprint_title">使用指纹登入</string>
+    <string name="welcome_menu_action_fp">指纹识别</string>
+    <string name="wrong_password">密码错误</string>
 
 </resources>

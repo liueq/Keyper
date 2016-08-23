@@ -78,7 +78,7 @@ public class SplashActivityPresenter extends Presenter {
                     activity.finish();
                 }
             }else{
-                Toast.makeText(activity, "Wrong Password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.wrong_password, Toast.LENGTH_SHORT).show();
             }
         }else{
             if(pwd_1_md5.equals(pwd_2_md5)){
