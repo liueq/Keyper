@@ -11,4 +11,5 @@ gradle/
 gradlew
 gradlew.bat
 settings.gradle
-
+/doc
+/release_log
